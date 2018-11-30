@@ -1,51 +1,38 @@
 image: 172.16.1.99/frontend/guardian-federation/build/federation-ci-7
 before_script:
+  - echo "Namespace" $CI_PROJECT_NAMESPACE
+  - echo "Project" $CI_PROJECT_NAME
 
 stages:
   - test
   - build
 
-build-prod:
-  stage: test
-  script:
-    - echo "build-prod started"
-    - cd /guardian/federation-frontend
-    - cp -r /usr/src/app/node_modules /guardian/federation-frontend/node_modules
-    - npm run build:prod
-  only:
-    - /.*_\d{10}$/
-  tags:
-    - k8s
-
 unit-test:
   stage: test
   script:
-    - echo "unit-test started"
-    - cd /guardian/federation-frontend
-    - cp -r /usr/src/app/node_modules /guardian/federation-frontend/node_modules
+    - echo "unit-test"
+    - cd /$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
+    - cp -r /usr/src/app/node_modules /$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/node_modules
     - npm run test:single
   only:
-    - /.*_\d{10}$/
+    - master
   tags:
     - k8s
 
 postcommit:
   stage: build
   script:
-    - echo "build-prod started"
-    - cd /guardian/federation-frontend
-    - cp -r /usr/src/app/node_modules /guardian/federation-frontend/node_modules
+    - echo "build artifacts"
+    - cd /$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
+    - cp -r /usr/src/app/node_modules /$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/node_modules
     - npm run build:prod
-    - if [ $CI_COMMIT_REF_NAME == "master" ]; then
-    -   "curl -Lvk -H 'PRIVATE-TOKEN: TN42eT8KyzNs4zKmwDeo' -X POST http://172.16.1.41:10080/api/v4/projects/905/pipeline?ref=master"
-    - fi
   artifacts:
     expire_in: 6 mos
     paths:
       - dist
   only:
     - master
-    - /^federation-.+/
+    - release
   tags:
     - k8s
 
