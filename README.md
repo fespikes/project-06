@@ -1,6 +1,6 @@
-# Gurdian Federation FrontEnd
+# Guardian Federation FrontEnd
 
-This is the front end application for Gurdian Federation.
+This is the front end application for Guardian Federation.
 
 ### Dev
 ```bash
