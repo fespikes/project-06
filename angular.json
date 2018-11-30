@@ -135,5 +135,14 @@
       }
     }
   },
-  "defaultProject": "federation-frontend"
+  "defaultProject": "federation-frontend",
+  "schematics": {
+    "@schematics/angular:component": {
+      "prefix": "fed",
+      "styleext": "sass"
+    },
+    "@schematics/angular:directive": {
+      "prefix": "fed"
+    }
+  }
 }

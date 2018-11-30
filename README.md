@@ -1,27 +1,67 @@
-# FederationFrontend
+# Gurdian Federation FrontEnd
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.4.
+This is the front end application for Gurdian Federation.
 
-## Development server
+### Dev
+```bash
+npm install 
+npm start
+```
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### Unit Test
+```bash
+npm test
+```
 
-## Code scaffolding
+### Scripts
+```
+# 编译国际化文本
+npm run i18n
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+# 编译图标
+npm run icon
+```
 
-## Build
+### Code scaffolding
+To generate a new component: 
+```bash
+ng generate component component-name
+```
+To generate more:
+```bash
+`ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+### Collaboration
+#### MUST DO 
+Before submiting a merge request:
+1. Pass all unit tests locally. (`npm run test`)
+2. Pass all lint requirements. (`ng lint`)
 
-## Running unit tests
+#### NICE TO HAVE
+- Follow [karma commit rule](http://karma-runner.github.io/0.10/dev/git-commit-msg.html) to make a commit. <br>
+- When creating a merge request, attach relevant jira number if possible.<br>
+- 请检查编辑器是否加载了editorconfig里面的配置
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Release
 
-## Running end-to-end tests
+```bash
+npm run build:prod
+```
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+serve构建输出
 
-## Further help
+```bash
+npm run lite
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+### 制作CI build image
+
+当node依赖更新时，需重新制作image。在项目根目录下运行
+
+```
+docker build . -f ci/Dockerfile -t guardian-federation/federation-ci-7
+docker tag tcc/tcc-ci-7 172.16.1.99/frontend/guardian-federation/build/federation-ci-7
+docker push 172.16.1.99/frontend/guardian-federation/build/federation-ci-7
+```
+

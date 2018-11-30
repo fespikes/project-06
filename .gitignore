@@ -4,6 +4,7 @@
 /dist
 /tmp
 /out-tsc
+/src/assets/i18n/
 
 # dependencies
 /node_modules
@@ -34,6 +35,14 @@ yarn-error.log
 testem.log
 /typings
 
+# e2e
+/e2e/*.js
+/e2e/*.map
+
 # System Files
 .DS_Store
 Thumbs.db
+
+# project
+yarn.lock
+package-lock.json
