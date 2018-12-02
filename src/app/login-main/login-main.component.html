@@ -1,23 +1,69 @@
-<div class="login">
-  <div class="login-left">
-    <img src="../../assets/images/shield.png" alt="shield logo">
-  </div>
-  <div class="login-right">
-    <div class="login-right-title">
-      {{ "LOGIN.ACCOUNT_VERIFICATION_CENTER" | translate }}
+<div class="container">
+  <div class="login">
+    <div class="login-left">
+      <img src="../../assets/images/shield.png" alt="shield logo">
     </div>
-    <div class="login-right-forms">
-      <div class="login-right-form-title">
-        {{ "LOGIN.LOGIN" | translate }}
+    <div class="login-right">
+      <div class="login-right-title">
+        <span>&nbsp;</span>
+        <span> {{ "LOGIN.ACCOUNT_VERIFICATION_CENTER" | translate }} </span>
       </div>
-      <div>
-        <form class="login-right-form-area" [formGroup]="login">
-          <button (click)="submit()"></button>
+      <div class="login-right-forms">
+        <div class="login-right-info" *ngIf="false"></div>
+        <div class="login-right-forms-title">
+          {{ "LOGIN.LOGIN" | translate }}
+        </div>
+        <form class="login-right-forms-area" [formGroup]="loginForm">
+          <div class="input-field">
+            <svg> 
+              <use xlink:href="../shared/icons/user.svg"></use> 
+            </svg>
+            <input 
+              type="text" 
+              placeholder="{{ 'LOGIN.USERNAME' | translate }}"
+              name="username"
+              formControlName="username"
+            >
+          </div>
+          <div class="input-field">
+            <svg> 
+              <use></use> 
+            </svg>
+            <input 
+              type="password" 
+              placeholder="{{ 'LOGIN.PASSWORD' | translate }}"
+              name="password"
+              formControlName="password"
+            >
+          </div>
+          <div class="captcha-field">
+            <div class="input-field">
+              <svg> 
+                <use></use> 
+              </svg>
+              <input 
+                type="text" 
+                placeholder="{{ 'LOGIN.VERIFICATION_CODE' | translate }}"
+                name="captcha"
+                formControlName="captcha"
+              >
+            </div>
+            <img src="../../assets/images/dummy.jpg" alt="dummy captcha">
+          </div>
+          <button (click)="submit()">{{ 'LOGIN.LOGIN' | translate }}</button>
+          <div class="checkbox-field">
+            <input 
+              type="checkbox"
+              name="remember"
+              formControlName="remember"
+            >
+            <span> {{ 'LOGIN.REMEMBER_PASSWORD' | translate }} </span>
+          </div>
         </form>
       </div>
     </div>
-  </div>
+  </div>  
   <div class="footer">
-    {{ "\u00a9" + "2017 TRANSWARP. All Rights Reserved." }}
+    @2017 TRANSWARP. All Rights Reserved.
   </div>
 </div>

@@ -8,11 +8,11 @@ import { FormBuilder } from '@angular/forms';
 })
 export class LoginMainComponent implements OnInit {
 
-  login = this.fb.group({
-    name: [''],
+  loginForm = this.fb.group({
+    username: [''],
     password: [''],
-    verfication_coee: [''],
-    stay: [''],
+    captcha: [''],
+    remember: [''],
   })
 
   constructor(
@@ -23,7 +23,7 @@ export class LoginMainComponent implements OnInit {
   }
 
   submit() {
-
+    console.log(this.loginForm.value);
   }
 
 }
