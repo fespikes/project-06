@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'fed-login-main',
@@ -7,9 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginMainComponent implements OnInit {
 
-  constructor() { }
+  login = this.fb.group({
+    name: [''],
+    password: [''],
+    verfication_coee: [''],
+    stay: [''],
+  })
+
+  constructor(
+    private fb: FormBuilder,
+  ) { }
 
   ngOnInit() {
+  }
+
+  submit() {
+
   }
 
 }

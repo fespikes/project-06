@@ -17,9 +17,6 @@ npm test
 ```
 # 编译国际化文本
 npm run i18n
-
-# 编译图标
-npm run icon
 ```
 
 ### Code scaffolding
@@ -34,8 +31,8 @@ ng generate directive|pipe|service|class|guard|interface|enum|module
 
 ### Collaboration
 #### _MUST DO_
-Before submiting a merge request:
-1. Pass all unit tests locally. (`npm run test`)
+Before submitting a merge request:
+1. Pass all unit tests locally. (`npm test`)
 2. Pass all lint requirements. (`ng lint`)
 
 #### _NICE TO HAVE_

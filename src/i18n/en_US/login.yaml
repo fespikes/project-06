@@ -1,0 +1,9 @@
+LOGIN:
+  ACCOUNT_VERIFICATION_CENTER: Account Verfication Center
+  USERNAME: UserName
+  PASSWORD: Password
+  VERIFICATION_CODE: Verfication Code
+  CHANGE_CODE: Change Code
+  LOGIN: Login
+  REMEMBER_PASSWORD: Remember Me
+  FORGOT_PASSWORD: Forgot Password?

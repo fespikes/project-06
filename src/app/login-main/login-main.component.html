@@ -1,3 +1,23 @@
-<p>
-  login-main works!
-</p>
+<div class="login">
+  <div class="login-left">
+    <img src="../../assets/images/shield.png" alt="shield logo">
+  </div>
+  <div class="login-right">
+    <div class="login-right-title">
+      {{ "LOGIN.ACCOUNT_VERIFICATION_CENTER" | translate }}
+    </div>
+    <div class="login-right-forms">
+      <div class="login-right-form-title">
+        {{ "LOGIN.LOGIN" | translate }}
+      </div>
+      <div>
+        <form class="login-right-form-area" [formGroup]="login">
+          <button (click)="submit()"></button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    {{ "\u00a9" + "2017 TRANSWARP. All Rights Reserved." }}
+  </div>
+</div>

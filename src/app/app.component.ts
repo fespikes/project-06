@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { I18nLangService } from './i18n';
+
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
-  title = 'federation-frontend';
+
+  title = "Guardian Federation";
+
+  constructor(
+    private i18nLang: I18nLangService,
+  ) {
+    i18nLang.switch(i18nLang.lang);
+  }
 }
