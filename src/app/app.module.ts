@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   I18nModule,
   I18nLangService,
@@ -12,19 +12,20 @@ import { ApiService, SharedModule }  from './shared';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginMainComponent } from './login-main/login-main.component';
+import { LoginMainComponent} from './login-main/login-main.component';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginMainComponent
+    LoginMainComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     SharedModule,
     I18nModule,
-    ReactiveFormsModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [ 
     ApiService, 

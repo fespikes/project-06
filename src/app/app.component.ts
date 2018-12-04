@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { I18nLangService } from './i18n';
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

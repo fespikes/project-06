@@ -1,6 +1,8 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LoginMainComponent } from './login-main.component';
+import { TranslatePipeSub } from '../mock';
 
 describe('LoginMainComponent', () => {
   let component: LoginMainComponent;
@@ -8,7 +10,9 @@ describe('LoginMainComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginMainComponent ]
+      schemas: [NO_ERRORS_SCHEMA],
+      imports: [ReactiveFormsModule],
+      declarations: [ LoginMainComponent, TranslatePipeSub ],
     })
     .compileComponents();
   }));
