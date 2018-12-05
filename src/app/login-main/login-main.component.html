@@ -13,7 +13,7 @@
         <div class="login-right-forms-title">
           {{ "LOGIN.LOGIN" | translate }}
         </div>
-        <form class="login-right-forms-area" [formGroup]="loginForm">
+        <form class="login-right-forms-area" [formGroup]="loginForm" (ngSubmit)="submit()"> 
           <div class="input-field">
             <svg> <use xlink:href="#user"></use></svg>
             <input 
@@ -44,7 +44,7 @@
             </div>
             <img src="../../assets/images/dummy.jpg" alt="dummy captcha">
           </div>
-          <button (click)="submit()">{{ 'LOGIN.LOGIN' | translate }}</button>
+          <button [disabled]="loginForm.invalid">{{ 'LOGIN.LOGIN' | translate }}</button>
           <div class="checkbox-field">
             <input 
               type="checkbox"

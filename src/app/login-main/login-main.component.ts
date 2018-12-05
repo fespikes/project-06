@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+
+function captchaValidator(): ValidatorFn {
+  return (control: AbstractControl): {[key: string]: any} => {
+    const test = (control.value.length === 4);
+    return test ? { 'invalid captcha': 'length must be 4' } : null;
+  }
+}
+
 
 @Component({
   selector: 'fed-login-main',
@@ -9,9 +17,9 @@ import { FormBuilder } from '@angular/forms';
 export class LoginMainComponent implements OnInit {
 
   loginForm = this.fb.group({
-    username: [''],
-    password: [''],
-    captcha: [''],
+    username: ['', Validators.required],
+    password: ['', Validators.required],
+    captcha: ['', [Validators.required, captchaValidator]],
     remember: [''],
   })
 
