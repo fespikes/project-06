@@ -13,10 +13,13 @@ import { ApiService, SharedModule }  from './shared';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginMainComponent} from './login-main/login-main.component';
+import { IconSymbolComponent } from 'assets/icons/icon-symbol.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginMainComponent,
+    IconSymbolComponent,
   ],
   imports: [
     BrowserModule,

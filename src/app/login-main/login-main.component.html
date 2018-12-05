@@ -15,9 +15,7 @@
         </div>
         <form class="login-right-forms-area" [formGroup]="loginForm">
           <div class="input-field">
-            <svg> 
-              <use xlink:href="../shared/icons/user.svg"></use> 
-            </svg>
+            <svg> <use xlink:href="#user"></use></svg>
             <input 
               type="text" 
               placeholder="{{ 'LOGIN.USERNAME' | translate }}"
@@ -26,9 +24,7 @@
             >
           </div>
           <div class="input-field">
-            <svg> 
-              <use></use> 
-            </svg>
+            <svg> <use xlink:href="#lock"></use></svg>
             <input 
               type="password" 
               placeholder="{{ 'LOGIN.PASSWORD' | translate }}"
@@ -38,9 +34,7 @@
           </div>
           <div class="captcha-field">
             <div class="input-field">
-              <svg> 
-                <use></use> 
-              </svg>
+              <svg><use xlink:href="#shield"></use></svg>
               <input 
                 type="text" 
                 placeholder="{{ 'LOGIN.VERIFICATION_CODE' | translate }}"
