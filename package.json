@@ -3,13 +3,17 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "prestart": "npm run i18n",
+    "start": "ng serve --proxy-config proxy.conf.json",
+    "prebuild": "npm run i18n",
     "build": "ng build",
-    "test": "ng test",
+    "test": "ng test federation-frontend --code-coverage true --source-map true",
     "test:single": "ng test --watch=false",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build:prod": "ng build --prod --aot"
+    "build:prod": "ng build --prod --aot",
+    "i18n": "node scripts/compileI18n",
+    "icon": "node scripts/generateIconSymbol"
   },
   "private": true,
   "dependencies": {
@@ -22,7 +26,9 @@
     "@angular/platform-browser": "~7.0.0",
     "@angular/platform-browser-dynamic": "~7.0.0",
     "@angular/router": "~7.0.0",
+    "cheerio": "^1.0.0-rc.2",
     "core-js": "^2.5.4",
+    "lodash-es": "^4.17.11",
     "rxjs": "~6.3.3",
     "zone.js": "~0.8.26"
   },
@@ -31,9 +37,9 @@
     "@angular/cli": "~7.0.4",
     "@angular/compiler-cli": "~7.0.0",
     "@angular/language-service": "~7.0.0",
-    "@types/node": "~8.9.4",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
+    "@types/node": "~8.9.4",
     "codelyzer": "~4.5.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
