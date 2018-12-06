@@ -11,6 +11,7 @@
     "test:single": "ng test --watch=false",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "prebuild:prod": "npm run i18n",
     "build:prod": "ng build --prod --aot",
     "i18n": "node scripts/compileI18n",
     "icon": "node scripts/generateIconSymbol"
