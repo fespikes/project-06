@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule, PreloadAllModules, PreloadingStrategy } from '@angular/router';
-import { LoginMainComponent } from './login-main/login-main.component';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
 import {
   TranslateResolver,
@@ -8,18 +7,38 @@ import {
   TranslateToken,
 } from './i18n';
 
+import { FederationGuard } from 'app/shared';
+import { LoginMainComponent } from './login-main/login-main.component';
+import { MainComponent } from './main/main.component';
+
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'main',
+    pathMatch: 'full',
+  },
+  {
+    path: 'login',
     component: LoginMainComponent,
-    resolve: [TranslateResolver],
-    canDeactivate: [TranslateDeactivator],
+  },
+  {
+    path: 'main',
+    component: MainComponent,
+    canActivate: [FederationGuard],
   }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, {
+    RouterModule.forRoot([
+      {
+        path: '',
+        resolve: [TranslateResolver],
+        canDeactivate: [TranslateDeactivator],
+        children: routes,
+      },
+    ], {
+      useHash: true,
       preloadingStrategy: PreloadAllModules,
     }),
   ],
