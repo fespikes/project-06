@@ -9,7 +9,7 @@ LOGIN:
   FORGOT_PASSWORD: 忘记密码?
   TENANT: 租户
   LOGIN_SUCCESSFUL: 登录成功
-  SUCCESS_NOTIFICATION: 您已经成功登录联盟认证系统。
+  SUCCESS_NOTIFICATION: 您已经成功登录统一身份认证系统。
   LOGOUT_PREFIX: 出于安全考虑，一旦您访问过那些需要您提供凭证信息的应用时，请操作完成之后
   LOGOUT: 登出
   LOGOUT_SUFFIX: 并关闭浏览器。

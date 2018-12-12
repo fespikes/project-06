@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthService } from 'app/shared';
 import { MainComponent } from './main.component';
+import { TranslatePipeSub } from 'app/mock';
 
 const mockUser = {
   tenant: 't',
@@ -15,12 +16,13 @@ describe('MainComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MainComponent ],
+      declarations: [ MainComponent, TranslatePipeSub ],
       providers: [
         {
           provide: AuthService,
           useValue: {
             currUser: mockUser,
+            purgeAuth() {}
           }
         }
       ]

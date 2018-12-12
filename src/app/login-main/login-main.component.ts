@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService, LoginInfo } from 'app/shared';
+import { I18nLangService } from 'app/i18n';
 
 function captchaValidator(): ValidatorFn {
   return (control: AbstractControl): {[key: string]: any} => {
@@ -16,6 +17,11 @@ function captchaValidator(): ValidatorFn {
   styleUrls: ['./login-main.component.sass']
 })
 export class LoginMainComponent implements OnInit {
+
+  languages = [
+    { value: 'zh_CN', name: '中文' },
+    { value: 'en_US', name: 'English' },
+  ];
 
   loginForm = this.fb.group({
     tenant: ['', Validators.required],
@@ -35,8 +41,10 @@ export class LoginMainComponent implements OnInit {
     }
   }
 
+  errorMsg: string;
+
   set error(err: any) {
-    
+    this.errorMsg = err.message;
   }
 
   get error() {
@@ -47,6 +55,7 @@ export class LoginMainComponent implements OnInit {
     private fb: FormBuilder,
     private auth: AuthService,
     private router: Router,
+    private i18nLang: I18nLangService,
   ) { }
 
   ngOnInit() {
@@ -61,6 +70,15 @@ export class LoginMainComponent implements OnInit {
     (error) => {
 
     });
+  }
+
+  switchLang(lang) {
+    this.i18nLang.switch(lang);
+    console.log (this.i18nLang.lang);
+  }
+
+  getSelected(v: string) {
+    return v === this.i18nLang.lang;
   }
 
 }

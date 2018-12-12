@@ -6,6 +6,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoginMainComponent } from './login-main.component';
 import { TranslatePipeSub } from 'app/mock';
 import { AuthService } from 'app/shared';
+import { I18nLangService } from 'app/i18n';
 
 const payload = {
   tenant: 'demo',
@@ -36,6 +37,12 @@ describe('LoginMainComponent', () => {
           provide: Router,
           useValue: {
             navigate() {}
+          }
+        },
+        {
+          provide: I18nLangService,
+          useValue: {
+            switchLang() {}
           }
         }
       ]

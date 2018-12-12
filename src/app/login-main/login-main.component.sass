@@ -53,6 +53,19 @@
         &-title
           margin-bottom: 20px
 
+          >span:last-child
+            float: right
+            
+            >a:not(.selected)
+              cursor: pointer
+
+            >a:not(.selected):hover
+              text-decoration: underline
+            
+            .selected
+              color: $text-link
+              font-weight: bold
+
         &-area
 
           .input-field
