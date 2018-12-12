@@ -13,7 +13,11 @@
 
         </div>
         <div class="login-right-forms-title">
-          {{ "LOGIN.LOGIN" | translate }}
+          <span> {{ "LOGIN.LOGIN" | translate }} </span>
+          <span> 
+            <a (click)="switchLang(languages[0].value)" [ngClass]="{ 'selected': getSelected(languages[0].value)}">{{languages[0].name}}</a> | 
+            <a (click)="switchLang(languages[1].value)" [ngClass]="{ 'selected': getSelected(languages[1].value)}">{{languages[1].name}}</a> 
+          </span>
         </div>
         <form class="login-right-forms-area" [formGroup]="loginForm" (ngSubmit)="submit()"> 
             <div class="input-field">
@@ -69,6 +73,6 @@
     </div>
   </div>  
   <div class="footer">
-    ©2018 TRANSWARP. All Rights Reserved.
+    Copyright © 2018 TRANSWARP. All Rights Reserved.
   </div>
 </div>
