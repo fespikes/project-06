@@ -9,18 +9,29 @@
         <span> {{ "LOGIN.ACCOUNT_VERIFICATION_CENTER" | translate }} </span>
       </div>
       <div class="login-right-forms">
-        <div class="login-right-info" *ngIf="false"></div>
+        <div class="login-right-info" *ngIf="error">
+
+        </div>
         <div class="login-right-forms-title">
           {{ "LOGIN.LOGIN" | translate }}
         </div>
         <form class="login-right-forms-area" [formGroup]="loginForm" (ngSubmit)="submit()"> 
+            <div class="input-field">
+              <svg> <use xlink:href="#tenant"></use></svg>
+              <input 
+                type="text" 
+                placeholder="{{ 'LOGIN.TENANT' | translate }}"
+                name="tenant"
+                formControlName="tenant"
+              >
+            </div>
           <div class="input-field">
             <svg> <use xlink:href="#user"></use></svg>
             <input 
               type="text" 
               placeholder="{{ 'LOGIN.USERNAME' | translate }}"
-              name="username"
-              formControlName="username"
+              name="name"
+              formControlName="name"
             >
           </div>
           <div class="input-field">
@@ -32,7 +43,7 @@
               formControlName="password"
             >
           </div>
-          <div class="captcha-field">
+          <!-- <div class="captcha-field">
             <div class="input-field">
               <svg><use xlink:href="#shield"></use></svg>
               <input 
@@ -43,7 +54,7 @@
               >
             </div>
             <img src="../../assets/images/dummy.jpg" alt="dummy captcha">
-          </div>
+          </div> -->
           <button [disabled]="loginForm.invalid">{{ 'LOGIN.LOGIN' | translate }}</button>
           <div class="checkbox-field">
             <input 
@@ -58,6 +69,6 @@
     </div>
   </div>  
   <div class="footer">
-    @2017 TRANSWARP. All Rights Reserved.
+    ©2018 TRANSWARP. All Rights Reserved.
   </div>
 </div>

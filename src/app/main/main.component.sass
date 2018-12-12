@@ -1,0 +1,36 @@
+@import 'app/styles/util.sass'
+
+.container
+  background: url(assets/images/skyline.jpg) no-repeat center center fixed
+  height: 100vh
+  width: 100%
+
+  .info
+    width: 65%
+    height: 300px
+    border-radius: 10px
+    margin: auto
+    background: white
+    top: 20px
+    position: relative
+    background-color: $bg-success
+
+    &-text  
+      padding: 20px
+      color: green
+
+      a
+        text-decoration: underline
+        color: $text-link
+        cursor: pointer
+
+  .footer
+    width: 100vw
+    height: 60px
+    color: white
+    position: fixed
+    bottom: 0px
+    line-height: 60px
+    border-top: 1px solid rgba(255, 255, 255, 0.4)
+    font-size: 12px
+    padding-left: 60px

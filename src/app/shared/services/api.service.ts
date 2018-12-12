@@ -69,11 +69,21 @@ export class ApiService {
     );
   }
 
-  post(urlPath: string, body: Object = {}): Observable<any> {
+  post(urlPath: string, body: Object = {}, headers = this.headers): Observable<any> {
     return this.http.post(
       this.makeUrl(urlPath),
       JSON.stringify(body),
-      {headers: this.headers},
+      {headers},
+    ).pipe(
+      catchError(this.formatErrors),
+    );
+  }
+
+  postEncode(urlPath: string, body: Object = {}, headers = this.headers): Observable<any> {
+    return this.http.post(
+      this.makeUrl(urlPath),
+      this.setHttpParams(body).toString(),
+      {headers},
     ).pipe(
       catchError(this.formatErrors),
     );

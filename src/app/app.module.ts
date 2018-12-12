@@ -8,18 +8,21 @@ import {
   TranslateService,
 } from './i18n';
 
-import { ApiService, SharedModule }  from './shared';
+import { ApiService, SharedModule, FederationGuard, AuthService }  from 'app/shared';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginMainComponent} from './login-main/login-main.component';
 import { IconSymbolComponent } from 'assets/icons/icon-symbol.component';
+
+import { LoginMainComponent } from './login-main/login-main.component';
+import { MainComponent } from './main/main.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginMainComponent,
     IconSymbolComponent,
+    MainComponent,
+    LoginMainComponent
   ],
   imports: [
     BrowserModule,
@@ -33,8 +36,11 @@ import { IconSymbolComponent } from 'assets/icons/icon-symbol.component';
   providers: [ 
     ApiService, 
     I18nLangService, 
-    TranslateService 
+    TranslateService,
+    FederationGuard,
+    AuthService,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [],
 })
 export class AppModule { }
