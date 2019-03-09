@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { ApiService } from './api.service';
+import { session } from 'app/shared/utils';
+import { adminRoles } from 'app/components/tenant/tenant.model';
 
 export class User {
   name = '';
@@ -15,7 +17,7 @@ export class LoginInfo {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
 
@@ -32,6 +34,14 @@ export class AuthService {
   setToken (response: any) {
     this.currUser.name = response.name;
     this.currUser.tenant = response.details.tenant;
+    session.setUserName(response.name);
+    if (response.authorities) {
+      session.setUserIsAdmin(
+        response.authorities.some(item => {
+          return adminRoles.indexOf(item.authority) > -1;
+        }) ? 'true' : 'false'
+      );
+    }
   }
 
   login(formValue: LoginInfo) {

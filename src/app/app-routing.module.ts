@@ -8,24 +8,54 @@ import {
 } from './i18n';
 
 import { FederationGuard } from 'app/shared';
-import { LoginMainComponent } from './login-main/login-main.component';
 import { MainComponent } from './main/main.component';
+import { IndexComponent } from './components/index/index.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 const routes: Routes = [
   {
+    path: 'account',
+    loadChildren: './components/account/account.module#AccountModule',
+  },
+  {
+    path: 'index',
+    component: IndexComponent,
+    canActivate: [FederationGuard],
+    children: [
+      {
+        path: 'tenant',
+        loadChildren: './components/tenant/tenant.module#TenantModule',
+      },
+      {
+        path: 'users',
+        loadChildren: './components/users/users.module#UsersModule',
+      },
+      {
+        path: 'main',
+        component: MainComponent,
+      },
+      {
+        path: 'access-token',
+        loadChildren: './components/access-token/access-token.module#AccessTokenModule',
+      },
+      {
+        path: 'users',
+        loadChildren: './components/users/users.module#UsersModule',
+      },
+      {
+        path: '',
+        redirectTo: 'tenant',
+        pathMatch: 'full',
+      }
+    ]
+  },
+  
+  {
     path: '',
-    redirectTo: 'main',
+    redirectTo: 'index',
     pathMatch: 'full',
   },
-  {
-    path: 'login',
-    component: LoginMainComponent,
-  },
-  {
-    path: 'main',
-    component: MainComponent,
-    canActivate: [FederationGuard],
-  }
+  { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({
@@ -48,7 +78,7 @@ const routes: Routes = [
     TranslateResolver,
     {
       provide: TranslateToken,
-      useValue: 'login'
+      useValue: 'common'
     },
   ]
 })

@@ -1,0 +1,91 @@
+<h3>租户</h3>
+<div class="operate">
+  <button
+    tuiBtn="primary"
+    (click)="showModal(tenant, tenantActionTypes['create'])"
+  >{{'TENANT.create' | translate}}</button>
+  <tui-input
+    placeholder="{{'TENANT.placeholder' | translate}}"
+    prefix="user"
+    [(ngModel)]="filter.tenant"
+    (input)="searchTenants($event)"
+  ></tui-input>
+</div>
+
+<ul [tuiLoading]="loading">
+  <li *ngFor="let tenant of tenants">
+    <!-- <div
+      *ngIf="i === hoverIndex"
+      class="dropdown"
+    >
+      <span (click)="edit(tenant)">编辑租户</span>
+      <span (click)="remove(tenant)">删除租户</span>
+    </div> -->
+    <div
+      class="up"
+      *ngIf="tenant.tenantOwner"
+      [tuiDropdownTrigger]="editDropdown"
+    >
+      <svg tuiIcon="setting"></svg>
+      <svg tuiIcon="caret-down"></svg>
+    </div>
+    <!-- trigger="hover" -->
+    <tui-dropdown #editDropdown direction="bottomRight" [caret]="false">
+      <!-- [class.active]="true" -->
+      <tui-dropdown-item 
+        (click)="showModal(tenant, tenantActionTypes['edit'])"
+      >编辑租户
+      </tui-dropdown-item>
+      <tui-dropdown-item (click)="showModal(tenant, tenantActionTypes['remove'])">
+        删除租户
+      </tui-dropdown-item>
+    </tui-dropdown>
+    <div [routerLink]="['../', tenant.tenantName]">
+      <svg tuiIcon="setting"></svg>
+      {{tenant.tenantName}}
+    </div>
+    <!-- <p tuiTooltip="{{tenant.attributes?.description}}"
+    >{{tenant.attributes?.description || ' - '}}</p> -->
+    <!--api not ready for that , so see the description in details-->
+  </li>
+  <!-- <li>
+    <div class="up">
+      {{'test'}}
+      <svg tuiIcon="setting"></svg>
+      <svg tuiIcon="caret-down"></svg>
+    </div>
+    <p>次租户仅用于测试，不可随意更改其</p>
+  </li>
+  <li>
+    <div class="up">
+      {{'test'}}
+      <svg tuiIcon="setting"></svg>
+      <svg tuiIcon="caret-down"></svg>
+    </div>
+    <p>次租户仅用于测试，不可随意更改其</p>
+  </li>
+  <li>
+    <div class="up">
+      {{'test'}}
+      <svg tuiIcon="setting"></svg>
+      <svg tuiIcon="caret-down"></svg>
+    </div>
+    <p>次租户仅用于测试，不可随意更改其</p>
+  </li>
+  <li>
+    <div class="up">
+      {{'test'}}
+      <svg tuiIcon="setting"></svg>
+      <svg tuiIcon="caret-down"></svg>
+    </div>
+    <p>次租户仅用于测试，不可随意更改其</p>
+  </li>
+  <li>
+    <div class="up">
+      {{'test'}}
+      <svg tuiIcon="setting"></svg>
+      <svg tuiIcon="caret-down"></svg>
+    </div>
+    <p>次租户仅用于测试，不可随意更改其</p>
+  </li> -->
+</ul>

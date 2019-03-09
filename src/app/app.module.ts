@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -14,18 +15,23 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IconSymbolComponent } from 'assets/icons/icon-symbol.component';
 
-import { LoginMainComponent } from './login-main/login-main.component';
 import { MainComponent } from './main/main.component';
+import { IndexComponent } from './components/index/index.component';
+import { federation_server } from 'app/shared/app.tokens';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     IconSymbolComponent,
     MainComponent,
-    LoginMainComponent
+    IndexComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
     I18nModule,
@@ -33,12 +39,16 @@ import { MainComponent } from './main/main.component';
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [ 
+  providers: [
     ApiService, 
     I18nLangService, 
     TranslateService,
-    FederationGuard,
+    // FederationGuard,
     AuthService,
+    {
+      provide: federation_server,
+      useValue: 'federation-server'
+    }
   ],
   bootstrap: [AppComponent],
   entryComponents: [],

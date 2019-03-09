@@ -15,20 +15,24 @@
         <div class="login-right-forms-title">
           <span> {{ "LOGIN.LOGIN" | translate }} </span>
           <span> 
-            <a (click)="switchLang(languages[0].value)" [ngClass]="{ 'selected': getSelected(languages[0].value)}">{{languages[0].name}}</a> | 
-            <a (click)="switchLang(languages[1].value)" [ngClass]="{ 'selected': getSelected(languages[1].value)}">{{languages[1].name}}</a> 
+            <a (click)="switchAccountType(roles['federation'])" [ngClass]="{ 'selected': role === roles['federation']}">{{'Federation账号'}}</a> | 
+            <a (click)="switchAccountType(roles['other'])" [ngClass]="{ 'selected': role !== roles['federation']}">{{'租户内账号'}}</a> 
+            <!-- <a (click)="switchLang(languages[0].value)" [ngClass]="{ 'selected': getSelected(languages[0].value)}">{{languages[0].name}}</a> | 
+            <a (click)="switchLang(languages[1].value)" [ngClass]="{ 'selected': getSelected(languages[1].value)}">{{languages[1].name}}</a>  -->
           </span>
         </div>
         <form class="login-right-forms-area" [formGroup]="loginForm" (ngSubmit)="submit()"> 
-            <div class="input-field">
-              <svg> <use xlink:href="#tenant"></use></svg>
-              <input 
-                type="text" 
-                placeholder="{{ 'LOGIN.TENANT' | translate }}"
-                name="tenant"
-                formControlName="tenant"
-              >
-            </div>
+          <div class="input-field"
+            *ngIf="role !== roles['federation']"
+          >
+            <svg> <use xlink:href="#tenant"></use></svg>
+            <input 
+              type="text" 
+              placeholder="{{ 'LOGIN.TENANT' | translate }}"
+              name="tenant"
+              formControlName="tenant"
+            >
+          </div>
           <div class="input-field">
             <svg> <use xlink:href="#user"></use></svg>
             <input 
@@ -60,14 +64,16 @@
             <img src="../../assets/images/dummy.jpg" alt="dummy captcha">
           </div> -->
           <button [disabled]="loginForm.invalid">{{ 'LOGIN.LOGIN' | translate }}</button>
-          <div class="checkbox-field">
-            <input 
-              type="checkbox"
-              name="remember"
-              formControlName="remember"
-            >
-            <span> {{ 'LOGIN.REMEMBER_PASSWORD' | translate }} </span>
-          </div>
+<!--           <div class="checkbox-field">
+            <label>
+              <input
+                type="checkbox"
+                name="remember"
+                formControlName="remember"
+              >{{ 'LOGIN.REMEMBER_PASSWORD' | translate }}
+            </label>
+          </div> -->
+          <a routerLink="/account/reset-pwd">忘记密码 ?</a>
         </form>
       </div>
     </div>

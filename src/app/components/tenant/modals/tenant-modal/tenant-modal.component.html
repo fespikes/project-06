@@ -1,0 +1,94 @@
+<div >
+  <form
+    *ngIf="actionType === 'create' || actionType ==='edit'"
+    tuiForm labelFlex="1" inputFlex="5"
+  >
+    <tui-form-item label="名称">
+      <tui-input
+        [(ngModel)]="params.name"
+        [ngModelOptions]="{standalone: true}"
+        required
+      ></tui-input>
+    </tui-form-item>
+    <tui-form-item label="类型">
+      <tui-select
+        [(ngModel)]="params.type"
+        (ngModelChange)="typeChange()"
+        [ngModelOptions]="{standalone: true}"
+        required
+      >
+        <tui-select-option
+          *ngFor="let option of tenantGroups"
+          [value]="option"
+          [label]="option"
+        >{{option}}
+        </tui-select-option>
+      </tui-select>
+    </tui-form-item>
+    <!-- <tui-form-item label="描述">
+      <tui-textarea name="textarea" ngModel resizeVertical="true" required></tui-textarea>
+    </tui-form-item> -->
+    <h4>自定义信息</h4>
+    <ul class="add-info">
+      <li class="title">
+        <span>{{'key' | translate}}</span>
+        <span>{{'value' | translate}}</span>
+      </li>
+      <li *ngIf="attrs.length === 0">未添加自定义信息</li>
+      <ng-container *ngIf="attrs.length > 0">
+        <li *ngFor="let attr of attrs; let idx = index">
+          <span *ngIf="attr.key!==' '">{{attr.key}}</span>
+          <span *ngIf="attr.value!==' '">{{attr.value}}</span>
+        </li>
+      </ng-container>
+      <ng-container *ngIf="last.key !== undefined">
+        <li class="last-attr">
+          <span>
+            <input [(ngModel)]="last.key" [ngModelOptions]="{standalone: true}" />
+          </span>
+          <span>
+            <input [(ngModel)]="last.value" [ngModelOptions]="{standalone: true}" />
+          </span>
+        </li>
+      </ng-container>
+      <li class="" >
+        <button
+          class="add" 
+          (click)="addInfo()"
+          [disabled]="addAble?'disabled' : ''"
+        >+</button>
+      </li>
+    </ul>
+    <div class="btns">
+      <button
+        class="tui-btn-md tui-btn-default tui-btn"
+        type="reset"
+      >{{'取消' | translate}}</button>
+      <button
+        class="tui-btn-md tui-btn-primary tui-btn"
+        type="submit"
+        [disabled]="submitAble ? false:  'disabled'"
+        (click)="submit()"
+      >{{'确定' | translate}}</button>
+    </div>
+  </form>
+
+  <form
+    *ngIf="actionType === 'remove'"
+    tuiForm labelFlex="1" inputFlex="5" >
+    <p>确认删除租户 “{{tenant.name}}”？</p>
+    <p>删除住户后，此租户下所有的资源也将被删除。</p>
+    <div class="btns">
+      <button
+        class="tui-btn-md tui-btn-default tui-btn"
+        type="reset"
+      >{{'取消' | translate}}</button>
+      <button
+        class="tui-btn-md tui-btn-primary tui-btn"
+        type="submit"
+        [disabled]="false ? 'disabled' : null"
+        (click)="submit()"
+      >{{'确定' | translate}}</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,75 @@
+<div >
+  <form
+    *ngIf="actionType === 'register' || actionType ==='details'"
+    tuiForm labelFlex="1" inputFlex="5"
+  >
+    <tui-form-item label="名称">
+      <tui-input
+        [(ngModel)]="params.name"
+        [ngModelOptions]="{standalone: true}"
+        required
+      ></tui-input>
+    </tui-form-item>
+    <tui-form-item label="类型">
+      <tui-select
+        [(ngModel)]="params.type"
+        (ngModelChange)="typeChange()"
+        [ngModelOptions]="{standalone: true}"
+        required
+      >
+        <tui-select-option
+          *ngFor="let option of providerTypes"
+          [value]="option"
+          [label]="option"
+        >{{option}}
+        </tui-select-option>
+      </tui-select>
+    </tui-form-item>
+    <!-- <tui-form-item label="地址">
+      <tui-textarea name="textarea" ngModel
+        placeholder="for example: 'address1:8324; address2:8653'"
+        resizeVertical="true" required
+      ></tui-textarea>
+    </tui-form-item> -->
+    <tui-form-item>
+      <tui-checkbox
+        name="agree"
+        [(ngModel)]="params.tls.enabled"
+        (ngModelChange)="checkboxChange($event)"
+        [ngModelOptions]="{standalone: true}"
+      >开启 tls</tui-checkbox>
+        <!-- tuiCompel -->
+    </tui-form-item>
+    <div class="btns">
+      <button
+        class="tui-btn-md tui-btn-default tui-btn"
+        type="reset"
+      >{{'取消' | translate}}</button>
+      <button
+        class="tui-btn-md tui-btn-primary tui-btn"
+        type="submit"
+        [disabled]="submitAble ? false:  'disabled'"
+        (click)="submit()"
+      >{{'确定' | translate}}</button>
+    </div>
+  </form>
+
+  <form
+    *ngIf="actionType === 'remove'"
+    tuiForm labelFlex="1" inputFlex="5" >
+    <p>确认删除租户 “{{tenant.name}}”？</p>
+    <p>删除住户后，此租户下所有的资源也将被删除。</p>
+    <div class="btns">
+      <button
+        class="tui-btn-md tui-btn-default tui-btn"
+        type="reset"
+      >{{'取消' | translate}}</button>
+      <button
+        class="tui-btn-md tui-btn-primary tui-btn"
+        type="submit"
+        [disabled]="false ? 'disabled' : null"
+        (click)="submit()"
+      >{{'确定' | translate}}</button>
+    </div>
+  </form>
+</div>

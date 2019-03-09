@@ -1,3 +1,10 @@
+account:
+  forget_pwd: Forget password
+  send_description: Please input your email for reset password.
+  register-email: Email
+  send_submit: Send Link
+  resend: Resend
+
 LOGIN:
   ACCOUNT_VERIFICATION_CENTER: Account Verfication Center
   USERNAME: UserName

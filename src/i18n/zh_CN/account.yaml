@@ -1,3 +1,10 @@
+account:
+  forget_pwd: 忘记密码
+  send_description: 请输入您用于注册的邮箱，我们将发送重置密码的链接到此邮箱。
+  register_email: 注册邮箱
+  send_submit: 发送链接
+  resend: 重新发送
+
 LOGIN:
   ACCOUNT_VERIFICATION_CENTER: 账户认证中心
   USERNAME: 用户名
@@ -13,3 +20,4 @@ LOGIN:
   LOGOUT_PREFIX: 出于安全考虑，一旦您访问过那些需要您提供凭证信息的应用时，请操作完成之后
   LOGOUT: 登出
   LOGOUT_SUFFIX: 并关闭浏览器。
+  

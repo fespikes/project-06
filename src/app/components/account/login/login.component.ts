@@ -12,33 +12,33 @@ function captchaValidator(): ValidatorFn {
 }
 
 @Component({
-  selector: 'fed-login-main',
-  templateUrl: './login-main.component.html',
-  styleUrls: ['./login-main.component.sass']
+  selector: 'fed-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.sass']
 })
-export class LoginMainComponent implements OnInit {
+export class LoginComponent implements OnInit {
 
-  languages = [
+  roles = {
+    federation: 'FEDERATION'
+  };
+
+  role: string;
+/*   languages = [
     { value: 'zh_CN', name: '中文' },
     { value: 'en_US', name: 'English' },
-  ];
+  ]; */
 
-  loginForm = this.fb.group({
-    tenant: ['', Validators.required],
-    name: ['', Validators.required],
-    password: ['', Validators.required],
-    // captcha: ['', [Validators.required, captchaValidator()]],
-    remember: [''],
-  })
+  loginForm: any;
 
   get loginPayload(): LoginInfo {
-    const loginValue = this.loginForm.value as LoginInfo; 
-    return {
-      tenant: loginValue.tenant,
-      name: loginValue.name,
-      password: loginValue.password,
-      username: loginValue.name + '#' + loginValue.tenant,
+    const loginValue = this.loginForm.value as LoginInfo;
+    const result = {...loginValue};
+    if (this.role === this.roles['federation']) {
+      result.username = loginValue.name + '#FEDERATION';
+    } else {
+      result.username = loginValue.name + '#' + loginValue.tenant;
     }
+    return result;
   }
 
   errorMsg: string;
@@ -51,14 +51,30 @@ export class LoginMainComponent implements OnInit {
     return false;
   }
 
+  getFormGroup() {
+    const group = {
+      tenant: ['', Validators.required],
+      name: ['', Validators.required],
+      password: ['', Validators.required]
+    };
+    if (this.role === this.roles['federation']) {
+      delete group.tenant;
+    }
+
+    this.loginForm = this.fb.group(group);
+  }
+
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
     private router: Router,
     private i18nLang: I18nLangService,
-  ) { }
+  ) {
+    this.role = this.roles.federation;
+  }
 
   ngOnInit() {
+    this.getFormGroup();
   }
 
   submit() {
@@ -72,10 +88,14 @@ export class LoginMainComponent implements OnInit {
     });
   }
 
-  switchLang(lang) {
-    this.i18nLang.switch(lang);
-    console.log (this.i18nLang.lang);
+  switchAccountType(role) {
+    this.role = role;
+    this.getFormGroup();
   }
+
+  // switchLang(lang) {
+  //   this.i18nLang.switch(lang);
+  // }
 
   getSelected(v: string) {
     return v === this.i18nLang.lang;

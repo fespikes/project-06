@@ -15,7 +15,8 @@ export class FederationGuard implements CanActivate {
     private router: Router,
   ) {}
 
-  canActivate(): Observable<boolean> {    
+  canActivate(): Observable<boolean> {
+    // return observableOf(true);
     return this.auth.isLoggedIn().pipe( 
       map ((token) => {
         if (token) {
@@ -24,7 +25,7 @@ export class FederationGuard implements CanActivate {
         return true;
       }),
       catchError((error) => {
-        this.router.navigate(['login']);
+        this.router.navigate(['account/login']);
         return observableOf(false);
       })
     );
