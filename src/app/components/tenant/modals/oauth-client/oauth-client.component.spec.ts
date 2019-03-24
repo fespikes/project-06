@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OauthModalComponent } from './oauth-modal.component';
+import { OauthClientComponent } from './oauth-client.component';
 
-describe('OauthModalComponent', () => {
-  let component: OauthModalComponent;
-  let fixture: ComponentFixture<OauthModalComponent>;
+describe('OauthClientComponent', () => {
+  let component: OauthClientComponent;
+  let fixture: ComponentFixture<OauthClientComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OauthModalComponent ]
+      declarations: [ OauthClientComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OauthModalComponent);
+    fixture = TestBed.createComponent(OauthClientComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

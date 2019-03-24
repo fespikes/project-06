@@ -13,17 +13,24 @@ import { ObjectToArray } from 'app/shared/utils';
 })
 export class AuthProviderComponent implements OnInit {
   actionType: string;
+  tenantName: string;
   get submitAble() {
-    return this.params.name !== '' && (this.params.tls.enabled !== undefined);
+    return this.params.providerId !== '' && (this.params.tls.enabled !== undefined);
   };
   // guardian.server
   params = {
-    name: '',
+    providerId: '',
     // address: '',
+    // TODO:
     tls: {
       enabled: false
     },
-    type: ''
+    type: '',
+    tenant: '',
+    attributes: {
+      'guardian.server.tls.enabled': true,
+      'guardian.server.address': 'hostname:port'
+    }
   };
   providerTypes = ObjectToArray(providerTypes, 'value');
 
@@ -33,12 +40,12 @@ export class AuthProviderComponent implements OnInit {
     private api: TenantService
   ) {
     this.actionType = data.type;
-    this.params.type = this.providerTypes[0];
-    this.params = data.provider || this.params;
+    this.params = data || this.params;
+    this.params.type = this.params.type || this.providerTypes[0];
+    this.tenantName = data.tenantName;
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   checkboxChange($event) {
     console.log($event);
@@ -48,13 +55,13 @@ export class AuthProviderComponent implements OnInit {
     let observe: any;
     switch (this.actionType) {
       case 'register':
-        observe = this.api.providerMaintain(this.params.name, 'post', this.params);
+        observe = this.api.providerMaintain(this.tenantName, 'post', this.params);
         break;
-      case 'details':
-        observe = this.api.providerMaintain('', 'post', this.params);
+      case 'edit':
+        observe = this.api.providerMaintain(this.tenantName, 'put', this.params);
         break;
       case 'remove':
-        observe = this.api.providerMaintain(this.params.name, 'delete');
+        observe = this.api.providerMaintain(this.tenantName, 'delete', this.params);
         break;
     }
 

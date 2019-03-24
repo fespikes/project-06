@@ -1,4 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 
 import { TuiModalService, TuiModalRef, TUI_MODAL_DATA } from 'tdc-ui';
 
@@ -13,14 +19,18 @@ import { ObjectToArray } from 'app/shared/utils';
 })
 export class TenantModalComponent implements OnInit {
   actionType: 'edit' | 'create' | 'remove';
-  tenantGroups = ObjectToArray(tenantGroups)
+  tenantGroups = ObjectToArray(tenantGroups, 'value');
   params: any = {
     'attributes': {},
     'name': '',
-    'type': ''
+    'type': '',
+    'description': '',
+    'createTime': 0
   };
   last: any = {};
   attrs: any[] = [];
+  myForm: FormGroup;
+
   get addAble() {
     return (this.last.key === '') || (this.last.value === '');
   }
@@ -29,19 +39,34 @@ export class TenantModalComponent implements OnInit {
   }
 
   constructor(
+    private fb: FormBuilder,
     private modal: TuiModalRef,
     @Inject(TUI_MODAL_DATA) data,
     private api: TenantService
   ) {
     this.actionType = data.type;
     if (data.tenant) {
-      this.params = data.tenant;
+      // this.params = data.tenant;
+      this.params = {
+        name: data.tenant.tenantName,
+      }
     } else {
       this.params.type = this.tenantGroups[0];
     }
   }
 
   ngOnInit() {
+    this.myForm = this.fb.group({
+      'name': ['', Validators.required],
+      'type': ['', Validators.required],
+      'description': ['']
+    });
+    this.myForm.statusChanges.subscribe(argu => {
+      console.log(this.myForm);
+    });
+    this.myForm.valueChanges.subscribe(argu => {
+      console.log(this.myForm);
+    });
   }
 
   typeChange() {
@@ -58,9 +83,15 @@ export class TenantModalComponent implements OnInit {
   }
 
   submit() {
-    if (this.last && (this.last.key !== '') && (this.last.value !== '')) {
-      this.attrs.push(this.last);
+    if (this.actionType !== tenantActionTypes.remove) {
+      if (this.last && (this.last.key !== '') && (this.last.value !== '')) {
+        this.attrs.push(this.last);
+      }
+      this.attrs.forEach(item => {
+        this.params.attributes[item.key] = item.value;
+      });
     }
+
     let observe: any;
     switch (this.actionType) {
       case tenantActionTypes.edit:
@@ -78,6 +109,11 @@ export class TenantModalComponent implements OnInit {
       this.modal.close(res);
       this.last = null;
     });
+  }
+
+  quit() {
+    this.modal.close();
+
   }
 
 }

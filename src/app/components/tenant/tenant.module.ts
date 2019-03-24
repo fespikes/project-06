@@ -17,7 +17,7 @@ import {
   AccessTokenModalComponent,
   ClientSecretModalComponent,
   GuardianModalComponent,
-  OauthModalComponent,
+  OauthClientComponent,
 } from './modals';
 import { ListComponent } from './list/list.component';
 
@@ -26,13 +26,13 @@ import { ListComponent } from './list/list.component';
     DetailsComponent,
     TenantModalComponent,
     GuardianModalComponent, 
-    OauthModalComponent,
     AccessTokenModalComponent,
     ClientSecretModalComponent,
     TruthModalComponent,
     VisitModalComponent,
     ListComponent,
-    AuthProviderComponent
+    AuthProviderComponent,
+    OauthClientComponent
   ],
   entryComponents: [
     TenantModalComponent,
@@ -42,7 +42,7 @@ import { ListComponent } from './list/list.component';
     AccessTokenModalComponent,
     ClientSecretModalComponent,
     GuardianModalComponent,
-    OauthModalComponent
+    OauthClientComponent
   ],
   imports: [
     CommonModule,

@@ -1,6 +1,6 @@
 {
-  "/oauth-server": {
-    "target": "http://172.16.111.19:8011",
+  "/federation-server": {
+    "target": "http://172.16.132.224:9000",
     "secure": false,
     "changeOrigin": true
   }

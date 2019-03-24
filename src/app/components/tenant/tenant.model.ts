@@ -8,7 +8,7 @@ export const adminRoles = [
 ];
 
 export const providerTypes = {
-  guardian: 'Guardian Server',
+  guardian: 'GUARDIAN',
   // cas: 'CAS' // templetely hide it
 }
 

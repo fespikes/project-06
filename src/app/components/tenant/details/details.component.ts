@@ -89,7 +89,7 @@ export class DetailsComponent implements OnInit {
   }
 
   showVisitManagementModal(type) {
-    this.modal.tenantModal({
+    this.modal.visitManagement({
       tenant: this.details,
       type
     }).subscribe(argu => {
@@ -102,7 +102,7 @@ export class DetailsComponent implements OnInit {
   }
 
   showAuthProviderModal(type, provider) {
-    this.modal.AuthProvider(provider, type)
+    this.modal.AuthProvider(provider, type, this.tenantName)
       .subscribe(argu => {
         if (type === 'details') {
           return;

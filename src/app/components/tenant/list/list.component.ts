@@ -36,7 +36,7 @@ export class ListComponent implements OnInit {
       debounceTime(500),
       distinctUntilChanged())
       .subscribe((argu) => {
-        this.filter.tenant = argu;
+        this.filter.searchValue = argu;
         this.getOwnTenants();
       });
   }
@@ -54,7 +54,7 @@ export class ListComponent implements OnInit {
     this.api.getTenants(this.filter)
       .subscribe(res => {
         this.loading = false;
-        this.tenants = this.sortTenants(res);
+        this.tenants = this.sortTenants(res.body);
       });
   }
 

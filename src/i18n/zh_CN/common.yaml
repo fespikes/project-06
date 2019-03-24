@@ -1,3 +1,5 @@
 COMMON:
   HEADER:
     invite: 邀请用户
+
+  required: 必填项

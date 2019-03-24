@@ -1,11 +1,11 @@
 <div >
   <form
-    *ngIf="actionType === 'register' || actionType ==='details'"
+    *ngIf="actionType === 'register' || actionType ==='edit'"
     tuiForm labelFlex="1" inputFlex="5"
   >
     <tui-form-item label="名称">
       <tui-input
-        [(ngModel)]="params.name"
+        [(ngModel)]="params.providerId"
         [ngModelOptions]="{standalone: true}"
         required
       ></tui-input>
@@ -25,16 +25,17 @@
         </tui-select-option>
       </tui-select>
     </tui-form-item>
-    <!-- <tui-form-item label="地址">
-      <tui-textarea name="textarea" ngModel
+    <tui-form-item label="地址">
+      <tui-textarea name="textarea"
+        [(ngModel)]="params.attributes['guardian.server.address']"
         placeholder="for example: 'address1:8324; address2:8653'"
         resizeVertical="true" required
       ></tui-textarea>
-    </tui-form-item> -->
+    </tui-form-item>
     <tui-form-item>
       <tui-checkbox
         name="agree"
-        [(ngModel)]="params.tls.enabled"
+        [(ngModel)]="params.attributes['guardian.server.tls.enabled']"
         (ngModelChange)="checkboxChange($event)"
         [ngModelOptions]="{standalone: true}"
       >开启 tls</tui-checkbox>
@@ -57,8 +58,7 @@
   <form
     *ngIf="actionType === 'remove'"
     tuiForm labelFlex="1" inputFlex="5" >
-    <p>确认删除租户 “{{tenant.name}}”？</p>
-    <p>删除住户后，此租户下所有的资源也将被删除。</p>
+    <p>确认删除认证源“{{params.providerId}}”？</p>
     <div class="btns">
       <button
         class="tui-btn-md tui-btn-default tui-btn"

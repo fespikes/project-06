@@ -6,10 +6,10 @@ import {
   TruthModalComponent,
   VisitModalComponent,
   AuthProviderComponent,
+  OauthClientComponent,
   AccessTokenModalComponent,
   ClientSecretModalComponent,
   GuardianModalComponent,
-  OauthModalComponent,
 } from './modals';
 import { tenantActionTypes as actionTypes } from './tenant.model';
 
@@ -65,14 +65,14 @@ export class ModalsService {
     });
   }
 
-  AuthProvider(provider, type?) {
+  AuthProvider(provider, type?, tenantName?) {
     let title = '';
     switch (type) {
       case 'register':
         title = '注册认证源'
         break;
-      case 'details':
-        title = '认证源' + '-' + provider.name;
+      case 'edit':
+        title = '认证源' + '-' + provider.providerId;
         break;
       case 'remove':
         title = '删除认证源'
@@ -82,15 +82,16 @@ export class ModalsService {
       title: title,
       data: {
         ...provider,
-        type
+        type,
+        tenantName: tenantName
       },
       size: 'md'
     });
   }
 
-  registerAuthProvider(argu?) {
-    let title = '注册认证源';
-    return this.modal.open(OauthModalComponent, {
+  authClient(argu?) {
+    let title = '注册 oauth client';
+    return this.modal.open(OauthClientComponent, {
       title: title,
       data: {
         ...argu

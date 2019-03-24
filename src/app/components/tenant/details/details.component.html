@@ -6,28 +6,39 @@
 </tui-breadcrumb>
 
 <section>
-  <div>
-    <h3>{{tenantName}}</h3>
-    <p>{{details.attributes?.description}}</p>
-    <ul>
-      <li>
-        类型：{{details.type}}
-      </li>
-    </ul>
-  </div>
-  <div class="btns">
-    <button tuiBtn="primary" (click)="showTruthManagementModal()">信任管理</button>
-    <button tuiBtn="primary" (click)="showVisitManagementModal()">访问管理</button>
-    <button tuiBtn="primary" [tuiDropdownTrigger]="editDropdown">...</button>
-    <!-- trigger="hover" -->
-    <tui-dropdown #editDropdown direction="bottomRight" [caret]="false">
-      <tui-dropdown-item (click)="showTenantModal(tenantActionTypes['edit'])">
-        编辑租户
-      </tui-dropdown-item>
-      <tui-dropdown-item (click)="showTenantModal(tenantActionTypes['remove'])">
-        删除租户
-      </tui-dropdown-item>
-    </tui-dropdown>
+  <div class="details">
+    <div class="top">
+      <div class="left">{{tenantName}}</div>
+      <div class="right">
+        <button class="item" tuiBtn="primary" (click)="showTruthManagementModal()">信任管理</button>
+        <button class="item" tuiBtn="primary" (click)="showVisitManagementModal()">访问管理</button>
+        <button class="item" tuiBtn="primary" [tuiDropdownTrigger]="editDropdown">...</button>
+        <!-- trigger="hover" -->
+        <tui-dropdown #editDropdown direction="bottomRight" [caret]="false">
+          <tui-dropdown-item (click)="showTenantModal(tenantActionTypes['edit'])">
+            编辑租户
+          </tui-dropdown-item>
+          <tui-dropdown-item (click)="showTenantModal(tenantActionTypes['remove'])">
+            删除租户
+          </tui-dropdown-item>
+        </tui-dropdown>
+      </div>
+    </div>
+    <div class="description">{{details.description}}</div>
+    <div class="items">
+      <label>类型
+        <span>{{details.type}}</span>
+      </label>
+      <label>创建时间
+        <span>{{details.createTime | date:'y/M/d HH:mm:ss'}}</span>
+        <!-- <span>2018.12.31 13:20:13</span> -->
+      </label>
+      <label>自定义信息
+        <span
+          class="ellipsis"
+        >...</span>
+      </label>
+    </div>
   </div>
 </section>
 
@@ -78,7 +89,7 @@
         <div>{{datum.type}}</div>
         <div>
           <span tuiTooltip="{{'查看详情' | translate}}">
-            <svg tuiIcon="trash" (click)="showAuthProviderModal('details', datum)"></svg>
+            <svg tuiIcon="trash" (click)="showAuthProviderModal('edit', datum)"></svg>
           </span>
           <span tuiTooltip="{{'删除' | translate}}">
             <svg tuiIcon="trash" (click)="showAuthProviderModal('remove', datum)"></svg>
@@ -89,6 +100,32 @@
   </div>
 
   <div *tuiTabPane="'oauth client'">
+    <div>
+      <tui-input
+        placeholder="{{'TENANT.placeholder' | translate}}"
+        prefix="user"
+        [(ngModel)]="providersFilter.tenant"
+        (input)="fetchProviders($event)"
+      ></tui-input>
+      <tui-select
+        placeholder="全部类型"
+        [(ngModel)]="providersFilter.ssss"
+        (ngModelChange)="typeChange($event)"
+        allowClear
+      >
+        <tui-select-option
+          *ngFor="let option of objectOptions"
+          [value]="option.value"
+          [disabled]="option.disabled"
+        >
+          {{option.label | tuiDefault }}
+        </tui-select-option>
+      </tui-select>
+      <button
+        tuiBtn="primary"
+        (click)="showAuthProviderModal('register')"
+      >注册 oauth client</button>
+    </div>
     <tui-table [tuiTableFlex]="[1,1,2]" tuiTableOutline>
       <tui-table-head>
         <div>Name</div>

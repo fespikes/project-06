@@ -17,7 +17,7 @@ export class FederationGuard implements CanActivate {
 
   canActivate(): Observable<boolean> {
     // return observableOf(true);
-    return this.auth.isLoggedIn().pipe( 
+    return this.auth.isLoggedIn().pipe(
       map ((token) => {
         if (token) {
           this.auth.setToken(token);
