@@ -6,12 +6,13 @@ account:
   resend: 重新发送
 
 LOGIN:
-  ACCOUNT_VERIFICATION_CENTER: 账户认证中心
+  FEDERATION: Federation
   USERNAME: 用户名
+  USERNAME&EMAIL: '用户名/邮箱'
   PASSWORD: 密码
   VERIFICATION_CODE: 验证码
   CHANGE_CODE: 换一个
-  LOGIN: 登陆
+  LOGIN: 登录
   REMEMBER_PASSWORD: 记住我
   FORGOT_PASSWORD: 忘记密码?
   TENANT: 租户

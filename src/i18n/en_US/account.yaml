@@ -6,8 +6,9 @@ account:
   resend: Resend
 
 LOGIN:
-  ACCOUNT_VERIFICATION_CENTER: Account Verfication Center
+  FEDERATION: Federation
   USERNAME: UserName
+  USERNAME&EMAIL: 'UserName/Email'
   PASSWORD: Password
   VERIFICATION_CODE: Verfication Code
   CHANGE_CODE: Change Code

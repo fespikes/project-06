@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { Observable, of } from 'rxjs';
+
 import {ApiService} from 'app/shared';
 
 @Injectable({
@@ -11,8 +13,12 @@ export class AccountService {
     private api: ApiService,
   ) {}
 
-  sendRegisterLink() {
+  captchaUrl() {
+    return this.api.makeUrl('login/captcha');
+  }
 
+  sendRegisterLink() {
+    return of({});
   }
 
 

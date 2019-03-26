@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
+
+import { AccountService } from '../account.service';
 import { AuthService, LoginInfo } from 'app/shared';
 import { I18nLangService } from 'app/i18n';
 
@@ -17,16 +19,16 @@ function captchaValidator(): ValidatorFn {
   styleUrls: ['./login.component.sass']
 })
 export class LoginComponent implements OnInit {
-
+  captchaUrl: string;
   roles = {
     federation: 'FEDERATION'
   };
 
   role: string;
-/*   languages = [
+  languages = [
     { value: 'zh_CN', name: '中文' },
     { value: 'en_US', name: 'English' },
-  ]; */
+  ];
 
   loginForm: any;
 
@@ -51,26 +53,15 @@ export class LoginComponent implements OnInit {
     return false;
   }
 
-  getFormGroup() {
-    const group = {
-      tenant: ['', Validators.required],
-      name: ['', Validators.required],
-      password: ['', Validators.required]
-    };
-    if (this.role === this.roles['federation']) {
-      delete group.tenant;
-    }
-
-    this.loginForm = this.fb.group(group);
-  }
-
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
     private router: Router,
     private i18nLang: I18nLangService,
+    private service: AccountService
   ) {
     this.role = this.roles.federation;
+    this.captchaUrl = this.service.captchaUrl();
   }
 
   ngOnInit() {
@@ -83,9 +74,7 @@ export class LoginComponent implements OnInit {
       this.auth.currUser.tenant = this.loginForm.value.tenant;      
       this.router.navigate(['main']);
     }, 
-    (error) => {
-
-    });
+    (error) => {});
   }
 
   switchAccountType(role) {
@@ -93,12 +82,26 @@ export class LoginComponent implements OnInit {
     this.getFormGroup();
   }
 
-  // switchLang(lang) {
-  //   this.i18nLang.switch(lang);
-  // }
+  switchLang(lang) {
+    this.i18nLang.switch(lang);
+  }
 
   getSelected(v: string) {
     return v === this.i18nLang.lang;
+  }
+
+  getFormGroup() {
+    const group: any = {
+      tenant: ['', Validators.required],
+      name: ['', Validators.required],
+      password: ['', Validators.required],
+      captcha: ['']
+    };
+    if (this.role === this.roles['federation']) {
+      delete group.tenant;
+      group.captcha = ['', Validators.required];
+    }
+    this.loginForm = this.fb.group(group);
   }
 
 }

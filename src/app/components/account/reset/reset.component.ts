@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import {ApiService} from 'app/shared';
+import { AccountService } from '../account.service';
 
 
 @Component({
@@ -10,11 +10,33 @@ import {ApiService} from 'app/shared';
 })
 export class ResetComponent implements OnInit {
   sent = false;
-  to: number;
+  to = 120;
 
-  constructor() { }
+  constructor(private service: AccountService) { }
 
   ngOnInit() {
+  }
+
+  sendLink() {
+    this.swithLink();
+    let itv = setInterval(() => {
+      if (this.to > 0) {
+        this.to -= 1;
+      } else {
+        this.to = 120;
+        clearInterval(itv);
+        this.swithLink();
+      }
+    }, 1000);
+
+    this.service.sendRegisterLink()
+    .subscribe(res => {
+      
+    });
+  }
+
+  swithLink() {
+    this.sent = !this.sent;
   }
 
 }
