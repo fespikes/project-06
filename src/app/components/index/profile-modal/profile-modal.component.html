@@ -1,0 +1,41 @@
+
+<form class="mid ">
+  <div class="view">
+    <label>用户类型</label>
+    <span class="txt">Federation用户</span>
+  </div>
+  <div class="view">
+    <label>用户名</label>
+    <span class="txt">{{user.username}}</span>
+  </div>
+  <div class="view">
+    <label>邮箱</label>
+    <span class="txt">{{user.email}}</span>
+  </div>
+  <div class="view">
+    <label>系统角色</label>
+    <span class="marks">
+      <mark
+        *ngFor="let item of user.roles; let od = odd;"
+        [class.c-0083B8]="od"
+        [class.c-1D96F3]="!od"
+      >{{('COMMON.ROLES.' + item) | translate}}</mark>
+    </span>
+  </div>
+  <div class="view">
+    <label>描述</label>
+    <span class="txt">{{user.description}}</span>
+  </div>
+
+  <div class="buttons">
+    <!-- <button
+      class="tui-btn-md tui-btn-default tui-btn"
+      type="reset"
+    >{{'COMMON.MODAL.RESET' | translate}}</button> -->
+    <button
+      class="tui-btn-md tui-btn-primary tui-btn"
+      type="submit"
+      (click)="closeSelf()"
+    >{{'COMMON.MODAL.CONFIRM' | translate}}</button>
+  </div>
+</form>

@@ -23,7 +23,7 @@ import { AccountComponent } from './account.component';
   declarations: [
     LoginComponent,
     ResetComponent,
-    AccountComponent
+    AccountComponent,
   ],
   providers: [
     {

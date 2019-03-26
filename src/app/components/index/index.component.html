@@ -14,13 +14,36 @@
 </section>
 <section class="content">
   <header>
-    <span>{{'rockwang' }}
-      <svg tuiIcon="caret-down" size="md"></svg>
-    </span>
-    <span>
+    <span class="invite">
       <svg tuiIcon="property-users" size="md"></svg>
       {{"COMMON.HEADER.invite" | translate}}
     </span>
+
+    <span class="user-dropdown" [tuiDropdownTrigger]="userDropdown">
+      {{userName}}
+      <svg tuiIcon="caret-down" size="md"></svg>
+    </span>
+    <tui-dropdown #userDropdown direction="bottomCenter" [caret]="true">
+      <tui-dropdown-item [class.active]="true" class="items">
+        <svg class="icons" tuiIcon="user" size="md"></svg>
+        <a (click)="showProfile()">{{'账号信息' | translate}}</a>
+      </tui-dropdown-item>
+      <tui-dropdown-item class="items">
+        <svg class="icons" tuiIcon="lock" size="md"></svg>
+        <a routerLink="/account/change-pwd">{{'修改密码' | translate}}</a>
+      </tui-dropdown-item>
+      <tui-dropdown-item class="items">
+        <span>
+          <input type="checkbox" name="lang" />中文
+        </span>
+        <span>
+          <input type="checkbox" name="lang" />En
+        </span>
+      </tui-dropdown-item>
+    </tui-dropdown>
+
+    <svg tuiIcon="property-users" size="md"></svg>
   </header>
+
   <router-outlet></router-outlet>
 </section>

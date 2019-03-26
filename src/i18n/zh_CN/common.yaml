@@ -2,4 +2,14 @@ COMMON:
   HEADER:
     invite: 邀请用户
 
-  required: 必填项
+  ROLES:
+    ROLE_FED_ADMIN: 系统管理员 #能够管理Federation所有资源，但不能管理租户内部资源和用户的Access Token
+    ROLE_FED_VIEWER: 系统访客 #能够查看Federation所有资源，但不能查看租户内部资源和用户的Access Token
+    ROLE_FED_USER_ADMIN: 系统用户管理员 #能够管理Federation用户，但不能管理用户的Access Token
+    ROLE_FED_USER_VIEWER: 系统用户访客 #能够查看Federation用户，但不能查看用户的Access Token
+    ROLE_FED_TENANT_ADMIN: 系统租户管理员 #能够删除和查看任意Federation租户，但不能管理租户内部资源
+    ROLE_FED_TENANT_VIEWER: 系统租户访客 #能够查看所有Federation租户，但不能查看租户内部资源
+
+  MODAL:
+    CONFIRM: 确定
+    RESET: 取消

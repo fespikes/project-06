@@ -18,6 +18,7 @@ import { IconSymbolComponent } from 'assets/icons/icon-symbol.component';
 import { MainComponent } from './main/main.component';
 import { IndexComponent } from './components/index/index.component';
 import { federation_server } from 'app/shared/app.tokens';
+import { ProfileModalComponent } from './components/index/profile-modal/profile-modal.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 
 
@@ -27,6 +28,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     IconSymbolComponent,
     MainComponent,
     IndexComponent,
+    ProfileModalComponent,
     NotFoundComponent,
   ],
   imports: [
@@ -45,12 +47,14 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     TranslateService,
     // FederationGuard,
     AuthService,
-    {
-      provide: federation_server,
-      useValue: 'federation-server'
-    }
+    // {
+    //   provide: federation_server,
+    //   useValue: 'federation-server'
+    // }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [],
+  entryComponents: [
+    ProfileModalComponent
+  ],
 })
 export class AppModule { }

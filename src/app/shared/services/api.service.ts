@@ -25,9 +25,9 @@ export class ApiService {
     this.formatErrors = this.formatErrors.bind(this);
   }
 
-  get(path: string, params: Object = {}): Observable<any> {
+  get(path: string, params: Object = {}, fs?): Observable<any> {
     return this.http.get(
-      this.makeUrl(path),
+      this.makeUrl(path, fs),
       this.setHttpParams(params)
     ).pipe(
       catchError(this.formatErrors),
@@ -165,11 +165,12 @@ export class ApiService {
     return obj;
   }
 
-  makeUrl(url) {
+  makeUrl(url, fs?) {
     if (/\/ops\/v1/g.test(url)) {
       return url;
     }
-    return this.join(this.federation_server || environment.apiUrl, url);
+    // return this.join(this.federation_server || environment.apiUrl, url);
+    return this.join(fs || environment.apiUrl, url);
   }
 
   join(...parts) {

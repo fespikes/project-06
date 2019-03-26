@@ -28,7 +28,7 @@ export class AuthService {
   ) { }
 
   isLoggedIn() {
-    return this.api.get('sessions/current');
+    return this.api.get('sessions/current', undefined,'federation-server');
   }
 
   setToken (response: any) {

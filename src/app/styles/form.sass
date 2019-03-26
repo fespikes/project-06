@@ -144,13 +144,19 @@ form
       text-align: right
     .txt
       line-height: 32px
-      height: 32px
-
+    .marks
+      padding: 10px 0
+      line-height: auto
       mark
+        float: left
+        display: inline-block
+        line-height: 12px
+        height: 14px
         border: 0
         padding: 1px 5px
         border-radius: 3px
         margin-right: 8px
+        margin-bottom: 4px
         font-size: 12px
         color: #fff
 
@@ -171,6 +177,7 @@ form.mid
 
   label
     flex-basis: 130px
+    flex-shrink: 0
   .field-box
     .tip-on-top
       flex-basis: 320px
@@ -191,6 +198,8 @@ form.mid
       flex-basis: 100px
     .field
       flex-basis: 385px
+      &.textarea
+        height: 80px
     .icon
     .half
       flex-basis: 160px
