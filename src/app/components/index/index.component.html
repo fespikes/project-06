@@ -30,14 +30,14 @@
       </tui-dropdown-item>
       <tui-dropdown-item class="items">
         <svg class="icons" tuiIcon="lock" size="md"></svg>
-        <a routerLink="/account/change-pwd">{{'修改密码' | translate}}</a>
+        <a (click)="changePWD()">{{'修改密码' | translate}}</a>
       </tui-dropdown-item>
       <tui-dropdown-item class="items">
-        <span>
-          <input type="checkbox" name="lang" />中文
+        <span (click)="switchLang(languages[0].value)">
+          <input type="radio" name="lang" />中文
         </span>
-        <span>
-          <input type="checkbox" name="lang" />En
+        <span (click)="switchLang(languages[1].value)" >
+          <input type="radio" name="lang" />En
         </span>
       </tui-dropdown-item>
     </tui-dropdown>

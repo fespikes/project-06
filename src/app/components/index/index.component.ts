@@ -15,7 +15,11 @@ export class IndexComponent implements OnInit {
     {path: '/index/users', label: '用户管理'}
   ];
   userName: string;
-  dropdownDirection = 'bottomCenter'
+  dropdownDirection = 'bottomCenter';
+  languages = [
+    { value: 'zh_CN', name: '中文' },
+    { value: 'en_US', name: 'English' },
+  ];
 
   constructor(private modal: ModalsService) { }
 
@@ -25,7 +29,7 @@ export class IndexComponent implements OnInit {
     }
     this.userName = session.getUserName();
     setTimeout(() => {
-      this.showProfile();
+      this.changePWD();
     }, 16);
   }
 
@@ -34,7 +38,11 @@ export class IndexComponent implements OnInit {
   }
 
   showProfile() {
-    this.modal.profileModal(this.userName);
+    this.modal.profileModal();
+  }
+
+  changePWD() {
+    this.modal.pwdModal();
   }
 
 }

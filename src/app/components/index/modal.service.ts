@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { TuiModalService, TuiModalRef, TUI_MODAL_DATA } from 'tdc-ui';
 
 import { ProfileModalComponent } from './profile-modal/profile-modal.component';
+import { PwdModalComponent } from './pwd-modal/pwd-modal.component';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +12,21 @@ export class ModalsService {
     private modal: TuiModalService,
   ) { }
 
-  profileModal(userName) {
+  profileModal() {
     let title = '账号信息';
     return this.modal.open(ProfileModalComponent, {
       title: title,
       data: {
-        'userName': userName
+      },
+      size: 'md'
+    });
+  }
+
+  pwdModal() {
+    let title = '修改密码';
+    return this.modal.open(PwdModalComponent, {
+      title: title,
+      data: {
       },
       size: 'md'
     });

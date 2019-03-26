@@ -20,6 +20,7 @@ import { IndexComponent } from './components/index/index.component';
 import { federation_server } from 'app/shared/app.tokens';
 import { ProfileModalComponent } from './components/index/profile-modal/profile-modal.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { PwdModalComponent } from './components/index/pwd-modal/pwd-modal.component';
 
 
 @NgModule({
@@ -30,6 +31,11 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     IndexComponent,
     ProfileModalComponent,
     NotFoundComponent,
+    PwdModalComponent,
+  ],
+  entryComponents: [
+    ProfileModalComponent,
+    PwdModalComponent
   ],
   imports: [
     BrowserModule,
@@ -52,9 +58,6 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     //   useValue: 'federation-server'
     // }
   ],
-  bootstrap: [AppComponent],
-  entryComponents: [
-    ProfileModalComponent
-  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

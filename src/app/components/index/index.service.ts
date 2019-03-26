@@ -15,4 +15,8 @@ export class IndexService {
     return this.api.get(`users/${userName}`);
   }
 
+  changePWD(username, params) {
+    return this.api.put(`users/${username}/password`, params)
+  }
+
 }
