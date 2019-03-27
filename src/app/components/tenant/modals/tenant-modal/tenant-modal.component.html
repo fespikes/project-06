@@ -75,7 +75,11 @@
     <ng-container *ngIf="last.key !== undefined">
       <li class="last-attr">
         <span>
-          <input [(ngModel)]="last.key" [ngModelOptions]="{standalone: true}" />
+          <input
+            [(ngModel)]="last.key"
+            [ngModelOptions]="{standalone: true}"
+            #focus
+          />
         </span>
         <span>
           <input [(ngModel)]="last.value" [ngModelOptions]="{standalone: true}" />
@@ -95,7 +99,7 @@
     <button
       class="tui-btn-md tui-btn-default tui-btn"
       type="reset"
-    >{{'RESET'}}</button>
+    >{{'取消'}}</button>
     <button
       class="tui-btn-md tui-btn-primary tui-btn"
       (click)="submit()"
@@ -117,7 +121,7 @@
       class="tui-btn-md tui-btn-default tui-btn"
       type="reset"
       (click)="quit()"
-    >{{'RESET'}}</button>
+    >{{'取消'}}</button>
     <button
       class="tui-btn-md tui-btn-primary tui-btn"
       (click)="submit()"

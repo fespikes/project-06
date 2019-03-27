@@ -34,13 +34,14 @@ export class AuthService {
   setToken (response: any) {
     this.currUser.name = response.name;
     this.currUser.tenant = response.details.tenant;
-    session.setUserName(response.name);
+    session.userName = response.name;
+    session.isTenant = response.details.tenant !== 'FEDERATION';
+    session.tenant = response.details.tenant;
+
     if (response.authorities) {
-      session.setUserIsAdmin(
-        response.authorities.some(item => {
+      session.isAdmin = response.authorities.some(item => {
           return adminRoles.indexOf(item.authority) > -1;
-        }) ? 'true' : 'false'
-      );
+        }) ? 'true' : 'false';
     }
   }
 

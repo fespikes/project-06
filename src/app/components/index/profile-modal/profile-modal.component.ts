@@ -20,6 +20,8 @@ export class ProfileModalComponent implements OnInit {
   user: any = {
     roles: []
   };
+  isTenant: boolean;
+  tenant: string;
 
   constructor(
     private service: IndexService,
@@ -27,11 +29,16 @@ export class ProfileModalComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const userName = session.getUserName();
-    this.service.getProfile(userName)
-      .subscribe(res => {
-        this.user = res;
-      });
+    const userName = session.userName;
+    this.isTenant = session.isTenant;
+    if( this.isTenant) {
+      this.tenant = session.tenant;
+    } else {
+      this.service.getProfile(userName)
+        .subscribe(res => {
+          this.user = res;
+        });
+    }
   }
 
   closeSelf() {

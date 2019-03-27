@@ -17,7 +17,7 @@ const tenantRoutes: Routes = [
         path: 'list',
         component: ListComponent
       },{
-        path: ':tenantName',
+        path: ':name',
         component: DetailsComponent
       },{
         path: '',

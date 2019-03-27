@@ -1,6 +1,6 @@
 
 <div class="banner-title">
-  <div class="left">{{filter.username}}</div>
+  <div class="left">{{userName}}</div>
   <div class="right">
     <tui-input
       class="item"
@@ -24,13 +24,14 @@
   <li *ngFor="let tenant of tenants">
     <span
       class="left"
-      [routerLink]="['../', tenant.tenantName]"
+      [routerLink]="['../', tenant.name]"
     >
       <img src="/assets/icons/svg/letters/A.svg" />
+      <!--TODO: get the first letter -->
     </span>
     <span class="right">
       <div class="name">
-        {{tenant.tenantName}}
+        {{tenant.name}}
         <span
           class="opt up"
           *ngIf="tenant.tenantOwner"
@@ -49,7 +50,7 @@
           </tui-dropdown-item>
         </tui-dropdown>
       </div>
-      <p [routerLink]="['../', tenant.tenantName]">{{tenant.description}}</p>
+      <p [routerLink]="['../', tenant.name]">{{tenant.description}}</p>
     </span>
     <!-- <p tuiTooltip="{{tenant.attributes?.description}}"
     >{{tenant.attributes?.description || ' - '}}</p> -->

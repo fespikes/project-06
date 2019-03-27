@@ -16,9 +16,10 @@ export class ListComponent implements OnInit {
   searchSubject = new Subject();
   loading = false;
   tenants = [];
+  userName: string;
   filter: any = {
     // tenant: '',
-    username: ''
+    // username: ''
   };
   hoverIndex;
   adminRoles = adminRoles;
@@ -47,21 +48,46 @@ export class ListComponent implements OnInit {
 
   getOwnTenants() {
     this.loading = true;
-    if (this.filter.tenant === '') {
-      delete this.filter.tenant;
+    this.userName = session.userName;
+
+    if (session.isTenant === 'true') {
+      this.filter.tenant = session.tenant;
+      this.api.getTenantsByTenantName(session.tenant)
+        .subscribe( res => {
+          this.tenants = [];
+          // this.tenants = res;
+        });
+    } else {
+      this.api.getTenants(this.filter, false)
+        .subscribe(res => {
+          this.loading = false;
+          let accesses = this.sortTenants(res.body);
+          let length = accesses.length;
+          let names = accesses.reduce((acc, cur, idx) => {
+            return acc + cur.tenantName + (idx+1 !== length ? '&tenantName=' : '');
+          }, '');
+          this.api.getTenantDetails({tenantName: names})
+            .subscribe(rs => {
+              this.tenants = this.mergeTenants(rs.body, accesses);
+              // TODO: due to api change, let's holdon here
+            });
+        });
     }
-    this.filter.username = session.getUserName();
-    this.api.getTenants(this.filter)
-      .subscribe(res => {
-        this.loading = false;
-        this.tenants = this.sortTenants(res.body);
-      });
   }
 
   sortTenants(tenants: any[]) {
     const owners = tenants.filter( item => item.tenantOwner );
     const noOwners = tenants.filter( item => !item.tenantOwner );
     return owners.concat(noOwners);
+  }
+
+  mergeTenants(tenants, accesses) {
+    tenants.forEach(element => {
+      element.tenantOwner = accesses.filter( ele => {
+        return ele.tenantName == element.name;
+      })[0].tenantOwner
+    });
+    return tenants;
   }
 
   showModal(tenant, type) {

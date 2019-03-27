@@ -1,21 +1,36 @@
-<div >
-  <form
-    *ngIf="actionType === 'register' || actionType ==='edit'"
-    tuiForm labelFlex="1" inputFlex="5"
+<form
+  [formGroup]="myForm"
+  (ngSubmit)="submit(myForm.value)"
+  class="mid"
+>
+  <div
+    [class.error]="!myForm.get('providerId').valid && myForm.get('providerId').touched"
   >
-    <tui-form-item label="名称">
-      <tui-input
-        [(ngModel)]="params.providerId"
-        [ngModelOptions]="{standalone: true}"
-        required
-      ></tui-input>
-    </tui-form-item>
-    <tui-form-item label="类型">
+    <div class="field-box">
+      <label for="providerId"><span>*</span>{{'名称'}}</label>
+      <input
+        class="field"
+        type="text"
+        id="providerId"
+        autocomplete="off"
+        [formControl]="myForm.controls['providerId']"
+        />
+    </div>
+    <div
+      *ngIf="myForm.controls['providerId'].hasError('required') && myForm.controls['providerId'].touched"
+      class="message"
+    >{{'required tip'}}</div>
+  </div>
+
+  <div [class.error]="!myForm.get('type').valid && myForm.get('type').touched">
+    <div class="field-box">
+      <label for="typeId"><span>*</span>{{'类型'}}</label>
       <tui-select
-        [(ngModel)]="params.type"
-        (ngModelChange)="typeChange()"
-        [ngModelOptions]="{standalone: true}"
-        required
+        class="field"
+        type="text"
+        id="typeId"
+        autocomplete="off"
+        [formControl]="myForm.controls['type']"
       >
         <tui-select-option
           *ngFor="let option of providerTypes"
@@ -24,52 +39,61 @@
         >{{option}}
         </tui-select-option>
       </tui-select>
-    </tui-form-item>
-    <tui-form-item label="地址">
-      <tui-textarea name="textarea"
-        [(ngModel)]="params.attributes['guardian.server.address']"
-        placeholder="for example: 'address1:8324; address2:8653'"
-        resizeVertical="true" required
-      ></tui-textarea>
-    </tui-form-item>
-    <tui-form-item>
-      <tui-checkbox
-        name="agree"
-        [(ngModel)]="params.attributes['guardian.server.tls.enabled']"
-        (ngModelChange)="checkboxChange($event)"
-        [ngModelOptions]="{standalone: true}"
-      >开启 tls</tui-checkbox>
-        <!-- tuiCompel -->
-    </tui-form-item>
-    <div class="btns">
-      <button
-        class="tui-btn-md tui-btn-default tui-btn"
-        type="reset"
-      >{{'取消' | translate}}</button>
-      <button
-        class="tui-btn-md tui-btn-primary tui-btn"
-        type="submit"
-        [disabled]="submitAble ? false:  'disabled'"
-        (click)="submit()"
-      >{{'确定' | translate}}</button>
     </div>
-  </form>
+    <div
+      *ngIf="myForm.controls['type'].hasError('required') && myForm.controls['type'].touched"
+      class="message"
+    >{{'COMMON.required' | translate}}</div>
+  </div>
 
-  <form
-    *ngIf="actionType === 'remove'"
-    tuiForm labelFlex="1" inputFlex="5" >
-    <p>确认删除认证源“{{params.providerId}}”？</p>
-    <div class="btns">
-      <button
-        class="tui-btn-md tui-btn-default tui-btn"
-        type="reset"
-      >{{'取消' | translate}}</button>
-      <button
-        class="tui-btn-md tui-btn-primary tui-btn"
-        type="submit"
-        [disabled]="false ? 'disabled' : null"
-        (click)="submit()"
-      >{{'确定' | translate}}</button>
+  <div
+    [class.error]="!myForm.get('address').valid && myForm.get('address').touched"
+  >
+    <div class="field-box">
+      <label for="addressId"><span>*</span>{{'地址'}}</label>
+      <span class="tip-on-top">
+        <p class="tips">格式示例： address1:8932；address2:2344</p>
+        <textarea
+          class="field textarea" 
+          id="addressId"
+          [formControl]="myForm.controls['address']"
+        >
+          {{''}}
+        </textarea>
+      </span>
     </div>
-  </form>
-</div>
+
+    <div
+      *ngIf="myForm.controls['address'].hasError('required') && myForm.controls['address'].touched"
+      class="message"
+    >{{'required tip'}}</div>
+  </div>
+
+  <div class="checkbox-wrapper">
+    <label class="only">
+      <!-- <input
+        type="checkbox"
+        [(ngModel)]="params.attributes['guardian.server.tls.enabled']"
+        [ngModelOptions]="{standalone: true}"
+        />开启 TLS -->
+      <tui-checkbox
+        [(ngModel)]="params.attributes['guardian.server.tls.enabled']"
+        [ngModelOptions]="{standalone: true}"
+        name="tls"
+      >开启 TLS</tui-checkbox>
+    </label>
+  </div>
+
+  <div class="buttons">
+    <button
+      class="tui-btn-md tui-btn-default tui-btn"
+      type="reset"
+    >{{'取消'}}</button>
+    <button
+      class="tui-btn-md tui-btn-primary tui-btn"
+      (click)="submit()"
+      type="submit"
+      [disabled]="submitAble ? false:  'disabled'"
+    >{{'确定' | translate}}</button>
+  </div>
+</form>

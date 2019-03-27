@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ElementRef, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -10,7 +10,7 @@ import { TuiModalService, TuiModalRef, TUI_MODAL_DATA } from 'tdc-ui';
 
 import { tenantGroups, tenantActionTypes } from '../../tenant.model';
 import { TenantService } from '../../tenant.service';
-import { ObjectToArray } from 'app/shared/utils';
+import { ObjectToArray, getAttrsFromObj } from 'app/shared/utils';
 
 @Component({
   selector: 'fed-tenant-modal',
@@ -18,6 +18,7 @@ import { ObjectToArray } from 'app/shared/utils';
   styleUrls: ['./tenant-modal.component.sass']
 })
 export class TenantModalComponent implements OnInit {
+  @ViewChild('focus') focus: ElementRef;
   actionType: 'edit' | 'create' | 'remove';
   tenantGroups = ObjectToArray(tenantGroups, 'value');
   params: any = {
@@ -46,10 +47,8 @@ export class TenantModalComponent implements OnInit {
   ) {
     this.actionType = data.type;
     if (data.tenant) {
-      // this.params = data.tenant;
-      this.params = {
-        name: data.tenant.tenantName,
-      }
+      this.params = data.tenant;
+      this.attrs = getAttrsFromObj(data.tenant.attributes);
     } else {
       this.params.type = this.tenantGroups[0];
     }
@@ -80,12 +79,14 @@ export class TenantModalComponent implements OnInit {
       key: '',
       value: ''
     };
+    this.focus.nativeElement.focus();
   }
 
   submit() {
     if (this.actionType !== tenantActionTypes.remove) {
       if (this.last && (this.last.key !== '') && (this.last.value !== '')) {
         this.attrs.push(this.last);
+        this.last = {};
       }
       this.attrs.forEach(item => {
         this.params.attributes[item.key] = item.value;

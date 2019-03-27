@@ -13,9 +13,19 @@ export class TenantService {
     private api: ApiService,
   ) {}
 
-  getTenants(filter = {}): Observable<any>{
-    return this.api.get(`tenant-access`, filter);
-    // return this.api.get(`tenants`, filter);
+  getTenants(filter: any = {}, isTenant?): Observable<any>{
+    if (isTenant) {
+      return this.api.get(`tenants/${filter.tenant}`);
+    } else {
+      return this.api.get(`tenant-access`, filter);
+    }
+  }
+
+  getTenantDetails(tenantNameObj) {
+    return this.api.get(`tenants`, tenantNameObj);
+  }
+  getTenantsByTenantName(name) {
+    return this.api.get(`tenants/${name}`);
   }
 
   tenantMaintain(name, method: string/*'get'|'post'|'put'|'delete' */, body?): Observable<any>{
@@ -25,6 +35,10 @@ export class TenantService {
 
   fetchProviders(tenant): Observable<any>{
     return this.api.get(`tenants/${tenant}/providers`)
+  }
+
+  fetchProviderTypes(): Observable<any>{
+    return this.api.get(`provider-types`)
   }
 
   providerMaintain(name, method: string, body?): Observable<any>{

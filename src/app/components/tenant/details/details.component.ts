@@ -7,6 +7,7 @@ import { switchMap } from 'rxjs/operators';
 import { TenantService } from '../tenant.service';
 import { tenantTypes, tenantActionTypes } from '../tenant.model';
 import { ModalsService } from '../modals.service';
+import { getAttrsFromObj } from '../../../shared/utils';
 
 @Component({
   selector: 'fed-details',
@@ -17,6 +18,7 @@ export class DetailsComponent implements OnInit {
   loading = false;
   tenantActionTypes = tenantActionTypes;
   details: any = {};
+  attrs: any[];
   tenantName = '';
   selectedIndex = 0;
   tenantTypes = Object.keys(tenantTypes);
@@ -33,12 +35,13 @@ export class DetailsComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-        this.tenantName = params.get('tenantName');
+        this.tenantName = params.get('name');
         this.fetchData();
     });
   }
 
   fetchData() {
+    this.loading = true;
     const promises = [
       this.service.tenantMaintain(this.tenantName, 'get'),
       this.service.fetchProviders(this.tenantName),   // TODO:
@@ -47,8 +50,10 @@ export class DetailsComponent implements OnInit {
     combineLatest(promises)
       .subscribe(([details, providers, clients]) => {
         this.details = details;
-        this.providers = providers;
-        this.clients = clients;
+        this.attrs = getAttrsFromObj(details.attributes);
+        this.providers = providers.body;
+        this.clients = clients.body;
+        this.loading = false;
       });
   }
 

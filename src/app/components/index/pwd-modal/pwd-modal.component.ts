@@ -30,7 +30,7 @@ export class PwdModalComponent implements OnInit {
     private service: IndexService,
     private message: TuiMessageService,
   ) {
-    this.userName = session.getUserName();
+    this.userName = session.userName
     this.myForm = fb.group({
     'oldPassword': ['', Validators.required],
     'newPassword': [

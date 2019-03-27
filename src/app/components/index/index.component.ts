@@ -24,13 +24,13 @@ export class IndexComponent implements OnInit {
   constructor(private modal: ModalsService) { }
 
   ngOnInit() {
-    if(!session.getUserIsAdmin()) {
+    if(!session.isAdmin) {
       this.menuItems.pop();
     }
-    this.userName = session.getUserName();
-    setTimeout(() => {
+    this.userName = session.userName;
+    /* setTimeout(() => {
       this.changePWD();
-    }, 16);
+    }, 16); */
   }
 
   selectChange($event) {

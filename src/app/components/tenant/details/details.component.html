@@ -6,13 +6,13 @@
 </tui-breadcrumb>
 
 <section>
-  <div class="details">
+  <div class="details" [tuiLoading]="loading">
     <div class="top">
       <div class="left">{{tenantName}}</div>
       <div class="right">
-        <button class="item" tuiBtn="primary" (click)="showTruthManagementModal()">信任管理</button>
-        <button class="item" tuiBtn="primary" (click)="showVisitManagementModal()">访问管理</button>
-        <button class="item" tuiBtn="primary" [tuiDropdownTrigger]="editDropdown">...</button>
+        <button class="item" tuiBtn="default" (click)="showTruthManagementModal()" tuiBtnOutline>信任管理</button>
+        <button class="item" tuiBtn="default" (click)="showVisitManagementModal()" tuiBtnOutline>访问管理</button>
+        <button class="item" tuiBtn="default" [tuiDropdownTrigger]="editDropdown" tuiBtnOutline>...</button>
         <!-- trigger="hover" -->
         <tui-dropdown #editDropdown direction="bottomRight" [caret]="false">
           <tui-dropdown-item (click)="showTenantModal(tenantActionTypes['edit'])">
@@ -33,32 +33,34 @@
         <span>{{details.createTime | date:'y/M/d HH:mm:ss'}}</span>
         <!-- <span>2018.12.31 13:20:13</span> -->
       </label>
-      <label>自定义信息
+      <label >自定义信息
         <span
+          [tuiPopover]="tooltip"
           class="ellipsis"
         >...</span>
       </label>
+      <tui-popover #tooltip placement="bottom">
+        <div class="popover">
+          <p *ngFor="let item of attrs">{{'"' + item.key + '" = "' + item.value + '""'}}</p>
+        </div>
+      </tui-popover>
     </div>
   </div>
 </section>
 
 <tui-tab [(selectedIndex)]="selectedIndex" (selectedIndexChange)="tabChange($event)">
   <div *tuiTabPane="'认证源'">
-    <div>
-      <span>
-        <svg tuiIcon="caret-down" size="md"></svg>
-        健康{{23}}
-        <svg tuiIcon="caret-down" size="md"></svg>
-        故障{{23}}
-      </span>
-      <span>
+    <div class="details tab-padding">
+      <span class="right">
         <tui-input
+          class="item"
           placeholder="{{'TENANT.placeholder' | translate}}"
           prefix="user"
           [(ngModel)]="providersFilter.tenant"
           (input)="fetchProviders($event)"
         ></tui-input>
         <tui-select
+          class="item"
           placeholder="全部类型"
           [(ngModel)]="providersFilter.ssss"
           (ngModelChange)="typeChange($event)"
@@ -73,6 +75,7 @@
           </tui-select-option>
         </tui-select>
         <button
+          class="item"
           tuiBtn="primary"
           (click)="showAuthProviderModal('register')"
         >注册认证源</button>
@@ -100,31 +103,36 @@
   </div>
 
   <div *tuiTabPane="'oauth client'">
-    <div>
-      <tui-input
-        placeholder="{{'TENANT.placeholder' | translate}}"
-        prefix="user"
-        [(ngModel)]="providersFilter.tenant"
-        (input)="fetchProviders($event)"
-      ></tui-input>
-      <tui-select
-        placeholder="全部类型"
-        [(ngModel)]="providersFilter.ssss"
-        (ngModelChange)="typeChange($event)"
-        allowClear
-      >
-        <tui-select-option
-          *ngFor="let option of objectOptions"
-          [value]="option.value"
-          [disabled]="option.disabled"
+    <div class="details tab-padding">
+      <span class="right">
+        <tui-input
+          class="item"
+          placeholder="{{'TENANT.placeholder' | translate}}"
+          prefix="user"
+          [(ngModel)]="providersFilter.tenant"
+          (input)="fetchProviders($event)"
+        ></tui-input>
+        <tui-select
+          class="item"
+          placeholder="全部类型"
+          [(ngModel)]="providersFilter.ssss"
+          (ngModelChange)="typeChange($event)"
+          allowClear
         >
-          {{option.label | tuiDefault }}
-        </tui-select-option>
-      </tui-select>
-      <button
-        tuiBtn="primary"
-        (click)="showAuthProviderModal('register')"
-      >注册 oauth client</button>
+          <tui-select-option
+            *ngFor="let option of objectOptions"
+            [value]="option.value"
+            [disabled]="option.disabled"
+          >
+            {{option.label | tuiDefault }}
+          </tui-select-option>
+        </tui-select>
+        <button
+          class="item"
+          tuiBtn="primary"
+          (click)="showAuthProviderModal('register')"
+        >注册 oauth client</button>
+      </span>
     </div>
     <tui-table [tuiTableFlex]="[1,1,2]" tuiTableOutline>
       <tui-table-head>
