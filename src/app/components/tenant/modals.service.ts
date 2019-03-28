@@ -81,7 +81,7 @@ export class ModalsService {
     return this.modal.open(AuthProviderComponent, {
       title: title,
       data: {
-        ...provider,
+        provider,
         type,
         tenantName: tenantName
       },

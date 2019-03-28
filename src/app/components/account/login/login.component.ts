@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit {
     this.auth.login(this.loginPayload).subscribe(() => {
       this.auth.currUser.name = this.loginForm.value.name;
       this.auth.currUser.tenant = this.loginForm.value.tenant;      
-      this.router.navigate(['main']);
+      this.router.navigate(['/index/tenant/list']);
     }, 
     (error) => {});
   }

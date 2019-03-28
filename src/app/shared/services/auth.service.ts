@@ -22,6 +22,7 @@ export class LoginInfo {
 export class AuthService {
 
   currUser: User = new User();
+  redirectUrl: string;
 
   constructor(
     private api: ApiService,

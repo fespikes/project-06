@@ -1,7 +1,8 @@
+<!-- (ngSubmit)="submit(myForm.value)" -->
 <form
   [formGroup]="myForm"
-  (ngSubmit)="submit(myForm.value)"
   class="mid"
+  *ngIf="actionType==='register' || actionType==='edit'"
 >
   <div
     [class.error]="!myForm.get('providerId').valid && myForm.get('providerId').touched"
@@ -88,6 +89,7 @@
     <button
       class="tui-btn-md tui-btn-default tui-btn"
       type="reset"
+      (click)="closeSelf()"
     >{{'取消'}}</button>
     <button
       class="tui-btn-md tui-btn-primary tui-btn"
@@ -97,3 +99,24 @@
     >{{'确定' | translate}}</button>
   </div>
 </form>
+
+<div
+  class="wide"
+  *ngIf="actionType === 'remove'"
+>
+  <p class="info">确认删除认证源 “{{params.providerId}}”？</p>
+
+  <div class="buttons">
+    <button
+      class="tui-btn-md tui-btn-default tui-btn"
+      type="reset"
+      (click)="quit()"
+    >{{'取消'}}</button>
+    <button
+      class="tui-btn-md tui-btn-primary tui-btn"
+      (click)="submit()"
+      type="submit"
+      [disabled]="submitAble ? false:  'disabled'"
+    >{{'确定' | translate}}</button>
+  </div>
+</div>

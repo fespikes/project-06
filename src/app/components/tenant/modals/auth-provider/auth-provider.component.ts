@@ -22,12 +22,12 @@ export class AuthProviderComponent implements OnInit {
   actionType: string;
   tenantName: string;
   get submitAble() {
-    // return this.params.providerId !== '' &&
-    return this.myForm.get('providerId').value !== '' &&
+    return this.myForm ? this.myForm.get('providerId').value : this.params.providerId !== '' &&
       (this.params.attributes['guardian.server.tls.enabled'] !== undefined);
   };
   // guardian.server
   params = {
+    tenant: '',
     providerId: '',
     // address: '',
     // TODO:
@@ -47,32 +47,59 @@ export class AuthProviderComponent implements OnInit {
     private api: TenantService
   ) {
     this.actionType = data.type;
-    this.api.fetchProviderTypes()
-      .subscribe(res => {
-        this.providerTypes = res;
-      });
     this.params = data.provider || this.params;
     this.params.type = this.params.type || this.providerTypes[0];
     this.tenantName = data.tenantName;
 
-    this.myForm = this.fb.group({
-      'providerId': ['', Validators.required],  // 名称
-      'type': ['', Validators.required],
-      'address': ['', Validators.required]
-    });
+    if (data.type !== 'remove') {
+      this.api.fetchProviderTypes()
+        .subscribe(res => {
+          this.providerTypes = res;
+          if (this.params.type === undefined) {
+            this.myForm.controls['type'].setValue(res[0]);
+          }
+        });
+
+        let group;
+        if (data.type === 'register') {
+          group = {
+            'providerId': ['', Validators.required],  // 名称
+            'type': ['', Validators.required],
+            'address': ['', Validators.required]
+          };
+        } else {
+          group = {
+            'providerId': [this.params.providerId],  // 名称
+            'type': [this.params.type],
+            'address': [
+              this.params.attributes['guardian.server.address'],
+              Validators.required
+            ]
+          }
+        }
+
+        this.myForm = this.fb.group(group);
+        if (data.type === 'edit') {
+          this.myForm.controls['providerId'].disabled;
+          this.myForm.controls['type'].disabled;
+        }
+    } else {
+      return ;
+    }
+
   }
 
   ngOnInit() {}
 
-  checkboxChange($event) {
-    console.log($event);
-  }
-
-  submit(val: {[s: string]: string}) {
+  submit() {
     let observe: any;
-    this.params.providerId = val.providerId;
-    this.params.type = val.type;
-    this.params.attributes['guardian.server.address'] = val.address;
+    if (this.actionType !== 'remove') {
+      const controls = this.myForm.controls;
+      this.params.providerId = controls['providerId'].value;
+      this.params.type = controls['type'].value;
+      this.params.attributes['guardian.server.address'] = controls['address'].value;
+      this.params.tenant = this.tenantName
+    }
     
     console.log(this.params.attributes['guardian.server.tls.enabled']);
     switch (this.actionType) {
@@ -90,6 +117,10 @@ export class AuthProviderComponent implements OnInit {
     observe.subscribe(res => {
       this.modal.close(res);
     });
+  }
+
+  closeSelf() {
+    this.modal.close();
   }
 
 }

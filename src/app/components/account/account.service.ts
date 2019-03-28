@@ -14,7 +14,7 @@ export class AccountService {
   ) {}
 
   captchaUrl() {
-    return this.api.makeUrl('login/captcha');
+    return this.api.makeUrl('federation-server', 'login/captcha');
   }
 
   sendRegisterLink() {

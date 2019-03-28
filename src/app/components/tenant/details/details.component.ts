@@ -22,6 +22,7 @@ export class DetailsComponent implements OnInit {
   tenantName = '';
   selectedIndex = 0;
   tenantTypes = Object.keys(tenantTypes);
+  providerTypes: any;
   providersFilter: any = {};
   providers: any;
   clients: any;
@@ -44,16 +45,35 @@ export class DetailsComponent implements OnInit {
     this.loading = true;
     const promises = [
       this.service.tenantMaintain(this.tenantName, 'get'),
-      this.service.fetchProviders(this.tenantName),   // TODO:
-      this.service.fetchClients(this.tenantName)
+      this.fetchProviders(),   // TODO:
+      this.service.fetchClients(this.tenantName),
+      this.service.fetchProviderTypes()
     ];
     combineLatest(promises)
-      .subscribe(([details, providers, clients]) => {
+      .subscribe(([details, providers, clients, providerTypes]) => {
         this.details = details;
         this.attrs = getAttrsFromObj(details.attributes);
         this.providers = providers.body;
         this.clients = clients.body;
+        this.providerTypes = providerTypes;
         this.loading = false;
+      });
+  }
+
+  fetchProviders($event?, val?) {
+    let request;
+    if (val) {
+      this.providersFilter.type = $event;
+    } else if($event) {
+      this.providersFilter.searchValue = $event.target.value;
+      console.log($event.target.value);
+      console.log(this.providersFilter);
+    } else {
+      return this.service.fetchProviders(this.tenantName, this.providersFilter)
+    }
+    this.service.fetchProviders(this.tenantName, this.providersFilter)
+      .subscribe( res => {
+        this.providers = res.body;
       });
   }
 
@@ -61,15 +81,10 @@ export class DetailsComponent implements OnInit {
     this.selectedIndex = index;
   }
 
-  typeChange() {
-  }
+  typeChange() {}
 
   toProviderDetails() {
     console.log('toProviderDetails:')
-  }
-  
-  removeProvider() {
-    console.log('removeProvider:')
   }
 
   showTenantModal(type) {

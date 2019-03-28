@@ -33,8 +33,8 @@ export class TenantService {
     return this.api[method](`tenants${part}`, body)
   }
 
-  fetchProviders(tenant): Observable<any>{
-    return this.api.get(`tenants/${tenant}/providers`)
+  fetchProviders(tenant, filter?): Observable<any>{
+    return this.api.get(`tenants/${tenant}/providers`, filter);
   }
 
   fetchProviderTypes(): Observable<any>{
