@@ -7,8 +7,7 @@ import {
   FormControl,
 } from '@angular/forms';
 
-import { tenantGroups, tenantActionTypes } from '../../tenant.model';
-import { providerTypes } from '../../tenant.model';
+import { tenantPrivacyTypes, tenantActionTypes } from '../../tenant.model';
 import { TenantService } from '../../tenant.service';
 import { ObjectToArray } from 'app/shared/utils';
 
@@ -29,16 +28,13 @@ export class AuthProviderComponent implements OnInit {
   params = {
     tenant: '',
     providerId: '',
-    // address: '',
-    // TODO:
     type: '',
     attributes: {
       'guardian.server.tls.enabled': undefined,
       'guardian.server.address': 'hostname:port'
     }
   };
-  // providerTypes = ObjectToArray(providerTypes, 'value');
-  providerTypes: any = ObjectToArray(providerTypes, 'value');
+  providerTypes: string[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -52,41 +48,38 @@ export class AuthProviderComponent implements OnInit {
     this.tenantName = data.tenantName;
 
     if (data.type !== 'remove') {
-      this.api.fetchProviderTypes()
-        .subscribe(res => {
-          this.providerTypes = res;
-          if (this.params.type === undefined) {
+      if (data.type === 'register') {
+        this.api.fetchProviderTypes()
+          .subscribe(res => {
+            this.providerTypes = res;
             this.myForm.controls['type'].setValue(res[0]);
-          }
-        });
+          });
+      }
 
-        let group;
-        if (data.type === 'register') {
-          group = {
-            'providerId': ['', Validators.required],  // 名称
-            'type': ['', Validators.required],
-            'address': ['', Validators.required]
-          };
-        } else {
-          group = {
-            'providerId': [this.params.providerId],  // 名称
-            'type': [this.params.type],
-            'address': [
-              this.params.attributes['guardian.server.address'],
-              Validators.required
-            ]
-          }
+      let group;
+      if (data.type === 'register') {
+        group = {
+          'providerId': ['', Validators.required],  // 名称
+          'type': ['', Validators.required],
+          'address': ['', Validators.required]
+        };
+      } else {
+        group = {
+          'providerId': [this.params.providerId],  // 名称
+          'type': [this.params.type],
+          'address': [
+            this.params.attributes['guardian.server.address'],
+            Validators.required
+          ]
         }
+      }
 
-        this.myForm = this.fb.group(group);
-        if (data.type === 'edit') {
-          this.myForm.controls['providerId'].disabled;
-          this.myForm.controls['type'].disabled;
-        }
-    } else {
-      return ;
+      this.myForm = this.fb.group(group);
+      if (data.type === 'edit') {
+        this.myForm.controls['providerId'].disabled;
+        this.myForm.controls['type'].disabled;
+      }
     }
-
   }
 
   ngOnInit() {}

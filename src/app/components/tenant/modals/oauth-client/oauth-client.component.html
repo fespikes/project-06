@@ -1,3 +1,239 @@
-<p>
-  oauth-client works!
-</p>
+
+
+<form
+  *ngIf="actionType==='register' || (actionType==='edit')"
+  [formGroup]="myForm"
+  class="lg-md"
+  (ngSubmit)="submit(myForm.value)"
+  >
+  <div
+    [class.error]="!myForm.get('appName').valid && myForm.get('appName').touched"
+  >
+    <div class="field-box">
+      <label for="appNameId"><span>*</span>{{'名称'}}</label>
+      <input
+        class="field"
+        type="text"
+        id="appNameId"
+        autocomplete="off"
+        [formControl]="myForm.controls['appName']"
+        />
+    </div>
+
+    <div
+      *ngIf="myForm.controls['appName'].hasError('required') && myForm.controls['appName'].touched"
+      class="message"
+    >{{'NAME_TIP'}}
+    </div>
+  </div>
+
+  <div class="view">
+    <label>所属租户</label>
+    <span class="txt">{{tenant}}</span>
+  </div>
+
+  <div
+    [class.error]="!myForm.get('type').valid && myForm.get('type').touched"
+  >
+    <div class="field-box">
+      <label for="typeId"><span>*</span>{{'类型'}}</label>
+      <tui-select
+        class="field"
+        type="text"
+        id="typeId"
+        autocomplete="off"
+        [formControl]="myForm.controls['type']"
+      >
+        <tui-select-option
+          *ngFor="let option of oAuthPrivacyTypes"
+          [value]="option"
+          [label]="option"
+        >{{option}}
+        </tui-select-option>
+      </tui-select>
+    </div>
+    <div
+      *ngIf="myForm.controls['type'].hasError('required') && myForm.controls['type'].touched"
+      class="message"
+    >{{'required tip' | translate}}</div>
+  </div>
+
+  <div
+    [class.error]="!myForm.get('redirectUris').valid && myForm.get('redirectUris').touched"
+  >
+    <div class="field-box">
+      <label for="redirectUrisId"><span>*</span>{{'Redirect URIs'}}</label>
+      <span class="tip-on-top">
+        <p class="tips">多个URI之间用回车隔开</p>
+        <textarea
+          class="field textarea"
+          id="redirectUrisId"
+          [formControl]="myForm.controls['redirectUris']"
+        >
+        </textarea>
+      </span>
+    </div>
+    <div
+      *ngIf="myForm.controls['redirectUris'].hasError('required') && myForm.controls['redirectUris'].touched"
+      class="message"
+    >{{'required tip'}}</div>
+  </div>
+
+  <div
+    [class.error]="!myForm.get('accessTokenValiditySeconds').valid && myForm.get('accessTokenValiditySeconds').touched"
+  >
+    <div class="field-box fix-height-57">
+      <label for="accessTokenValiditySecondsId"><span>*</span>{{'Access Token有效时间'}}</label>
+      <tui-input-number
+        class="amount"
+        [tuiMinValue]="0"
+        [tuiMaxValue]="hourMax"
+        type="number"
+        [(ngModel)]="at"
+        [ngModelOptions]="{standalone: true}"
+        required
+      ></tui-input-number>
+      <span class="unit">小时</span>
+    </div>
+
+    <div
+      *ngIf="myForm.controls['accessTokenValiditySeconds'].hasError('required') && myForm.controls['accessTokenValiditySeconds'].touched"
+      class="message"
+    >{{'NAME_TIP'}}</div>
+  </div>
+
+<!--   <div>
+    <div class="field-box">
+      <label for="appNameId"><span>*</span>{{'Refresh Token 有效时间'}}</label>
+      <label class="label-right">
+        <input
+          type="checkbox"
+          [(ngModel)]="params.noExpire"
+          [ngModelOptions]="{standalone: true}"
+        />永久有效
+      </label>
+    </div>
+  </div> -->
+  <!-- *ngIf="!params.noExpire" -->
+  <div >
+    <div class="field-box fix-height-57">
+      <label for="passwordId"><span>*</span>{{'Refresh Token 有效时间'}}</label>
+      <!--TODO-->
+      <tui-input-number
+        class="amount"
+        [tuiMinValue]="0"
+        [tuiMaxValue]="hourMax"
+        type="number"
+        [(ngModel)]="rt"
+        [ngModelOptions]="{standalone: true}"
+        required
+      ></tui-input-number>
+      <span class="unit">小时</span>
+    </div>
+  </div>
+
+  <ul class="add-info">
+    <li class="f-title">自定义信息</li>
+    <li class="c-title">
+      <span>{{'key' | translate}}</span>
+      <span>{{'value' | translate}}</span>
+    </li>
+    <li
+      class="align-center"
+      *ngIf="(attrs.length === 0) && (last.key === undefined)"
+    >未添加自定义信息</li>
+    <ng-container *ngIf="attrs.length > 0">
+      <li *ngFor="let attr of attrs; let idx = index">
+        <span *ngIf="attr.key!==' '">{{attr.key}}</span>
+        <span *ngIf="attr.value!==' '">{{attr.value}}</span>
+      </li>
+    </ng-container>
+    <ng-container *ngIf="last.key !== undefined">
+      <li class="last-attr">
+        <span>
+          <input
+            [(ngModel)]="last.key"
+            [ngModelOptions]="{standalone: true}"
+            #focus
+          />
+        </span>
+        <span>
+          <input [(ngModel)]="last.value" [ngModelOptions]="{standalone: true}" />
+        </span>
+      </li>
+    </ng-container>
+    <li class="add-line" >
+      <button
+        class="add"
+        (click)="addInfo()"
+        [disabled]="addAble?'disabled' : ''"
+      >+</button>
+    </li>
+  </ul>
+
+  <div class="buttons">
+    <button
+      class="tui-btn-md tui-btn-default tui-btn"
+      type="reset"
+      (click)="modal.close()"
+    >{{'RESET'}}</button>
+    <button
+      class="tui-btn-md tui-btn-primary tui-btn"
+      type="submit"
+      [disabled]="!myForm.valid ? 'disabled' : null"
+    >{{'CONFIRM'}}</button>
+      <!-- (click)="submit()" -->
+  </div>
+
+</form>
+
+<div *ngIf="'return'===actionType || ('clientSecret'===actionType)">
+  <div class="narrow">
+    <p class="info">
+      “rubik-Client”已经注册成功，生成的Client ID 和 Client Secret 如下，请及时保存。
+    </p>
+  </div>
+  <div class="copy-field">
+    <label>Client ID:</label>
+    <input
+      type="text"
+      value="{{returned['clientId']}}"
+      #clientIdInput
+      disabled
+    />
+    <span>
+      <svg
+        class="icon"
+        tuiIcon="book"
+        ngxClipboard
+        [cbContent]="returned['clientId']"
+        (cbOnSuccess)="copy(clientIdInput)"
+      ></svg>
+    </span>
+  </div>
+  <div class="copy-field">
+    <label>Client Secret:</label>
+    <input
+      type="text"
+      value="{{returned['clientSecret']}}"
+      #clientSecretInput
+      disabled
+    />
+    <span>
+      <svg
+        class="icon"
+        tuiIcon="book"
+        ngxClipboard
+        [cbContent]="returned['clientSecret']"
+        (cbOnSuccess)="copy(clientSecretInput)"
+      ></svg>
+    </span>
+  </div>
+  <div class="buttons">
+    <button
+      class="tui-btn-md tui-btn-primary tui-btn"
+      type="submit"
+      (click)="modal.close()"
+    >{{'关闭'}}</button>
+  </div>
+</div>

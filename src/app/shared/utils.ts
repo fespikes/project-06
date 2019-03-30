@@ -21,20 +21,28 @@ export const session = (function() {
   }
 })(); */
 
-export const ObjectToArray = (obj, type?) => {
+export const ObjectToArray = (obj, type?, arr?) => {
   const result = [];
-  Object.keys(obj).forEach(item => result.push(type ==='value'? obj[item]: item));
+  Object.keys(obj).forEach(
+    item => result.push(
+      arr ? {'key': item, 'value': obj[item]} :
+        type ? obj[item]:
+          item
+    )
+  );
   return result;
 }
 
 export class Session {
   store: any;
-  keys = {
+  keys: any = {
     'currentUserName': 'federation.currUser.name',
     'currentUserIsAdmin': 'federation.currUser.role.IsAdmin',
     'currentUserIsTenant': 'federation.currUser.role.IsTenant',
-    'currentUserTenantName': 'federation.currUser.tennat.name'
+    'currentUserTenantName': 'federation.currUser.tennat.name',
+    'current': 'federation.currUser.'
   };
+
   set userName(name) {
     this.store.setItem(this.keys.currentUserName, name) }
   get userName() {
@@ -56,10 +64,19 @@ export class Session {
     return this.store.getItem(this.keys.currentUserTenantName);
   }
 
+  set [name](argu) {
+    this.store.setItem(this.keys['current'] + name, JSON.stringify(argu))
+  }
+  
+  get [name]() {
+    const parse = JSON.parse;
+    return parse(this.store.getItem(this.keys['current'] + name));
+  }
+
   constructor() { this.store = window.sessionStorage }
 }
 
-export const session = new Session();
+export const session: any = new Session();
 
 export const getAttrsFromObj = function(obj) {
   const attrs = [];
@@ -70,4 +87,34 @@ export const getAttrsFromObj = function(obj) {
     })
   });
   return attrs;
+}
+
+export const getUnitAndMax = function(u) {
+  let unit, max;  // TODO: make use the max is the case
+  switch (u) {
+    case 'mi':
+      unit = 60;
+      max = 24 * 60 * 60;
+      break;
+    case 'h':
+      unit = 60 * 60;
+      max = 60;
+      break;
+    case 'd':
+      unit = 24 * 60 * 60;
+      max = 100;
+      break;
+    case 'mo':
+      unit = 30 * 24 * 60 * 60;
+      max = 12;
+      break;
+    case 'y':
+      unit = 360 * 24 * 60 * 60;
+      max = 10;
+      break;
+  }
+  return {
+    unit : unit,
+    max: max
+  };
 }

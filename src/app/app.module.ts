@@ -21,7 +21,7 @@ import { federation_server } from 'app/shared/app.tokens';
 import { ProfileModalComponent } from './components/index/profile-modal/profile-modal.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PwdModalComponent } from './components/index/pwd-modal/pwd-modal.component';
-
+import { AppService } from './app.service';
 
 @NgModule({
   declarations: [
@@ -53,6 +53,7 @@ import { PwdModalComponent } from './components/index/pwd-modal/pwd-modal.compon
     TranslateService,
     // FederationGuard,
     AuthService,
+    AppService
     // {
     //   provide: federation_server,
     //   useValue: 'federation-server'

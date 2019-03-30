@@ -8,6 +8,9 @@ export const patterns = {
 
   letterAndNumber: /^$|^\w+$/,
   firstLetter: /^$|^[a-zA-Z].*$/,
+
+  // 不允许的特殊字符
+  special: /[(\ )(\~)(\!)(\@)(\#)(\$)(\%)(\^)(\&)(\*)(\()(\))(\-)(\_)(\+)(\=)(\[)(\])(\{)(\})(\|)(\\)(\;)(\:)(\')(\")(\,)(\.)(\/)(\<)(\>)(\?)(\)]+/g,
 };
 
 export const hourlyDefaultFormat = '%H:%M';

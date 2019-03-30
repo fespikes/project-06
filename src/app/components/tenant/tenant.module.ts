@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {ClipboardModule} from 'ngx-clipboard';
 import { I18nModule, TranslateService } from 'app/i18n';
 
 import { SharedModule } from 'app/shared';
@@ -48,7 +49,8 @@ import { ListComponent } from './list/list.component';
     CommonModule,
     SharedModule,
     I18nModule,
-    TenantRoutingModule
+    TenantRoutingModule,
+    ClipboardModule
   ],
   providers: [
     TenantService,

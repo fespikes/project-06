@@ -18,7 +18,7 @@ import { tenantActionTypes as actionTypes } from './tenant.model';
 })
 export class ModalsService {
   constructor(
-    private modal: TuiModalService,
+    public modal: TuiModalService,
   ) { }
 
   tenantModal(argu) {
@@ -89,15 +89,54 @@ export class ModalsService {
     });
   }
 
-  authClient(argu?) {
-    let title = '注册 oauth client';
+  authClient(client?, type?, tenantName?, returned?, modalFunction?, fetchOAuthClients?) {
+    let title = '';
+    switch (type) {
+      case 'register':
+        title = '注册OAuth2 Client'
+        break;
+      case 'edit':
+        title = '编辑OAuth2 Client';
+        break;
+      case 'remove':
+        title = '删除OAuth2 Client'
+        break;
+      case 'return':
+        title = '生成Client ID 和 Client Secret'
+        break;
+        break;
+      case 'clientSecret':
+        title = '更新 Client Secret'
+        break;
+    }
+    if (type === 'remove') {
+      return this.modal.error({
+        title: title,
+        message: `确认删除 “${client.clientId}”？`
+      });
+    }
     return this.modal.open(OauthClientComponent, {
       title: title,
       data: {
-        ...argu
+        type,
+        client,
+        tenantName,
+        returned,
+        modalFunction
       },
-      size: 'md'
+      size: (type === 'return' || (type === 'clientSecret')) ? 'md' : 'lg'
     });
   }
 
+  accessToken(oAuthClient, type?) {
+    let title = '查看Access Token';
+    return this.modal.open(AccessTokenModalComponent, {
+      title: title,
+      data: {
+        oAuthClient,
+        type,
+      },
+      size: 'lg'
+    });
+  }
 }

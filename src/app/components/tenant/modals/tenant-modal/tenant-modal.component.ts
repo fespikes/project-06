@@ -8,7 +8,7 @@ import {
 
 import { TuiModalService, TuiModalRef, TUI_MODAL_DATA } from 'tdc-ui';
 
-import { tenantGroups, tenantActionTypes } from '../../tenant.model';
+import { tenantPrivacyTypes, tenantActionTypes } from '../../tenant.model';
 import { TenantService } from '../../tenant.service';
 import { ObjectToArray, getAttrsFromObj } from 'app/shared/utils';
 
@@ -20,7 +20,7 @@ import { ObjectToArray, getAttrsFromObj } from 'app/shared/utils';
 export class TenantModalComponent implements OnInit {
   @ViewChild('focus') focus: ElementRef;
   actionType: 'edit' | 'create' | 'remove';
-  tenantGroups = ObjectToArray(tenantGroups, 'value');
+  tenantPrivacyTypes = ObjectToArray(tenantPrivacyTypes, true);
   params: any = {
     'attributes': {},
     'name': '',
@@ -50,7 +50,7 @@ export class TenantModalComponent implements OnInit {
       this.params = data.tenant;
       this.attrs = getAttrsFromObj(data.tenant.attributes);
     } else {
-      this.params.type = this.tenantGroups[0];
+      this.params.type = this.tenantPrivacyTypes[0];
     }
   }
 
@@ -60,16 +60,9 @@ export class TenantModalComponent implements OnInit {
       'type': ['', Validators.required],
       'description': ['']
     });
-    this.myForm.statusChanges.subscribe(argu => {
-      console.log(this.myForm);
-    });
-    this.myForm.valueChanges.subscribe(argu => {
-      console.log(this.myForm);
-    });
   }
 
-  typeChange() {
-  }
+  typeChange() {}
 
   addInfo() {
     if (this.last.key && this.attrs.filter(item => item.key === this.last.key).length===0) {
@@ -79,12 +72,12 @@ export class TenantModalComponent implements OnInit {
       key: '',
       value: ''
     };
-    this.focus.nativeElement.focus();
+    this.focus && this.focus.nativeElement.focus();
   }
 
   submit() {
     if (this.actionType !== tenantActionTypes.remove) {
-      if (this.last && (this.last.key !== '') && (this.last.value !== '')) {
+      if (this.last && (this.last.key !== undefined) && (this.last.value !== undefined)) {
         this.attrs.push(this.last);
         this.last = {};
       }

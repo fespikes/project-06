@@ -7,10 +7,7 @@ export const adminRoles = [
   'ROLE_FED_USER_VIEWER'
 ];
 
-export const providerTypes = {
-  guardian: 'GUARDIAN',
-  // cas: 'CAS' // templetely hide it
-}
+// ObjectToArray(tenantTypes, true);
 
 export const tenantTypes = {
   guardian: 'GUARDIAN',
@@ -20,8 +17,21 @@ export const tenantActionTypes = {
   edit: 'edit',
   create: 'create',
   remove: 'remove'
-};
-export const tenantGroups = {
+}
+export const tenantPrivacyTypes = {
   public: 'PUBLIC',
   private: 'PRIVATE'
+}
+
+export const oAuthPrivacyTypes = {
+  public: 'PUBLIC',
+  confidential: 'CONFIDENTIAL'
+}
+
+export const timeOptions = {
+  // minute: 'mi',
+  hour: 'h',
+  // day: 'd',
+  // month: 'mo',
+  // year: 'y'
 }

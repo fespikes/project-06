@@ -73,7 +73,7 @@
               [value]="option"
               [disabled]="option.disabled"
             >
-              {{option | tuiDefault }}
+              {{option}}
             </tui-select-option>
           </tui-select>
           <button
@@ -109,43 +109,90 @@
         <span class="right">
           <tui-input
             class="item"
-            placeholder="{{'TENANT.placeholder' | translate}}"
+            placeholder="{{'名称或Redirect Uris' | translate}}"
             prefix="user"
-            [(ngModel)]="providersFilter.tenant"
-            (input)="fetchProviders($event)"
+            [(ngModel)]="oAuthClientFilter.searchValue"
+            (input)="fetchOAuthClients($event)"
           ></tui-input>
           <tui-select
             class="item"
             placeholder="全部类型"
-            [(ngModel)]="providersFilter.ssss"
-            (ngModelChange)="typeChange($event)"
+            [(ngModel)]="oAuthClientFilter.type"
+            (ngModelChange)="fetchOAuthClients($event, true)"
             allowClear
+            style="width: 130px"
           >
             <tui-select-option
-              *ngFor="let option of objectOptions"
-              [value]="option.value"
-              [disabled]="option.disabled"
+              *ngFor="let option of oAuthPrivacyTypes"
+              [value]="option"
             >
-              {{option.label | tuiDefault }}
+              {{option}}
             </tui-select-option>
           </tui-select>
           <button
             class="item"
             tuiBtn="primary"
-            (click)="showAuthProviderModal('register')"
+            (click)="showOAuthClientModal('register')"
           >注册 oauth client</button>
         </span>
       </div>
-      <tui-table [tuiTableFlex]="[1,1,2]" tuiTableOutline>
+      <tui-table
+        [tuiLoading]="refreshingClientSecret"
+        [tuiTableFlex]="[2,3,1.5,2,1,2]"
+        tuiTableOutline
+      >
         <tui-table-head>
-          <div>Name</div>
-          <div>Gender</div>
-          <div>Age</div>
+          <div>名称</div>
+          <div>Client ID</div>
+          <div>类型</div>
+          <div>Redirect Uris</div>
+          <div>Access Token</div>
+          <div>操作</div>
         </tui-table-head>
-        <tui-table-row *ngFor="let datum of tableData" >
-          <div>{{datum.name}}</div>
-          <div>{{datum.sex}}</div>
-          <div>{{datum.age}}</div>
+        <tui-table-row *ngFor="let datum of clients" >
+          <div>{{datum.appName}}</div>
+          <div>{{datum.clientId}}</div>
+          <div>{{datum.type}}</div>
+          <div>
+            <span
+              class="one-line-ellipsis"  
+              [tuiPopover]="tooltip"
+              style="width: 174px"
+            >{{datum.redirectUris.join(',')}}</span>
+            <tui-popover #tooltip placement="top">
+              <div class="popover">
+                <div class="popover-content" *ngFor="let url of datum.redirectUris">
+                  {{url}}
+                </div>
+              </div>
+            </tui-popover>
+          </div>
+          <div>
+            <span
+              tuiTooltip="{{'查看详情' | translate}}"
+              (click)="showAccessToken(datum, '')"
+            >
+              <svg tuiIcon="trash"></svg>
+            </span>
+          </div>
+          <div>
+            <span
+              (click)="refresh(datum)"
+              tuiTooltip="{{'更新 Client Secret' | translate}}"
+            >
+              <svg tuiIcon="trash"></svg>
+            </span>
+            <span
+              (click)="showOAuthClientModal('edit', datum)"
+              tuiTooltip="{{'编辑' | translate}}">
+              <svg tuiIcon="trash"></svg>
+            </span>
+            <span
+              (click)="showOAuthClientModal('remove', datum)"
+              tuiTooltip="{{'删除' | translate}}">
+              <svg tuiIcon="trash"></svg>
+            </span>
+          </div>
         </tui-table-row>
       </tui-table>
     </div>

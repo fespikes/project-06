@@ -21,8 +21,12 @@ export class TenantService {
     }
   }
 
-  getTenantDetails(tenantNameObj) {
-    return this.api.get(`tenants`, tenantNameObj);
+  getTenantDetails(accesses) {
+    let length = accesses.length;
+    let names = accesses.reduce((acc, cur, idx) => {
+        return acc + 'tenantName=' + cur.tenantName + ((idx + 1) < length ? '&' : '');
+    }, '');
+    return this.api.get(`tenants?` + names);
   }
   getTenantsByTenantName(name) {
     return this.api.get(`tenants/${name}`);
@@ -46,11 +50,18 @@ export class TenantService {
     return this.api[method](`tenants/${name}/providers${part}`, body)
   }
 
-  fetchClients(tenant): Observable<any>{
-    return this.api.get(`tenants/${tenant}/clients`)
+  oAuthClients(tenantName, method?, body?, clientId?): Observable<any>{
+    let url = clientId ? `tenants/${tenantName}/clients/${clientId}`
+      : `tenants/${tenantName}/clients`;
+    return !!body ? this.api[method](url, body) : this.api[method](url);
   }
 
+  fetchAccessToken(clientId, filter): Observable<any>{
+    return this.api.get(`tokens?clientId=${clientId}&tokenSource=CLIENT_CRED`, filter);
+  }
 
+  refreshClientSecret(tenantName, clientId) {
+    return this.api.put(`tenants/${tenantName}/clients/${clientId}/secret`)
+  }
 
-  
 }

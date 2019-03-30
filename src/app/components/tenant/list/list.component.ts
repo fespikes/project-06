@@ -62,11 +62,7 @@ export class ListComponent implements OnInit {
         .subscribe(res => {
           this.loading = false;
           let accesses = this.sortTenants(res.body);
-          let length = accesses.length;
-          let names = accesses.reduce((acc, cur, idx) => {
-            return acc + cur.tenantName + (idx+1 !== length ? '&tenantName=' : '');
-          }, '');
-          this.api.getTenantDetails({tenantName: names})
+          this.api.getTenantDetails(accesses)
             .subscribe(rs => {
               this.tenants = this.mergeTenants(rs.body, accesses);
               // TODO: due to api change, let's holdon here

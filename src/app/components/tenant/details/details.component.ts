@@ -5,9 +5,9 @@ import { combineLatest } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { TenantService } from '../tenant.service';
-import { tenantTypes, tenantActionTypes } from '../tenant.model';
+import { tenantActionTypes, oAuthPrivacyTypes } from '../tenant.model';
 import { ModalsService } from '../modals.service';
-import { getAttrsFromObj } from '../../../shared/utils';
+import { getAttrsFromObj, ObjectToArray } from '../../../shared/utils';
 
 @Component({
   selector: 'fed-details',
@@ -16,16 +16,22 @@ import { getAttrsFromObj } from '../../../shared/utils';
 })
 export class DetailsComponent implements OnInit {
   loading = false;
+  selectedIndex = 0;
+
   tenantActionTypes = tenantActionTypes;
   details: any = {};
   attrs: any[];
   tenantName = '';
-  selectedIndex = 0;
-  tenantTypes = Object.keys(tenantTypes);
+
   providerTypes: any;
+  oAuthPrivacyTypes = ObjectToArray(oAuthPrivacyTypes, true);
+
   providersFilter: any = {};
+  oAuthClientFilter: any = {};
+
   providers: any;
   clients: any;
+  refreshingClientSecret = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -45,8 +51,8 @@ export class DetailsComponent implements OnInit {
     this.loading = true;
     const promises = [
       this.service.tenantMaintain(this.tenantName, 'get'),
-      this.fetchProviders(),   // TODO:
-      this.service.fetchClients(this.tenantName),
+      this.fetchProviders(),
+      this.fetchOAuthClients(),
       this.service.fetchProviderTypes()
     ];
     combineLatest(promises)
@@ -61,7 +67,6 @@ export class DetailsComponent implements OnInit {
   }
 
   fetchProviders($event?, val?) {
-    let request;
     if (val) {
       this.providersFilter.type = $event;
     } else if($event) {
@@ -77,14 +82,22 @@ export class DetailsComponent implements OnInit {
       });
   }
 
-  tabChange(index: number) {
-    this.selectedIndex = index;
+  fetchOAuthClients($event?, val?) {
+    if (val) {
+      this.oAuthClientFilter.type = $event;
+    } else if($event) {
+      $event.target && (this.oAuthClientFilter.searchValue = $event.target.value);
+    } else {
+      return this.service.oAuthClients(this.tenantName, 'get', this.oAuthClientFilter);
+    }
+    this.service.oAuthClients(this.tenantName, 'get', this.oAuthClientFilter)
+      .subscribe( res => {
+        this.clients = res.body;
+      });
   }
 
-  typeChange() {}
-
-  toProviderDetails() {
-    console.log('toProviderDetails:')
+  tabChange(index: number) {
+    this.selectedIndex = index;
   }
 
   showTenantModal(type) {
@@ -100,7 +113,7 @@ export class DetailsComponent implements OnInit {
     });
   }
 
-  showTruthManagementModal() {
+  showTruthManagementModal() {  // TODO: 
     this.modal.truthManagement({
       tenant: this.details,
     }).subscribe(argu => {
@@ -108,7 +121,7 @@ export class DetailsComponent implements OnInit {
     });
   }
 
-  showVisitManagementModal(type) {
+  showVisitManagementModal(type) { // TODO
     this.modal.visitManagement({
       tenant: this.details,
       type
@@ -124,11 +137,79 @@ export class DetailsComponent implements OnInit {
   showAuthProviderModal(type, provider) {
     this.modal.AuthProvider(provider, type, this.tenantName)
       .subscribe(argu => {
+        this.fetchProviders();
+      });
+  }
+
+  /**
+   * @description 
+   * will emit when:
+   * 1.register; 2.edit; 3.remove;
+   * 4.show 'return' when registered; 5.show 'clientSecret'
+   * @param type 
+   * @param client 
+   * @param returned 
+   */
+  showOAuthClientModal(type, client?, returned?) {
+    this.modal.authClient(
+      client,
+      type,
+      this.tenantName,
+      returned,
+      this.modal.authClient.bind(this.modal)
+    ).subscribe(argu => {
+      if (type === 'details') {
+        return;
+      } else if(type === 'remove') {
+        this.refreshingClientSecret = true;
+        this.service.oAuthClients(this.tenantName, 'delete', '', client.clientId)
+        .subscribe( res => {
+          this.fetchOAuthClients(true);
+          this.refreshingClientSecret = false;
+        });
+      }else {
+        this.fetchData(); // TODO: seperate the api request by "operation catagloy and types"
+      }
+    });
+  }
+
+  showAccessToken(oAuthClient, type) {
+    this.modal.accessToken(oAuthClient, '')
+      .subscribe(argu => {
         if (type === 'details') {
           return;
         } else {
-          this.fetchData(); // TODO: seperate the api request
+          this.fetchData();
         }
       });
   }
+
+  refresh(ele) {
+    this.refreshingClientSecret = true;
+    this.service.refreshClientSecret(this.tenantName, ele.clientId)
+      .subscribe( res => {
+        this.fetchOAuthClients();
+        this.refreshingClientSecret = false;
+        this.showOAuthClientModal('clientSecret', ele, {
+          clientId: ele.clientId,
+          clientSecret: res.clientSecret
+        });
+      });
+  }
+
+  removeOAuthClient(oAuthClient) {
+    this.refreshingClientSecret = true;
+    this.modal.modal.error({
+      title: '删除',
+      message: `确认删除 “${oAuthClient.clientId}”？`
+    }).subscribe( res => {
+      this.service.oAuthClients(this.tenantName, 'delete', '', oAuthClient.clientId)
+        .subscribe( res => {
+          this.fetchOAuthClients();
+          this.refreshingClientSecret = false;
+        });
+    });
+  }
+
+
 }

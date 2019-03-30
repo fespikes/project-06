@@ -1,3 +1,123 @@
-<p>
-  access-token-modal works!
-</p>
+
+<ul class="info-items">
+  <li>
+    <label>租户:</label>
+    <span>{{oAuthClient.tenant || ''}}</span>
+  </li>
+  <li>
+    <label>OAuth Client:</label>
+    <span>{{oAuthClient.clientId || ''}}</span>
+  </li>
+  <li>
+    <label>Access Token数:</label>
+    <span>{{accessTokens.length}}</span>
+  </li>
+</ul>
+
+<tui-input
+  class="search-banner"
+  suffix="check"
+  [(ngModel)]="filter.searchValue"
+  (input)="fetchData($event)"
+  placeholder="名称"
+></tui-input>
+
+<tui-table [tuiTableFlex]="[3,2,2,2]">
+  <tui-table-head>
+    <div>名称</div>
+    <div>创建时间</div>
+    <div>Access Token</div>
+    <div>Refresh Token</div>
+  </tui-table-head>
+  <tui-table-scroll-body [maxHeight]=250>
+    <!-- <tui-table-row *ngFor="let datum of scrollTableData"> -->
+    <tui-table-row *ngFor="let item of accessTokens">
+      <div>
+        <span
+          class="one-line-ellipsis"  
+          style="width: 180px"
+          tuiTooltip="{{item['name']}}"
+        >{{item['name']}}</span>
+      </div>
+      <div>{{item['createTime'] | date:'y/M/d HH:mm:ss' }}</div>
+      <div>
+        <span
+          class="one-line-ellipsis"  
+          style="width: 32px"
+          tuiTooltip="查看详情"
+          [tuiDropdownTrigger]="dropdownA"
+        >
+          <svg tuiIcon="trash"></svg>
+        </span>
+        <tui-dropdown #dropdownA direction="bottomCenter">
+          <tui-dropdown-item>
+            <span class="dropdown-here">
+              <input
+                type="text"
+                value="{{item['value']}}"
+                #accessTokenInput
+                disabled
+              />
+              <svg
+                class="icon"
+                tuiIcon="book"
+                ngxClipboard
+                [cbContent]="item['value']"
+                (cbOnSuccess)="copy(item['value'])"
+              ></svg>
+            </span>
+            <p class="dropdown-p">更新时间： {{item['refreshTime'] | date:'y/M/d HH:mm:ss'}}</p>
+            <p class="dropdown-p">过期时间： {{item['refreshTime'] | date:'y/M/d HH:mm:ss'}}</p>
+            <p class="dropdown-p">
+              <span tuiTooltip="{{item['validitySeconds']}} 秒">
+                有效期： {{ item['validitySeconds']/3600 }} 小时
+              </span>
+            </p>
+          </tui-dropdown-item>
+        </tui-dropdown>
+      </div>
+      <div>
+        <span
+          class="one-line-ellipsis"  
+          style="width: 32px"
+          tuiTooltip="查看详情"
+          [tuiDropdownTrigger]="dropdownB"
+        >
+          <svg tuiIcon="trash"></svg>
+        </span>
+        <tui-dropdown #dropdownB direction="bottomCenter">
+          <tui-dropdown-item>
+            <span class="dropdown-here">
+              <input
+                type="text"
+                value="{{item['refreshToken']['value']}}"
+                #accessTokenInput
+                disabled
+              />
+              <svg
+                class="icon"
+                tuiIcon="book"
+                ngxClipboard
+                [cbContent]="item['refreshToken']['value']"
+                (cbOnSuccess)="copy(item['refreshToken']['value'])"
+              ></svg>
+            </span>
+            <p class="dropdown-p">过期时间： {{item['refreshToken']['expireTime'] | date:'y/M/d HH:mm:ss'}}</p>
+            <p class="dropdown-p">
+              <span tuiTooltip="{{item['refreshToken']['validitySeconds']}} 秒">
+                有效期： {{ item['refreshToken']['validitySeconds']/3600 }} 小时
+              </span>
+            </p>
+          </tui-dropdown-item>
+        </tui-dropdown>
+      </div>
+    </tui-table-row>
+  </tui-table-scroll-body>
+</tui-table>
+<div class="btn-single">
+  <button
+    class="single"
+    tuiBtn="primary"
+    (click)="modal.close()"
+  >Close</button>
+</div>
