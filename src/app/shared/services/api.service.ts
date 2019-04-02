@@ -108,19 +108,16 @@ export class ApiService {
       catchError(this.formatErrors));
   }
 
-  delete(path, body: Object = null): Observable<any> {
-    // httpClient delete 不能传body
-    return this.http.request(
-      'delete',
-      this.makeUrl(path),
+  delete(url, body): Observable<any> {
+    return this.http.delete(
+      this.makeUrl(url),
       {
-        body,
-        headers: this.headers,
-      },
-    ).pipe(
-      catchError(this.formatErrors));
+        params: this.setHttpParams(body).params,
+        headers: this.headers
+      }
+    )
+    .pipe(catchError(this.formatErrors));
   }
-
   patch(path, body: Object = {}): Observable<any> {
     return this.http.patch(
       this.makeUrl(path),

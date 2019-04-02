@@ -1,3 +1,73 @@
-<p>
-  truth-modal works!
-</p>
+<tui-tab>
+  <div *tuiTabPane="'信任'">
+    <div class="wide">
+      <p class="info">当前租户信任下方列表中的租户，允许这些租户中的用户访问当前租户中的服务。</p>
+    </div>
+    <tui-table [tuiTableFlex]="[4,1]" tuiTableOutline>
+      <tui-table-head>
+        <div>租户名</div>
+        <div>操作</div>
+      </tui-table-head>
+      <tui-table-scroll-body [maxHeight]=200>
+        <tui-table-row *ngIf="lastTrust !== undefined">
+          <div>
+            <tui-input
+              class="hundred-percent"
+              style="width: 100%"
+              [(ngModel)]="lastTrust"
+              #dstTenantLast
+            ></tui-input>
+          </div>
+          <div>
+            <svg
+              tuiIcon="check"
+              (click)="addInfo(dstTenantLast)"
+            ></svg>
+            <svg
+              tuiIcon="cross"
+              (click)="addInfo(dstTenantLast, true)"
+            ></svg>
+          </div>
+        </tui-table-row>
+
+        <tui-table-row *ngFor="let datum of trusts" >
+          <div>{{datum.dstTenant}}</div>
+          <div>
+            <span tuiTooltip="{{'删除' | translate}}">
+              <svg tuiIcon="trash" (click)="remove(datum)"></svg>
+            </span>
+          </div>
+        </tui-table-row>
+      </tui-table-scroll-body>
+    </tui-table>
+    <div class="add-line" *ngIf="lastTrust === undefined">
+      <button
+        class="add"
+        (click)="addInfo()"
+      >+</button>
+    </div>
+  </div>
+  <div *tuiTabPane="'被信任'">
+    <div class="wide">
+      <p class="info">当前租户被下列租户信任，允许当前租户中的用户访问这些租户中的服务。</p>
+    </div>
+    <tui-table [tuiTableFlex]="[1]" tuiTableOutline>
+      <tui-table-head>
+        <div>租户名</div>
+      </tui-table-head>
+      <tui-table-scroll-body [maxHeight]=200>
+        <tui-table-row *ngFor="let datum of trusts" >
+          <div>{{datum.srcTenant}}</div>
+        </tui-table-row>
+      </tui-table-scroll-body>
+    </tui-table>
+  </div>
+</tui-tab>
+
+<div class="buttons">
+  <button
+    class="tui-btn-md tui-btn-primary tui-btn"
+    type="submit"
+    (click)="closeSelf()"
+  >{{'关闭'}}</button>
+</div>

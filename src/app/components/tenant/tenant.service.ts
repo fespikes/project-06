@@ -64,4 +64,8 @@ export class TenantService {
     return this.api.put(`tenants/${tenantName}/clients/${clientId}/secret`)
   }
 
+  trusts(method, body?) {
+    return this.api[method](`trusts`, body)
+  }
+
 }
