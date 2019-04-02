@@ -13,7 +13,7 @@
         <div class="right">
           <button class="item" tuiBtn="default" (click)="showTruthManagementModal()" tuiBtnOutline>信任管理</button>
           <button class="item" tuiBtn="default" (click)="showVisitManagementModal()" tuiBtnOutline>访问管理</button>
-          <button class="item" tuiBtn="default" [tuiDropdownTrigger]="editDropdown" tuiBtnOutline>...</button>
+          <button class="item" tuiBtn="default" [tuiDropdownTrigger]="editDropdown" tuiBtnOutline style="min-width: 50px">...</button>
           <!-- trigger="hover" -->
           <tui-dropdown #editDropdown direction="bottomRight" [caret]="false">
             <tui-dropdown-item (click)="showTenantModal(tenantActionTypes['edit'])">
@@ -138,7 +138,7 @@
       </div>
       <tui-table
         [tuiLoading]="refreshingClientSecret"
-        [tuiTableFlex]="[2,3,1.5,2,1,2]"
+        [tuiTableFlex]="[2,3,1.5,2,2,1.5]"
         tuiTableOutline
       >
         <tui-table-head>

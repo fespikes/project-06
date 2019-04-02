@@ -17,8 +17,12 @@ export class TenantService {
     if (isTenant) {
       return this.api.get(`tenants/${filter.tenant}`);
     } else {
-      return this.api.get(`tenant-access`, filter);
+      return this.tenantAccess('get', filter);
     }
+  }
+
+  tenantAccess(method, body?) {
+    return this.api[method](`tenant-access`, body);
   }
 
   getTenantDetails(accesses) {
@@ -27,9 +31,6 @@ export class TenantService {
         return acc + 'tenantName=' + cur.tenantName + ((idx + 1) < length ? '&' : '');
     }, '');
     return this.api.get(`tenants?` + names);
-  }
-  getTenantsByTenantName(name) {
-    return this.api.get(`tenants/${name}`);
   }
 
   tenantMaintain(name, method: string/*'get'|'post'|'put'|'delete' */, body?): Observable<any>{

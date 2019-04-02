@@ -52,10 +52,9 @@ export class ListComponent implements OnInit {
 
     if (session.isTenant === 'true') {
       this.filter.tenant = session.tenant;
-      this.api.getTenantsByTenantName(session.tenant)
+      this.api.getTenants(session.tenant, true)
         .subscribe( res => {
-          this.tenants = [];
-          // this.tenants = res;
+          this.tenants = res.body;
         });
     } else {
       this.api.getTenants(this.filter, false)

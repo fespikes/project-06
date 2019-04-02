@@ -1,15 +1,10 @@
 import { Component, OnInit, Inject, ViewChild, ElementRef  } from '@angular/core';
-import { TuiModalService, TuiModalRef, TUI_MODAL_DATA } from 'tdc-ui';
+import { TuiModalRef, TUI_MODAL_DATA } from 'tdc-ui';
 import {
   FormBuilder,
-  FormGroup,
-  Validators,
-  FormControl,
 } from '@angular/forms';
 
-import { tenantPrivacyTypes, tenantActionTypes } from '../../tenant.model';
 import { TenantService } from '../../tenant.service';
-import { ObjectToArray } from 'app/shared/utils';
 import { TuiMessageService } from 'tdc-ui';
 
 @Component({
@@ -27,9 +22,6 @@ export class TruthModalComponent implements OnInit {
   }
   get lastTrust() {
     return this.last;
-  }
-  get addAble() {
-    return (this.last === '');
   }
 
   constructor(

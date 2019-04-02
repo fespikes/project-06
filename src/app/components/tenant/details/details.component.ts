@@ -113,17 +113,17 @@ export class DetailsComponent implements OnInit {
     });
   }
 
-  showTruthManagementModal() {  // TODO: 
+  showTruthManagementModal() {
     this.modal.truthManagement({
       tenant: this.details,
     }).subscribe(argu => {
-      // this.fetchData();
+      this.fetchData();
     });
   }
 
-  showVisitManagementModal(type) { // TODO
+  showVisitManagementModal(type?) {
     this.modal.visitManagement({
-      tenant: this.details,
+      tenantName: this.tenantName,  // 对当前进入的租户访问管理
       type
     }).subscribe(argu => {
       if (type === this.tenantActionTypes.remove) {

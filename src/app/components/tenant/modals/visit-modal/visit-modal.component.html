@@ -1,3 +1,78 @@
-<p>
-  visit-modal works!
-</p>
+<div class="wide">
+  <p class="info">下方列表中为可访问当前租户的Federation用户。</p>
+</div>
+<tui-table [tuiTableFlex]="[4,1]" tuiTableOutline [tuiLoading]="loading">
+  <tui-table-head>
+    <div>用户名</div>
+    <div>操作</div>
+  </tui-table-head>
+  <tui-table-scroll-body [maxHeight]=200>
+    <tui-table-row *ngIf="lastOne !== undefined">
+      <div>
+        <tui-input
+          class="hundred-percent"
+          style="flex: 1"
+          [(ngModel)]="lastOne"
+          #tgt
+        ></tui-input>
+        <span class="ckb-wrapper">
+          <tui-checkbox [(ngModel)]="lastIsOwner">设为当前租户管理员</tui-checkbox>
+        </span>
+      </div>
+      <div>
+        <svg
+          tuiIcon="check"
+          (click)="addInfo(tgt)"
+        ></svg>
+        <svg
+          tuiIcon="cross"
+          (click)="addInfo(tgt, true)"
+        ></svg>
+      </div>
+    </tui-table-row>
+
+    <tui-table-row *ngFor="let datum of TAs" >
+      <div>
+        {{datum['username']}}
+        <svg
+          *ngIf="datum.tenantOwner"
+          tuiIcon="user"
+        ></svg>
+      </div>
+      <div>
+        <span
+          *ngIf="datum.tenantOwner"
+          tuiTooltip="{{'取消管理员' | translate}}"
+        >
+          <svg tuiIcon="trash" (click)="operate('delete', datum)"></svg>
+        </span>
+        <span
+          *ngIf="!datum.tenantOwner"
+          tuiTooltip="{{'设为当前租户管理员' | translate}}"
+        >
+          <svg tuiIcon="trash" (click)="operate('post', datum)"></svg>
+        </span>
+        <span tuiTooltip="{{'移除用户' | translate}}">
+          <svg tuiIcon="trash" (click)="remove(datum)"></svg>
+        </span>
+      </div>
+    </tui-table-row>
+
+  </tui-table-scroll-body>
+</tui-table>
+
+<div class="add-line" *ngIf="lastOne === undefined">
+  <button
+    class="add"
+    (click)="addInfo()"
+  >+</button>
+</div>
+
+<div class="buttons">
+  <button
+    class="tui-btn-md tui-btn-primary tui-btn"
+    type="submit"
+    (click)="closeSelf()"
+  >{{'关闭'}}</button>
+</div>
+  
