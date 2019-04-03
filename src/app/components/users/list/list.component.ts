@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UsersService } from '../users.service';
+
 
 @Component({
   selector: 'fed-list',
@@ -6,8 +8,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./list.component.sass']
 })
 export class ListComponent implements OnInit {
+  users: any[];
 
-  constructor() { }
+  constructor(
+    private service: UsersService
+  ) { }
 
   ngOnInit() {
   }

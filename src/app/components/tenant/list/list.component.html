@@ -18,7 +18,7 @@
 </div>
 
 <ul
-  class="rectangles"
+  class="rectangles right-scroll"
   [tuiLoading]="loading"
 >
   <li *ngFor="let tenant of tenants">
@@ -31,7 +31,6 @@
     </span>
     <span class="right">
       <div class="name">
-        {{tenant.name}}
         <span
           class="opt up"
           *ngIf="tenant.tenantOwner"
@@ -40,6 +39,25 @@
           <svg tuiIcon="setting"></svg>
           <svg tuiIcon="caret-down"></svg>
         </span>
+
+        <span
+          *ngIf="(tenant.name + '').length > 18"
+          class="wid"
+          [class.wider]="!tenant.tenantOwner"
+          [tuiTooltip]="tenant.name"
+        >
+          <span class="one-line-ellipsis">{{tenant.name}}</span>
+          <svg *ngIf="tenant.tenantOwner" tuiIcon="user"></svg>
+        </span>
+        <span
+          *ngIf="(tenant.name + '').length <= 18"
+          class="wid"
+          [class.wider]="!tenant.tenantOwner"
+        >
+          <span class="one-line-ellipsis">{{tenant.name}}</span>
+          <svg *ngIf="tenant.tenantOwner" tuiIcon="user"></svg>
+        </span>
+
         <tui-dropdown #editDropdown direction="bottomRight" [caret]="false">
           <tui-dropdown-item 
             (click)="showModal(tenant, tenantActionTypes['edit'])"

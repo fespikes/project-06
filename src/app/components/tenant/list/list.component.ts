@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, HostBinding, ElementRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
@@ -13,6 +13,8 @@ import { session } from 'app/shared/utils';
   styleUrls: ['./list.component.sass']
 })
 export class ListComponent implements OnInit {
+  @HostBinding('class.main') hostClass = true;
+  
   searchSubject = new Subject();
   loading = false;
   tenants = [];

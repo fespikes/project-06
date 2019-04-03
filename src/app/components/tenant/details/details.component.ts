@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { combineLatest } from 'rxjs';
@@ -15,6 +15,7 @@ import { getAttrsFromObj, ObjectToArray } from '../../../shared/utils';
   styleUrls: ['./details.component.sass']
 })
 export class DetailsComponent implements OnInit {
+  @HostBinding('class.main') hostClass = true;
   loading = false;
   selectedIndex = 0;
 
@@ -66,8 +67,13 @@ export class DetailsComponent implements OnInit {
       });
   }
 
-  fetchProviders($event?, val?) {
-    if (val) {
+  fetchProviders($event?, val?, fresh?) {
+    if (fresh) {
+      this.service.fetchProviders(this.tenantName, this.providersFilter)
+        .subscribe( res => {
+          this.providers = res.body;
+        });
+    } else if (val) {
       this.providersFilter.type = $event;
     } else if($event) {
       this.providersFilter.searchValue = $event.target.value;
@@ -76,24 +82,21 @@ export class DetailsComponent implements OnInit {
     } else {
       return this.service.fetchProviders(this.tenantName, this.providersFilter)
     }
-    this.service.fetchProviders(this.tenantName, this.providersFilter)
-      .subscribe( res => {
-        this.providers = res.body;
-      });
   }
 
-  fetchOAuthClients($event?, val?) {
-    if (val) {
+  fetchOAuthClients($event?, val?, fresh?) {
+    if (fresh) {
+      this.service.oAuthClients(this.tenantName, 'get', this.oAuthClientFilter)
+        .subscribe( res => {
+          this.clients = res.body;
+        });
+    } else if (val) {
       this.oAuthClientFilter.type = $event;
     } else if($event) {
       $event.target && (this.oAuthClientFilter.searchValue = $event.target.value);
     } else {
       return this.service.oAuthClients(this.tenantName, 'get', this.oAuthClientFilter);
     }
-    this.service.oAuthClients(this.tenantName, 'get', this.oAuthClientFilter)
-      .subscribe( res => {
-        this.clients = res.body;
-      });
   }
 
   tabChange(index: number) {
@@ -137,7 +140,7 @@ export class DetailsComponent implements OnInit {
   showAuthProviderModal(type, provider) {
     this.modal.AuthProvider(provider, type, this.tenantName)
       .subscribe(argu => {
-        this.fetchProviders();
+        this.fetchProviders('', '', true);
       });
   }
 
@@ -164,11 +167,11 @@ export class DetailsComponent implements OnInit {
         this.refreshingClientSecret = true;
         this.service.oAuthClients(this.tenantName, 'delete', '', client.clientId)
         .subscribe( res => {
-          this.fetchOAuthClients(true);
+          this.fetchOAuthClients('', '', true);
           this.refreshingClientSecret = false;
         });
       }else {
-        this.fetchData(); // TODO: seperate the api request by "operation catagloy and types"
+        this.fetchOAuthClients('', '', true);
       }
     });
   }
