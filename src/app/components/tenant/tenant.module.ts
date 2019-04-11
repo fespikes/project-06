@@ -55,7 +55,6 @@ import { ListComponent } from './list/list.component';
   providers: [
     TenantService,
     ModalsService,
-    TranslateService,
     {
       provide: federation_server,
       useFactory: function() {

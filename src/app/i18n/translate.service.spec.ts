@@ -1,30 +1,31 @@
-import { TestBed } from '@angular/core/testing';
+
+import {of as observableOf} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { of as observableOf } from 'rxjs';
+import { TestBed, inject } from '@angular/core/testing';
 
 import { TranslateService, I18nLangService } from '.';
-
 class I18nLangServiceStub {
   current = observableOf('zh_CN');
 }
 
 describe('TranslateService', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    providers:[
-      TranslateService,
-      {
-        provide: HttpClient,
-        useValue: {},
-      },
-      {
-        provide: I18nLangService,
-        useClass: I18nLangServiceStub,
-      }
-    ]
-  }));
-
-  it('should be created', () => {
-    const service: TranslateService = TestBed.get(TranslateService);
-    expect(service).toBeTruthy();
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        TranslateService,
+        {
+          provide: HttpClient,
+          useValue: {},
+        },
+        {
+          provide: I18nLangService,
+          useClass: I18nLangServiceStub,
+        },
+      ],
+    });
   });
+
+  it('should be created', inject([TranslateService], (service: TranslateService) => {
+    expect(service).toBeTruthy();
+  }));
 });

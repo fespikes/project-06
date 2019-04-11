@@ -1,0 +1,233 @@
+
+
+<form
+  class="lg-md"
+  *ngIf="actionType===actionTypes['create'] || (actionType===actionTypes['edit'])"
+  [formGroup]="myForm"
+  (ngSubmit)="submit(myForm.value)"
+>
+  <div
+    [class.error]="!myForm.get('name').valid && myForm.get('name').touched"
+  >
+    <div class="field-box">
+      <label for="nameId"><span>*</span>{{'名称'}}</label>
+      <input
+        class="field"
+        type="text"
+        id="nameId"
+        autocomplete="off"
+        [formControl]="myForm.controls['name']"
+        />
+    </div>
+
+    <div
+      *ngIf="myForm.controls['name'].hasError('required') && myForm.controls['name'].touched"
+      class="message"
+    >{{'required tip'}}
+    </div>
+  </div>
+
+  <div
+    [class.error]="!myForm.get('validitySeconds').valid && myForm.get('validitySeconds').touched"
+  >
+    <div class="field-box fix-height-57">
+      <label for="validitySecondsId"><span>*</span>{{'Access Token有效时间'}}</label>
+      <tui-input-number
+        class="amount"
+        [tuiMinValue]="0"
+        [tuiMaxValue]="100"
+        type="number"
+        [formControl]="myForm.controls['validitySeconds']"
+        required
+      ></tui-input-number>
+      <span class="unit">小时</span>
+    </div>
+
+    <div
+      *ngIf="myForm.controls['validitySeconds'].hasError('required') && myForm.controls['validitySeconds'].touched"
+      class="message"
+    >{{'required tip'}}</div>
+  </div>
+
+  <div class="checkbox-wrapper">
+    <label>
+      <input
+        type="checkbox"
+        [(ngModel)]="hasRefreshToken"
+        [ngModelOptions]="{standalone: true}"
+      />开启 TLS
+      <!-- <tui-checkbox name="agree" ngModel>开启 TLS</tui-checkbox> -->
+    </label>
+  </div>
+
+  <div *ngIf="params.hasRefreshToken">
+    <div class="field-box" style="padding: 0">
+      <label for="passwordId"><span>*</span>{{'Refresh Token 有效时间'}}</label>
+      <label class="label-right">
+        <input
+          type="checkbox"
+          [(ngModel)]="refreshTokenAlwaysWork"
+          [ngModelOptions]="{standalone: true}"
+        />永久有效
+      </label>
+    </div>
+  
+    <div
+      *ngIf="!params.alwaysAvaliable"
+      class="field-box fix-height-57"
+    >
+      <label></label>
+      <tui-input-number
+        class="amount"
+        [tuiMinValue]="0"
+        [tuiMaxValue]="hourMax"
+        type="number"
+        [formControl]="myForm.controls['refreshTokenValiditySeconds']"
+        required
+      ></tui-input-number>
+      <span class="unit">小时</span>
+    </div>
+  </div>
+
+  <ul class="add-info">
+    <li class="f-title">自定义信息</li>
+    <li class="c-title">
+      <span>{{'key' | translate}}</span>
+      <span>{{'value' | translate}}</span>
+    </li>
+    <li
+      class="align-center"
+      *ngIf="(additionalInfos.length === 0) && (last.key === undefined)"
+    >未添加自定义信息</li>
+    <ng-container *ngIf="additionalInfos.length > 0">
+      <li *ngFor="let additionalInfo of additionalInfos; let idx = index">
+        <span *ngIf="additionalInfo.key!==' '">{{additionalInfo.key}}</span>
+        <span *ngIf="additionalInfo.value!==' '">{{additionalInfo.value}}</span>
+        <svg
+          (click)="removeSelf(additionalInfo)"
+          class="icon"
+          tuiIcon="check"
+        ></svg>
+      </li>
+    </ng-container>
+    <ng-container *ngIf="last.key !== undefined">
+      <li class="last-additionalInfo">
+        <span>
+          <input
+            [(ngModel)]="last.key"
+            [ngModelOptions]="{standalone: true}"
+            #focus
+          />
+        </span>
+        <span>
+          <input [(ngModel)]="last.value" [ngModelOptions]="{standalone: true}" />
+        </span>
+        <svg
+          (click)="removeSelf('', true)"
+          class="icon"
+          tuiIcon="check"
+        ></svg>
+      </li>
+    </ng-container>
+    <li class="add-line" >
+      <button
+        class="add"
+        (click)="addInfo()"
+        [disabled]="addAble?'disabled' : ''"
+      >+</button>
+    </li>
+  </ul>
+
+  <div class="buttons">
+    <button
+      class="tui-btn-md tui-btn-default tui-btn"
+      type="reset"
+      (click)="modal.close()"
+    >{{'取 消'}}</button>
+    <button
+      class="tui-btn-md tui-btn-primary tui-btn"
+      type="submit"
+      [disabled]="!myForm.valid ? 'disabled' : null"
+    >{{'确 定'}}</button>
+  </div>
+</form>
+
+<section *ngIf="actionType===actionTypes['return']">
+  <div class="wide">
+    <p class="info">“{{name}}“创建完成，是否继续设置自动刷新以定时刷新此 Access Token？</p>
+  </div>
+  <div class="buttons">
+    <button
+      class="tui-btn-md tui-btn-default tui-btn"
+      type="reset"
+      (click)="modal.close()"
+    >{{'暂不设置'}}</button>
+    <button
+      class="tui-btn-md tui-btn-primary tui-btn"
+      type="submit"
+      (click)="setAutoRefresh()"
+    >{{'设置自动刷新'}}</button>
+  </div>
+</section>
+
+<section *ngIf="actionType === actionTypes['refresh']">
+  <div class="checkbox-wrapper">
+    <label>
+      <input type="checkbox" [(ngModel)]="autoRefresh.triggerAutoRefresh" />开启 TLS
+    </label>
+  </div>
+  <div
+    class="narrow" 
+    *ngIf="autoRefresh.triggerAutoRefresh"
+  >
+    <div class="row">
+      <label>刷新时间间隔</label>
+      <tui-input-number
+        class="half"
+        [tuiMaxValue]="1000"
+        [tuiMinValue]="0"
+        type="number"
+        [(ngModel)]="autoRefresh.executionInterval"
+      ></tui-input-number>
+      小时
+    </div>
+    <div class="row">
+      <label>当前任务状态</label>
+      <ng-container *ngIf="autoRefresh.status === 'SCHEDULED'">
+        <span>调度中</span>
+        <button
+          class="half"
+          tuiBtn="primary"
+          tuiBtnOutline
+          [tuiBtnIcon]="user-admin"
+          (click)="swithTaskStatus('STOPPED')"
+        >暂停任务</button>
+      </ng-container>
+      <ng-container *ngIf="autoRefresh.status === 'STOPPED'">
+        <span>已暂停</span>
+        <button
+          class="half"
+          tuiBtn="primary"
+          tuiBtnOutline
+          [tuiBtnIcon]="user-admin"
+          (click)="swithTaskStatus('SCHEDULED')"
+        >开始调度</button>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="narrow">
+    <div class="buttons">
+      <button
+        class="tui-btn-md tui-btn-default tui-btn"
+        type="reset"
+        (click)="modal.close()"
+      >{{'取 消'}}</button>
+      <button
+        class="tui-btn-md tui-btn-primary tui-btn"
+        type="submit"
+        (click)="autoRefreshSubmit()"
+      >{{'确 定'}}</button>
+    </div>
+  </div>
+</section>

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {TranslateDeactivator, TranslateResolver, TranslateToken} from 'app/i18n';
 
-import { ListComponent } from './list/list.component';
+import { UsersComponent } from './users.component';
 
 const usersRoutes: Routes = [
   {
@@ -12,7 +12,7 @@ const usersRoutes: Routes = [
     children: [
       {
         path: 'list',
-        component: ListComponent
+        component: UsersComponent
       },{
         path: '',
         redirectTo: 'list',

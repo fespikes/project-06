@@ -74,8 +74,8 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
   providers: [
-    TranslateDeactivator,
     TranslateResolver,
+    TranslateDeactivator,
     {
       provide: TranslateToken,
       useValue: 'common'

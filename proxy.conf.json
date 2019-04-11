@@ -1,6 +1,6 @@
 {
   "/federation-server": {
-    "target": "https://172.16.132.224:9000",
+    "target": "http://172.16.203.76:8011",
     "secure": false,
     "changeOrigin": true
   }

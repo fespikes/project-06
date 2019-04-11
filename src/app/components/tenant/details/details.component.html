@@ -34,17 +34,19 @@
           <span>{{details.createTime | date:'y/M/d HH:mm:ss'}}</span>
           <!-- <span>2018.12.31 13:20:13</span> -->
         </label>
-        <label >自定义信息
-          <span
-            [tuiPopover]="tooltip"
-            class="ellipsis"
-          >...</span>
-        </label>
-        <tui-popover #tooltip placement="bottom">
-          <div class="popover">
-            <p *ngFor="let item of attrs">{{'"' + item.key + '" = "' + item.value + '""'}}</p>
-          </div>
-        </tui-popover>
+        <ng-container *ngIf="attrs.length > 0">
+          <label >自定义信息
+            <span
+              [tuiPopover]="tooltip"
+              class="ellipsis"
+            >...</span>
+          </label>
+          <tui-popover #tooltip placement="bottom">
+            <div class="popover">
+              <p *ngFor="let item of attrs">{{'"' + item.key + '" = "' + item.value + '""'}}</p>
+            </div>
+          </tui-popover>
+        </ng-container>
       </div>
     </div>
   </section>

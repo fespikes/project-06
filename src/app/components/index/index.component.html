@@ -14,7 +14,9 @@
 </section>
 <section class="content">
   <header>
-    <span class="invite">
+    <span class="invite"
+    (click)="showInvitationModal()"
+    >
       <svg tuiIcon="property-users" size="md"></svg>
       {{"COMMON.HEADER.invite" | translate}}
     </span>

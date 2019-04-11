@@ -1,4 +1,5 @@
 import { getAttrsForDirectiveMatching } from "@angular/compiler/src/render3/view/util";
+import { Pagination } from 'tdc-ui';
 
 export const clearOutlet = function(outletName, router) {
   router.navigate([{outlets: { [outletName]: null}}]);
@@ -117,4 +118,34 @@ export const getUnitAndMax = function(u) {
     unit : unit,
     max: max
   };
+}
+
+export class Paging extends Pagination {
+  static instance() {
+    return new Paging();
+  }
+  /* set totalPageNumber(ag){ this.itemCount = ag }
+  get totalPageNumber() {
+    return this.itemCount || Math.floor(this.total%this.pageSize);
+  } */
+
+  set pageNumber(ag) { this.page = ag }
+  get pageNumber() { return this.page }
+
+  set pageSize(ag) { this.size = ag }
+  get pageSize() { return this.size }
+
+  /* set itemCount(ag) { this.total = ag }
+  get itemCount() { return this.total } */
+  constructor(page?: number, size?: number, total?: number) {
+    super(page, size, total);
+    // this.totalPageNumber = this.itemCount/this.pageSize;
+  }
+
+  afterReturn(pageNumber, pageSize, itemCount) {
+    this.pageNumber = pageNumber;
+    this.pageSize = pageSize;
+    // this.itemCount = itemCount;
+  }
+
 }

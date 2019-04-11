@@ -43,6 +43,7 @@ export class AuthService {
       session.isAdmin = response.authorities.some(item => {
           return adminRoles.indexOf(item.authority) > -1;
         }) ? 'true' : 'false';
+      session.isFedAdmin = response.authorities.some(item => item.authority==='ROLE_FED_ADMIN') ? 'true' : 'false';
     }
   }
 

@@ -70,11 +70,34 @@ export class ApiService {
       catchError(this.formatErrors));
   }
 
-  put(path: string, body: Object = {}): Observable<any> {
+  put(path: string, body: Object = {}, header?: object): Observable<any> {
+    let specialHeader;
+    if (header) {
+      // const headerObj = {
+      //   'Accept': '*/*',
+      //   'Content-Type': 'application/json;charset=UTF-8',
+      //   // 'Accept': 'application/json',
+      //   ...header
+      // }
+      const headers = this.headers;
+      // const key = 'GF-Refresh-Token';
+      Object.keys(header).forEach(item => {
+        // if (item === 'Authorization') {
+        // }
+        headers.set(item, header[item]);
+      })
+      // specialHeader = new HttpHeaders(headerObj);
+      return this.http.put(
+        this.makeUrl(path),
+        '{}',
+        {headers: headers}
+      ).pipe(
+        catchError(this.formatErrors));
+    }
     return this.http.put(
       this.makeUrl(path),
       JSON.stringify(body),
-      { headers: this.headers },
+      header ? {headers: specialHeader} : { headers: this.headers },
     ).pipe(
       catchError(this.formatErrors));
   }

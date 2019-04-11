@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
-  I18nModule,
   I18nLangService,
   TranslateService,
 } from './i18n';
@@ -21,6 +20,8 @@ import { federation_server } from 'app/shared/app.tokens';
 import { ProfileModalComponent } from './components/index/profile-modal/profile-modal.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PwdModalComponent } from './components/index/pwd-modal/pwd-modal.component';
+import { InvitationModalComponent } from './components/index/invitation-modal/invitation-modal.component';
+
 import { AppService } from './app.service';
 
 @NgModule({
@@ -32,17 +33,18 @@ import { AppService } from './app.service';
     ProfileModalComponent,
     NotFoundComponent,
     PwdModalComponent,
+    InvitationModalComponent,
   ],
   entryComponents: [
     ProfileModalComponent,
-    PwdModalComponent
+    PwdModalComponent,
+    InvitationModalComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
-    I18nModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,

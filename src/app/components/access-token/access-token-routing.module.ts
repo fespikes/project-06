@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import {TranslateDeactivator, TranslateResolver, TranslateToken} from 'app/i18n';
 
 import { AccessTokenComponent } from './access-token.component';
-import { ListComponent } from './list/list.component';
 
 const routes: Routes = [{
   path: '',
@@ -12,7 +11,7 @@ const routes: Routes = [{
     children: [
       {
         path: 'list',
-        component: ListComponent
+        component: AccessTokenComponent
       },{
         path: '',
         redirectTo: 'list',

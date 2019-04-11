@@ -35,7 +35,7 @@ export class AccessTokenModalComponent implements OnInit {
   ngOnInit() {
     this.fetchData();
   }
-  
+
   fetchData() {
     this.api.fetchAccessToken(this.oAuthClient.clientId, this.filter)
       .subscribe(res => {

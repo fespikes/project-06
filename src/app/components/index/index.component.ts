@@ -41,6 +41,13 @@ export class IndexComponent implements OnInit {
     this.modal.profileModal();
   }
 
+  showInvitationModal() {
+    this.modal.invitationModal()
+      .subscribe(res => {
+        console.log(res);
+      });
+  }
+
   changePWD() {
     this.modal.pwdModal();
   }
