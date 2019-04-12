@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ApiService } from 'app/shared';
 
 @Injectable({
@@ -17,6 +17,11 @@ export class IndexService {
 
   changePWD(username, params) {
     return this.api.put(`users/${username}/password`, params)
+  }
+
+  sendLink(method = 'post', params) {
+    // return this.api.post(``);
+    return of({});
   }
 
 }

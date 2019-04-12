@@ -15,7 +15,7 @@ export class UsersComponent implements OnInit {
 
   users: any[] = [];
   roles = ObjectToArray(roles, true);
-  filter: any = {};
+  filter: any = {searchValue: ''};
   paging = Paging.instance();
 
   constructor(
@@ -43,9 +43,41 @@ export class UsersComponent implements OnInit {
   toUserModal(type, user?) {
     this.modal.userModal(type, user)
       .subscribe(res => {
+        if (type === 'remove') {
+          return this.service.users('delete', {username: user.username})
+            .subscribe( res => {
+              this.fetchData();
+            })
+        }
         this.fetchData();
       })
+  }
 
+  dynamicStyles(role) {
+    let bgColor = '#';
+    switch (role) {
+      case roles.admin:
+        bgColor += '1D96F3'
+        break;
+      case roles.Viewer:
+        bgColor += 'B8DCC9'
+        break;
+      case roles.userAdmin:
+        bgColor += '93D0F5'
+        break;
+      case roles.userViewer:
+        bgColor += '74B7FE'
+        break;
+      case roles.tenantAdmin:
+        bgColor += '0083B8'
+        break;
+      case roles.tenantViewer:
+        bgColor += '97D1E1'
+        break;
+    }
+    return {
+      background:  bgColor
+    };
   }
 
 }

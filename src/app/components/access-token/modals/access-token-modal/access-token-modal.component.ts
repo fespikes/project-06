@@ -77,7 +77,7 @@ export class AccessTokenModalComponent implements OnInit {
   ) {
     this.actionType = data.type;
     this.autoRefresh.name = data.name;
-    this.autoRefresh.refreshTokenValue = data.refreshToken.value;
+    data.refreshToken && (this.autoRefresh.refreshTokenValue = data.refreshToken.value);
   }
 
   ngOnInit() {

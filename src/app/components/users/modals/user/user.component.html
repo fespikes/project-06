@@ -77,7 +77,7 @@
       <div
         *ngIf="myForm.controls['password'].hasError('required') && myForm.controls['password'].touched"
         class="message"
-      >{{'TENANT.TENANT_ADMIN.REQUIRED' | translate}}</div>
+      >{{'REQUIRED' | translate}}</div>
       <div
         *ngIf="myForm.controls['password'].hasError('pattern') && myForm.controls['password'].touched"
         class="message">{{'TENANT.PWD_PLACEHOLDER' | translate}}</div>
@@ -179,7 +179,7 @@
     </div>
 
     <div
-      *ngIf="actionType === 'register'"
+      *ngIf="actionType === 'register' || actionType === 'reset-pwd'"
       [class.error]="!myForm.get('newPassword').valid && myForm.get('newPassword').touched"
     >
       <div class="field-box">
@@ -195,15 +195,16 @@
       </div>
 
       <div
-        *ngIf="myForm.controls['password'].hasError('required') && myForm.controls['password'].touched"
+        *ngIf="myForm.controls['newPassword'].hasError('required') && myForm.controls['newPassword'].touched"
         class="message"
-      >{{'TENANT.TENANT_ADMIN.REQUIRED' | translate}}</div>
+      >{{'REQUIRED' | translate}}</div>
       <div
-        *ngIf="myForm.controls['password'].hasError('pattern') && myForm.controls['password'].touched"
+        *ngIf="myForm.controls['newPassword'].hasError('pattern') && myForm.controls['newPassword'].touched"
         class="message">{{'TENANT.PWD_PLACEHOLDER' | translate}}</div>
     </div>
 
     <div
+      *ngIf="actionType !== 'reset-pwd'"
       [class.error]="!myForm.get('confirm').valid && myForm.get('confirm').touched"
     >
       <div class="field-box">

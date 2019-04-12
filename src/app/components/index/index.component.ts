@@ -42,7 +42,7 @@ export class IndexComponent implements OnInit {
   }
 
   showInvitationModal() {
-    this.modal.invitationModal()
+    this.modal.invitationModal('create')
       .subscribe(res => {
         console.log(res);
       });

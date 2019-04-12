@@ -34,6 +34,28 @@ export class ApiService {
       map((data) => data)); // TODO: check if the data has data['data'] inside
   }
 
+  fetch(path: string, body?, header?): Observable<any> {
+    const obj = {
+      'Accept': 'application/json, text/plain, */*',
+      'Content-Type': 'application/json;charset=UTF-8',
+    };
+    Object.keys(header).forEach(item => {
+      obj[item] = header[item];
+    })
+    const headers = new HttpHeaders(obj);
+    const url = this.makeUrl(path);
+
+    return this.http.get(
+      url,
+      {
+        headers: headers,
+        // responseType: 'json',
+        // withCredentials: false
+      }
+    ).pipe(
+      catchError(this.formatErrors));
+  }
+
   getAll(path: string, params: Object = {}): Observable<any> {
     params['size'] = Math.pow(2, 31) - 1;
     params['page'] = 1;
@@ -59,7 +81,8 @@ export class ApiService {
       this.makeUrl(path),
       this.setHttpParams(params, true, 'arraybuffer')
     ).pipe(
-      catchError(this.formatErrors));
+      catchError(this.formatErrors)
+    );
   }
 
   getBlob(path: string, params: Object = {}, absolutePath = false): Observable<any> {
@@ -71,22 +94,11 @@ export class ApiService {
   }
 
   put(path: string, body: Object = {}, header?: object): Observable<any> {
-    let specialHeader;
     if (header) {
-      // const headerObj = {
-      //   'Accept': '*/*',
-      //   'Content-Type': 'application/json;charset=UTF-8',
-      //   // 'Accept': 'application/json',
-      //   ...header
-      // }
       const headers = this.headers;
-      // const key = 'GF-Refresh-Token';
       Object.keys(header).forEach(item => {
-        // if (item === 'Authorization') {
-        // }
         headers.set(item, header[item]);
       })
-      // specialHeader = new HttpHeaders(headerObj);
       return this.http.put(
         this.makeUrl(path),
         '{}',
@@ -97,7 +109,7 @@ export class ApiService {
     return this.http.put(
       this.makeUrl(path),
       JSON.stringify(body),
-      header ? {headers: specialHeader} : { headers: this.headers },
+      { headers: this.headers }
     ).pipe(
       catchError(this.formatErrors));
   }
@@ -131,7 +143,21 @@ export class ApiService {
       catchError(this.formatErrors));
   }
 
-  delete(url, body): Observable<any> {
+  delete(url, body, header?: object): Observable<any> {
+    if (header) {
+      const headers = this.headers;
+      Object.keys(header).forEach(item => {
+        headers.set(item, header[item]);
+      })
+      return this.http.delete(
+        this.makeUrl(url),
+        {
+          params: this.setHttpParams(body).params,
+          headers: headers
+        }
+      ).pipe(
+        catchError(this.formatErrors));
+    }
     return this.http.delete(
       this.makeUrl(url),
       {
@@ -151,7 +177,7 @@ export class ApiService {
   }
 
   formatErrors(responseError: HttpErrorResponse) {
-    let data;
+    let data, msg;
     if (typeof responseError.error === 'string') {
       try {
         data = JSON.parse(responseError.error);
@@ -162,7 +188,12 @@ export class ApiService {
     } else {
       data = responseError.error;
     }
-    this.message.error(data.error_code+':'+data.error_description); // TODO
+    if (data) {
+      msg = data.error_code+':'+data.error_description
+    } else {
+      msg = responseError.message;
+    }
+    this.message.error(msg); // TODO
     return observableThrowError(data);
   }
 

@@ -21,7 +21,7 @@ export class DetailsComponent implements OnInit {
 
   tenantActionTypes = tenantActionTypes;
   details: any = {};
-  attrs: any[];
+  attrs: any[] = [];
   tenantName = '';
 
   providerTypes: any;

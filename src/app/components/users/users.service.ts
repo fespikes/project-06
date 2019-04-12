@@ -13,7 +13,12 @@ export class UsersService {
   ) {}
 
   users(method, params): Observable<any>{
-    return this.api[method](`users`, params);
+    let url = `users`
+    if (method === 'remove') {
+      url = `users/${params.username}`;
+      return this.api[method](url);
+    }
+    return this.api[method](url, params);
   }
 
 }

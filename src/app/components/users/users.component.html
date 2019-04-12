@@ -43,8 +43,18 @@
       角色
       <svg
         tuiIcon="user"
-        tuiTooltip="系统管理员-拥有Federation最高权限的管理员; 系统访客-拥有Federation所有信息的查看权限； 用户管理员-拥有Federation用户的管理权限； 用户信息访客-拥有Federation用户的查看权限； 租户管理员-拥有Federation内全部租户的管理权限； 租户信息访客-拥有Federation内全部租户的管理权限。"
+        [tuiPopover]="tooltip"
       ></svg>
+      <tui-popover #tooltip placement="bottom">
+        <div class="popover">
+          <p>系统管理员-拥有Federation最高权限的管理员;</p>
+          <p>系统访客-拥有Federation所有信息的查看权限；</p>
+          <p>用户管理员-拥有Federation用户的管理权限；</p>
+          <p>用户信息访客-拥有Federation用户的查看权限；</p>
+          <p>租户管理员-拥有Federation内全部租户的管理权限；</p>
+          <p>租户信息访客-拥有Federation内全部租户的管理权限。</p>
+        </div>
+      </tui-popover>
     </div>
     <div>创建时间</div>
     <div>操作</div>
@@ -57,6 +67,7 @@
         <mark
           *ngFor="let item of datum.roles"
           class="c-1D96F3"
+          [ngStyle]="dynamicStyles(item)"
         >{{('COMMON.ROLES.' + item) | translate}}</mark> 
         <!-- <mark class="c-0083B8">租户管理员</mark>  -->
       </span>

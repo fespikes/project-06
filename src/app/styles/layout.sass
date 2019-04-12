@@ -1,5 +1,6 @@
 
 .tui-dropdown-item
+  padding: 11px 10px
   .dropdown-here
     input
       margin-right: 10px
@@ -8,6 +9,8 @@
     text-align: left
     &:last-child
       padding: 12px 0 10px
+  .icons
+    margin: 0 12px 0 0
 
 // S: common
 $border-radius: 3px
@@ -216,6 +219,17 @@ $borderColor: #DDE3E9
     width: 100%
     height: 50px
     padding: 10px 0
+    position: relative
+    img
+      height: 32px
+      display: inline-block
+      margin-left: auto
+      margin-right: auto
+      width: 121px
+      position: absolute
+      left: 50%
+      top: 50%
+      transform: translate(-50%, -50%)
 
 .content
   display: flex

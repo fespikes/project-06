@@ -33,11 +33,12 @@ export class ModalsService {
     });
   }
 
-  invitationModal() {
+  invitationModal(type) {
     let title = '生成邀请链接';
     return this.modal.open(InvitationModalComponent, {
       title: title,
       data: {
+        type
       },
       size: 'md'
     });

@@ -1,6 +1,8 @@
 
 <section class="navigation">
-  <h1 class="logo"></h1>
+  <h1 class="logo">
+    <img src="/assets/icons/svg/logo.svg" />
+  </h1>
   <tui-menu
     routeHandler
     (selectChange)="selectChange($event)"
@@ -17,13 +19,13 @@
     <span class="invite"
     (click)="showInvitationModal()"
     >
-      <svg tuiIcon="property-users" size="md"></svg>
+      <svg tuiIcon="f-invite"></svg>
       {{"COMMON.HEADER.invite" | translate}}
     </span>
 
     <span class="user-dropdown" [tuiDropdownTrigger]="userDropdown">
       {{userName}}
-      <svg tuiIcon="caret-down" size="md"></svg>
+      <svg tuiIcon="f-shot-down" size="md"></svg>
     </span>
     <tui-dropdown #userDropdown direction="bottomCenter" [caret]="true">
       <tui-dropdown-item [class.active]="true" class="items">
@@ -44,7 +46,7 @@
       </tui-dropdown-item>
     </tui-dropdown>
 
-    <svg tuiIcon="property-users" size="md"></svg>
+    <svg tuiIcon="f-head" size="lg"></svg>
   </header>
 
   <router-outlet></router-outlet>

@@ -79,22 +79,12 @@ export class UserComponent implements OnInit {
       this.user.roles.forEach(element => {
         this.roles[element] = true;
       });
-      // TODO: to be confirmed
     } else if (this.actionType === 'reset-pwd') {
       group = {
         'newPassword': ['', Validators.compose([
           Validators.required,
           Validators.pattern(patterns.password)
-        ])],
-        'confirm': ['',
-          Validators.compose([
-            Validators.required,
-            Validators.pattern(patterns.password),
-            function(control: FormControl) {
-              return me.confirmValidator.bind(me)(control, 'password');
-            },
-          ])
-        ]
+        ])]
       }
     }
     this.myForm = fb.group(group);
@@ -111,9 +101,10 @@ export class UserComponent implements OnInit {
   submit(val: {[s:string]: string}) {
     const params: any = {...val};
     let method;
-    if (this.actionType === 'register' && session.isFedAdmin){
+    if ((this.actionType === 'register' || this.actionType === 'edit') && session.isFedAdmin ){
       params.roles = ObjectToArray(this.roles).filter(item => this.roles[item]);
     }
+
     switch (this.actionType) {
       case 'register':
         method = 'post';
@@ -126,6 +117,8 @@ export class UserComponent implements OnInit {
         delete params.confirm;
         break;
       default:
+        method = 'delete';
+        params.username = this.user.username;
         break;
     }
     this.service.users(method, params)

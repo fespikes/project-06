@@ -50,10 +50,10 @@ export class AccessTokenComponent implements OnInit {
     this.loading = true;
     combineLatest(promises)
       .subscribe(([tenantASTokenRes, ownASTokenRes]) => {
-        this.tenantASToken = (tenantASTokenRes as any).body; // TODO
-        this.setPaging(this.tenantPaging, tenantASTokenRes);
-        this.ownASToken = this.adjustTokens((ownASTokenRes as any).body); // TODO
-        this.setPaging(this.ownPaging, ownASTokenRes);
+        this.fetchTasks((tenantASTokenRes as any).body, this.tenantASToken);
+        // this.setPaging(this.tenantPaging, tenantASTokenRes);
+        this.fetchTasks((ownASTokenRes as any).body, this.ownASToken);
+        // this.setPaging(this.ownPaging, ownASTokenRes);
         this.loading = false;
       });
   }
@@ -69,14 +69,26 @@ export class AccessTokenComponent implements OnInit {
       return this.service.tokens('get', filter)
         .subscribe( res => {
           if (tokenSource === 'CLIENT') {
-            this.tenantASToken = res.body;
-            this.setPaging(this.tenantPaging, res);
+            this.fetchTasks(res.body, this.tenantASToken);
           } else {
-            this.ownASToken = this.adjustTokens(res.body)
-            this.setPaging(this.ownPaging, res);
+            this.fetchTasks(res.body, this.ownASToken)
           }
         });
     }
+  }
+
+  fetchTasks(tokens, scopeToken) {
+    if (tokens.length===0) {return;}
+    const header = {
+      'GF-Refresh-Token': ''
+    };
+    header["GF-Refresh-Token"] = tokens[0].name;
+    // header["GF-Refresh-Token"] = tokens.map(token => token.name).join(',');
+    return this.service.tokenRefreshTask('get', '', header)
+      .subscribe(res => {
+        console.log(res);
+        scopeToken = this.adjustTokens(tokens, res.body);
+      });
   }
 
   setPaging(paging, res) {

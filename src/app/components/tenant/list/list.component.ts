@@ -96,4 +96,8 @@ export class ListComponent implements OnInit {
     });
   }
 
+  imageSrc(element) {
+    return '/assets/icons/svg/letters/'+ (element + '').slice(0,1).toUpperCase() +'.svg';
+  }
+
 }
