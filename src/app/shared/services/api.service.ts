@@ -14,6 +14,7 @@ export class ApiService {
     return new HttpHeaders({
       'Accept': 'application/json, text/plain, */*',
       'Content-Type': 'application/json;charset=UTF-8',
+      'credentials': 'include'
     });
   }
 

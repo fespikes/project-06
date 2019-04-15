@@ -22,7 +22,7 @@
     <div
       *ngIf="myForm.controls['username'].hasError('required') && myForm.controls['username'].touched"
       class="message"
-    >{{'required tip'}}</div>
+    >{{'必填项'}}</div>
   </div>
 
   <div [class.error]="!myForm.get('email').valid && myForm.get('email').touched" >

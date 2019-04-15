@@ -23,7 +23,7 @@
     <div
       *ngIf="myForm.controls['name'].hasError('required') && myForm.controls['name'].touched"
       class="message"
-    >{{'required tip'}}
+    >{{'必填项'}}
     </div>
   </div>
 
@@ -46,7 +46,7 @@
     <div
       *ngIf="myForm.controls['validitySeconds'].hasError('required') && myForm.controls['validitySeconds'].touched"
       class="message"
-    >{{'required tip'}}</div>
+    >{{'必填项'}}</div>
   </div>
 
   <div class="checkbox-wrapper">

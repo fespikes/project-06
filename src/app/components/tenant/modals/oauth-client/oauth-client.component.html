@@ -55,7 +55,7 @@
     <div
       *ngIf="myForm.controls['type'].hasError('required') && myForm.controls['type'].touched"
       class="message"
-    >{{'required tip' | translate}}</div>
+    >{{'必填项' | translate}}</div>
   </div>
 
   <div
@@ -76,7 +76,7 @@
     <div
       *ngIf="myForm.controls['redirectUris'].hasError('required') && myForm.controls['redirectUris'].touched"
       class="message"
-    >{{'required tip'}}</div>
+    >{{'必填项'}}</div>
   </div>
 
   <div
@@ -176,21 +176,23 @@
       class="tui-btn-md tui-btn-default tui-btn"
       type="reset"
       (click)="modal.close()"
-    >{{'RESET'}}</button>
+    >{{'COMMON.MODAL.RESET' | translate}}</button>
     <button
       class="tui-btn-md tui-btn-primary tui-btn"
       type="submit"
       [disabled]="!myForm.valid ? 'disabled' : null"
-    >{{'CONFIRM'}}</button>
-      <!-- (click)="submit()" -->
+    >{{'COMMON.MODAL.CONFIRM' | translate}}</button>
   </div>
 
 </form>
 
 <div *ngIf="'return'===actionType || ('clientSecret'===actionType)">
   <div class="narrow">
-    <p class="info">
+    <p class="info" *ngIf="'return'===actionType">
       “rubik-Client”已经注册成功，生成的Client ID 和 Client Secret 如下，请及时保存。
+    </p>
+    <p class="info" *ngIf="'clientSecret'===actionType">
+      “rubik-Client”已经更新成功，生成的Client ID 和 Client Secret 如下，请及时保存。
     </p>
   </div>
   <div class="copy-field">
@@ -204,7 +206,7 @@
     <span>
       <svg
         class="icon"
-        tuiIcon="book"
+        tuiIcon="f-copy"
         ngxClipboard
         [cbContent]="returned['clientId']"
         (cbOnSuccess)="copy(clientIdInput)"
@@ -222,7 +224,7 @@
     <span>
       <svg
         class="icon"
-        tuiIcon="book"
+        tuiIcon="f-copy"
         ngxClipboard
         [cbContent]="returned['clientSecret']"
         (cbOnSuccess)="copy(clientSecretInput)"

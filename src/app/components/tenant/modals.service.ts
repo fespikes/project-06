@@ -32,7 +32,10 @@ export class ModalsService {
         break;
       case actionTypes.remove:
         title = '删除租户'
-        break;
+        return this.modal.info({
+          title: title,
+          message: `确认删除 “${argu.tenant.name}”？ \n删除租户后，此租户下所有的资源也将被删除。`
+        });
     }
     return this.modal.open(TenantModalComponent, {
       title: title,
@@ -75,8 +78,11 @@ export class ModalsService {
         title = '认证源' + '-' + provider.providerId;
         break;
       case 'remove':
-        title = '删除认证源'
-        break;
+        title = '删除认证源';
+        return this.modal.info({
+          title: title,
+          message: `确认删除认证源 “${provider.providerId}”？`
+        });
     }
     return this.modal.open(AuthProviderComponent, {
       title: title,

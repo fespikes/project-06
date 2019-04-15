@@ -36,8 +36,8 @@
           *ngIf="tenant.tenantOwner"
           [tuiDropdownTrigger]="editDropdown"
         >
-          <svg tuiIcon="setting"></svg>
-          <svg tuiIcon="caret-down"></svg>
+          <svg tuiIcon="f-operate-right" style="margin-right: 3px"></svg>
+          <svg tuiIcon="f-shot-down"></svg>
         </span>
 
         <span
@@ -47,18 +47,18 @@
           [tuiTooltip]="tenant.name"
         >
           <span class="one-line-ellipsis">{{tenant.name}}</span>
-          <svg *ngIf="tenant.tenantOwner" tuiIcon="user"></svg>
+          <svg *ngIf="tenant.tenantOwner" tuiIcon="f-user-admin"></svg>
         </span>
         <span
           *ngIf="(tenant.name + '').length <= 18"
           class="wid"
           [class.wider]="!tenant.tenantOwner"
         >
-          <span class="one-line-ellipsis">{{tenant.name}}</span>
-          <svg *ngIf="tenant.tenantOwner" tuiIcon="user"></svg>
+          <span class="">{{tenant.name}}</span>
+          <svg *ngIf="tenant.tenantOwner" tuiIcon="f-user-admin"></svg>
         </span>
 
-        <tui-dropdown #editDropdown direction="bottomRight" [caret]="false">
+        <tui-dropdown #editDropdown direction="bottomCenter" [caret]="false">
           <tui-dropdown-item 
             (click)="showModal(tenant, tenantActionTypes['edit'])"
           >编辑租户

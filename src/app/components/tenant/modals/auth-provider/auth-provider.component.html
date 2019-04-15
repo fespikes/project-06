@@ -20,7 +20,7 @@
     <div
       *ngIf="myForm.controls['providerId'].hasError('required') && myForm.controls['providerId'].touched"
       class="message"
-    >{{'required tip'}}</div>
+    >{{'必填项'}}</div>
   </div>
 
   <div [class.error]="!myForm.get('type').valid && myForm.get('type').touched">
@@ -67,7 +67,7 @@
     <div
       *ngIf="myForm.controls['address'].hasError('required') && myForm.controls['address'].touched"
       class="message"
-    >{{'required tip'}}</div>
+    >{{'必填项'}}</div>
   </div>
 
   <div class="checkbox-wrapper">
@@ -100,7 +100,7 @@
   </div>
 </form>
 
-<div
+<!-- <div
   class="wide"
   *ngIf="actionType === 'remove'"
 >
@@ -119,4 +119,4 @@
       [disabled]="submitAble ? false:  'disabled'"
     >{{'确定' | translate}}</button>
   </div>
-</div>
+</div> -->

@@ -111,6 +111,7 @@ export class OauthClientComponent implements OnInit {
       this.params = data.client;
       this.attrs = getAttrsFromObj(this.params.additionalInfo);
     }
+    console.log('data.type:', this.params, this.attrs);
   }
 
   ngOnInit() {
@@ -156,6 +157,7 @@ export class OauthClientComponent implements OnInit {
       value: ''
     };
     this.focus && this.focus.nativeElement.focus();
+    return false;
   }
 
   submit(val: {[s:string]: string}) {

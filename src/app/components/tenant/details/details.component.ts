@@ -163,7 +163,7 @@ export class DetailsComponent implements OnInit {
     ).subscribe(argu => {
       if (type === 'details') {
         return;
-      } else if(type === 'remove') {
+      } else if(type === 'remove' && argu) {
         this.refreshingClientSecret = true;
         this.service.oAuthClients(this.tenantName, 'delete', '', client.clientId)
         .subscribe( res => {

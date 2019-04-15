@@ -58,7 +58,7 @@
           <tui-input
             class="item"
             placeholder="{{'名称、地址' | translate}}"
-            prefix="user"
+            suffix="search"
             [(ngModel)]="providersFilter.searchValue"
             (input)="fetchProviders($event)"
           ></tui-input>
@@ -95,11 +95,11 @@
           <div>{{datum.providerId}}</div>
           <div>{{datum.type}}</div>
           <div>
-            <span tuiTooltip="{{'查看详情' | translate}}">
-              <svg tuiIcon="trash" (click)="showAuthProviderModal('edit', datum)"></svg>
+            <span tuiTooltip="{{'查看详情' | translate}}" class="mg-right-12">
+              <svg tuiIcon="f-view-details" (click)="showAuthProviderModal('edit', datum)"></svg>
             </span>
             <span tuiTooltip="{{'删除' | translate}}">
-              <svg tuiIcon="trash" (click)="showAuthProviderModal('remove', datum)"></svg>
+              <svg tuiIcon="f-table-remove" (click)="showAuthProviderModal('remove', datum)"></svg>
             </span>
           </div>
         </tui-table-row>
@@ -112,7 +112,7 @@
           <tui-input
             class="item"
             placeholder="{{'名称或Redirect Uris' | translate}}"
-            prefix="user"
+            suffix="search"
             [(ngModel)]="oAuthClientFilter.searchValue"
             (input)="fetchOAuthClients($event)"
           ></tui-input>
@@ -160,7 +160,7 @@
               class="one-line-ellipsis"  
               [tuiPopover]="tooltip"
               style="width: 174px"
-            >{{datum.redirectUris.join(',')}}</span>
+            >{{datum.redirectUris?.join(',')}}</span>
             <tui-popover #tooltip placement="top">
               <div class="popover">
                 <div class="popover-content" *ngFor="let url of datum.redirectUris">
@@ -174,25 +174,29 @@
               tuiTooltip="{{'查看详情' | translate}}"
               (click)="showAccessToken(datum, '')"
             >
-              <svg tuiIcon="trash"></svg>
+              <svg tuiIcon="f-view-details"></svg>
             </span>
           </div>
           <div>
             <span
               (click)="refresh(datum)"
+              class="mg-right-12"
               tuiTooltip="{{'更新 Client Secret' | translate}}"
             >
-              <svg tuiIcon="trash"></svg>
+              <svg tuiIcon="f-table-pull"></svg>
             </span>
             <span
+              class="mg-right-12"
               (click)="showOAuthClientModal('edit', datum)"
-              tuiTooltip="{{'编辑' | translate}}">
-              <svg tuiIcon="trash"></svg>
+              tuiTooltip="{{'编辑' | translate}}"
+            >
+              <svg tuiIcon="f-table-operation"></svg>
             </span>
             <span
               (click)="showOAuthClientModal('remove', datum)"
-              tuiTooltip="{{'删除' | translate}}">
-              <svg tuiIcon="trash"></svg>
+              tuiTooltip="{{'删除' | translate}}"
+            >
+              <svg tuiIcon="f-table-remove"></svg>
             </span>
           </div>
         </tui-table-row>

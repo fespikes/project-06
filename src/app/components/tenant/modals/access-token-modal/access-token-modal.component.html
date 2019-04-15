@@ -47,7 +47,7 @@
           tuiTooltip="查看详情"
           [tuiDropdownTrigger]="dropdownA"
         >
-          <svg tuiIcon="trash"></svg>
+          <svg tuiIcon="f-table-viewAT"></svg>
         </span>
         <tui-dropdown #dropdownA direction="bottomCenter">
           <tui-dropdown-item>
@@ -60,7 +60,7 @@
               />
               <svg
                 class="icon"
-                tuiIcon="book"
+                tuiIcon="f-copy"
                 ngxClipboard
                 [cbContent]="item['value']"
                 (cbOnSuccess)="copy(item['value'])"
@@ -83,7 +83,7 @@
           tuiTooltip="查看详情"
           [tuiDropdownTrigger]="dropdownB"
         >
-          <svg tuiIcon="trash"></svg>
+          <svg tuiIcon="f-table-viewAT"></svg>
         </span>
         <tui-dropdown #dropdownB direction="bottomCenter">
           <tui-dropdown-item>
@@ -96,7 +96,7 @@
               />
               <svg
                 class="icon"
-                tuiIcon="book"
+                tuiIcon="f-copy"
                 ngxClipboard
                 [cbContent]="item['refreshToken']['value']"
                 (cbOnSuccess)="copy(item['refreshToken']['value'])"
@@ -119,5 +119,5 @@
     class="single"
     tuiBtn="primary"
     (click)="modal.close()"
-  >Close</button>
+  >关闭</button>
 </div>

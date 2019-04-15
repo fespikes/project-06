@@ -21,11 +21,11 @@
       </div>
       <div>
         <svg
-          tuiIcon="check"
+          tuiIcon="f-correct"
           (click)="addInfo(tgt)"
         ></svg>
         <svg
-          tuiIcon="cross"
+          tuiIcon="f-cross"
           (click)="addInfo(tgt, true)"
         ></svg>
       </div>
@@ -44,16 +44,16 @@
           *ngIf="datum.tenantOwner"
           tuiTooltip="{{'取消管理员' | translate}}"
         >
-          <svg tuiIcon="trash" (click)="operate('delete', datum)"></svg>
+          <svg tuiIcon="f-table-operation" (click)="operate('delete', datum)"></svg>
         </span>
         <span
           *ngIf="!datum.tenantOwner"
           tuiTooltip="{{'设为当前租户管理员' | translate}}"
         >
-          <svg tuiIcon="trash" (click)="operate('post', datum)"></svg>
+          <svg tuiIcon="f-correct" (click)="operate('post', datum)"></svg>
         </span>
         <span tuiTooltip="{{'移除用户' | translate}}">
-          <svg tuiIcon="trash" (click)="remove(datum)"></svg>
+          <svg tuiIcon="f-remove" (click)="remove(datum)"></svg>
         </span>
       </div>
     </tui-table-row>

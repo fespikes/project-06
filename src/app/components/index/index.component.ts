@@ -52,4 +52,11 @@ export class IndexComponent implements OnInit {
     this.modal.pwdModal();
   }
 
+  switchLang(language) {
+  }
+
+  quit() {
+    
+  }
+
 }

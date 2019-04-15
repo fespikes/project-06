@@ -46,7 +46,7 @@
       <div
         *ngIf="myForm.controls['email'].hasError('required') && myForm.controls['email'].touched"
         class="message"
-      >{{'required tip' | translate}}</div>
+      >{{'必填项' | translate}}</div>
       <div
         *ngIf="myForm.controls['email'].hasError('pattern') && myForm.controls['email'].touched"
         class="message"

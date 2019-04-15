@@ -20,11 +20,11 @@
           </div>
           <div>
             <svg
-              tuiIcon="check"
+              tuiIcon="f-correct"
               (click)="addInfo(dstTenantLast)"
             ></svg>
             <svg
-              tuiIcon="cross"
+              tuiIcon="f-cross"
               (click)="addInfo(dstTenantLast, true)"
             ></svg>
           </div>
@@ -34,7 +34,7 @@
           <div>{{datum.dstTenant}}</div>
           <div>
             <span tuiTooltip="{{'删除' | translate}}">
-              <svg tuiIcon="trash" (click)="remove(datum)"></svg>
+              <svg tuiIcon="f-remove" (click)="remove(datum)"></svg>
             </span>
           </div>
         </tui-table-row>
