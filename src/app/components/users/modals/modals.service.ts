@@ -27,7 +27,7 @@ export class ModalsService {
       break;
       case 'remove':
         title = '删除' ;
-        return this.modal.error({
+        return this.modal.info({
           title: title,
           message: `确认删除 “${user.username}”？`
         });

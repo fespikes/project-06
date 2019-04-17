@@ -16,7 +16,7 @@ export class AccessTokenComponent implements OnInit {
   @HostBinding('class.main') hostClass = true;
   actionTypes = actionTypes;
   loading = false;
-  selectedIndex = 1;
+  selectedIndex = 0;
   tenantASToken: any[];
   ownASToken: any[];
   filter: any = {
@@ -50,8 +50,8 @@ export class AccessTokenComponent implements OnInit {
     this.loading = true;
     combineLatest(promises)
       .subscribe(([tenantASTokenRes, ownASTokenRes]) => {
-        this.tenantASToken =(tenantASTokenRes as any).body;
-        this.ownASToken = (ownASTokenRes as any).body;
+        this.tenantASToken = this.adjustTokens((tenantASTokenRes as any).body);
+        this.ownASToken = this.adjustTokens((ownASTokenRes as any).body);
         this.loading = false;
       });
   }
@@ -61,15 +61,16 @@ export class AccessTokenComponent implements OnInit {
     filter.tokenSource = tokenSource;
     filter.pageNumber = paging.page;
     filter.pageSize = paging.size;
+    filter.withTokenRefreshTask = true;
     if(refresh === undefined) {
       return this.service.tokens('get', filter)
     } else if(!!refresh) {
       return this.service.tokens('get', filter)
         .subscribe( res => {
           if (tokenSource === 'CLIENT') {
-            this.tenantASToken = res.body;
+            this.tenantASToken = this.adjustTokens(res.body);
           } else {
-            this.ownASToken = res.body;
+            this.ownASToken = this.adjustTokens(res.body);
           }
         });
     }
@@ -89,8 +90,11 @@ export class AccessTokenComponent implements OnInit {
         // TODO: untill the solution of "Authorization"
         if (type === actionTypes['remove']) {
           this.service.tokens('delete', undefined, {
-            'GF-Access-Token': item.name
+            'GF-Access-Token': item.value
           }).subscribe(res => {
+            if (res) {
+              this.message.success(`"${res.name}" 已删除！`);
+            }
             this.fetchTokens('USER', this.ownPaging, true);
           });
         } else {
@@ -98,7 +102,9 @@ export class AccessTokenComponent implements OnInit {
           if (type === actionTypes['create']) {
             this.openAccessTokenModal(actionTypes['return'], res);
           } else if (type === actionTypes['return']) {
-            this.openAccessTokenModal(actionTypes['refresh'], item);
+            if (res.task) {
+              this.openAccessTokenModal(actionTypes['refresh'], item);
+            }
           }
         }
       });
@@ -111,7 +117,9 @@ export class AccessTokenComponent implements OnInit {
       const info = element.additionalInfo;
       Object.keys(info).forEach(item => {
         if (taskes) {
-          element.status = taskes.filter(ele => ele.name === element.name)['status'];
+          element.status = taskes.filter(ele => {
+            return ele.name === element.name;
+          })['status'];
         } else {
           element.attributes.push({
             key: item,
@@ -126,7 +134,6 @@ export class AccessTokenComponent implements OnInit {
     });
   }
 
-  // TODO: untill the solution of "Authorization"
   toRefreshNow(token) {
     this.service.tokens(
       'put',

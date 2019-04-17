@@ -6,7 +6,7 @@ import {map, catchError} from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { TuiMessageService  } from 'tdc-ui';
 
-import { federation_server } from 'app/shared/app.tokens';
+// import { federation_server } from 'app/shared/app.tokens';
 
 @Injectable()
 export class ApiService {
@@ -20,7 +20,7 @@ export class ApiService {
 
   constructor(
     private http: HttpClient,
-    @Optional() @Inject(federation_server) private federation_server,
+    // @Optional() @Inject(federation_server) private federation_server,
     private message: TuiMessageService,
   ) {
     this.formatErrors = this.formatErrors.bind(this);
@@ -35,7 +35,7 @@ export class ApiService {
       map((data) => data)); // TODO: check if the data has data['data'] inside
   }
 
-  fetch(path: string, body?, header?): Observable<any> {
+  getWithHeader(path: string, body?, header?): Observable<any> {
     const obj = {
       'Accept': 'application/json, text/plain, */*',
       'Content-Type': 'application/json;charset=UTF-8',
@@ -96,10 +96,15 @@ export class ApiService {
 
   put(path: string, body: Object = {}, header?: object): Observable<any> {
     if (header) {
-      const headers = this.headers;
+      const obj = {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json;charset=UTF-8',
+      };
       Object.keys(header).forEach(item => {
-        headers.set(item, header[item]);
+        obj[item] = header[item];
       })
+      const headers = new HttpHeaders(obj);
+
       return this.http.put(
         this.makeUrl(path),
         '{}',
@@ -146,10 +151,15 @@ export class ApiService {
 
   delete(url, body, header?: object): Observable<any> {
     if (header) {
-      const headers = this.headers;
+      const obj = {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json;charset=UTF-8',
+      };
       Object.keys(header).forEach(item => {
-        headers.set(item, header[item]);
+        obj[item] = header[item];
       })
+      const headers = new HttpHeaders(obj);
+
       return this.http.delete(
         this.makeUrl(url),
         {

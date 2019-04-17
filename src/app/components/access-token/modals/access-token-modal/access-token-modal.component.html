@@ -187,23 +187,23 @@
         [tuiMaxValue]="1000"
         [tuiMinValue]="0"
         type="number"
-        [(ngModel)]="autoRefresh.executionInterval"
+        [(ngModel)]="autoRefresh.task.executionInterval"
       ></tui-input-number>
       小时
     </div>
     <div class="row">
       <label>当前任务状态</label>
-      <ng-container *ngIf="autoRefresh.status === 'SCHEDULED'">
+      <ng-container *ngIf="autoRefresh.task.status === 'SCHEDULED'">
         <span>调度中</span>
         <button
           class="half"
           tuiBtn="primary"
           tuiBtnOutline
-          [tuiBtnIcon]="user-admin"
+          [tuiBtnIcon]="f-remove"
           (click)="swithTaskStatus('STOPPED')"
         >暂停任务</button>
       </ng-container>
-      <ng-container *ngIf="autoRefresh.status === 'STOPPED'">
+      <ng-container *ngIf="autoRefresh.task.status === 'STOPPED'">
         <span>已暂停</span>
         <button
           class="half"

@@ -1,5 +1,6 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { UsersService } from './users.service';
+import { TuiMessageService } from 'tdc-ui';
 
 import { ModalsService } from './modals';
 import { Paging, ObjectToArray } from 'app/shared';
@@ -12,28 +13,33 @@ import { roles } from './users.model';
 })
 export class UsersComponent implements OnInit {
   @HostBinding('class.main') hostClass = true;
+  loading = false;
 
   users: any[] = [];
   roles = ObjectToArray(roles, true);
   filter: any = {searchValue: ''};
-  paging = Paging.instance();
+  paging: Paging;
 
   constructor(
     private service: UsersService,
-    private modal: ModalsService
+    private modal: ModalsService,
+    private message: TuiMessageService
   ) {}
 
   ngOnInit() {
+    this.paging = this.paging || new Paging();
     this.fetchData();
   }
 
   fetchData() {
+    this.loading = true;
     this.filter.pageNumber = this.paging.pageNumber;
     this.filter.pageSize = this.paging.pageSize;
-    delete this.filter.roles; // templetely remove it
+    delete this.filter.roles;
 
     this.service.users('get', this.filter)
       .subscribe( res => {
+        this.loading = false;
         this.users = res.body;
         // TODO: the paging
         this.paging.afterReturn(res.pageNumber, res.pageSize, res.itemCount);
@@ -48,6 +54,16 @@ export class UsersComponent implements OnInit {
             .subscribe( res => {
               this.fetchData();
             })
+        }
+        switch (type) {
+          case 'reset-pwd':
+            this.message.success('重置密码成功!')
+            break;
+          case 'delete':
+            this.message.success('删除成功!')
+            break;
+          default:
+            break;
         }
         this.fetchData();
       })

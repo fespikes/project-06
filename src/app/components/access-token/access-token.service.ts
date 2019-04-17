@@ -16,7 +16,7 @@ export class AccessTokenService {
     return this.api[method](`tokens`, params, header);
   }
 
-  tokenRefreshTask(method, task?, header?) {
+  tokenRefreshTask(method, task?) {
     let part;
     switch (method) {
       case 'post':
@@ -26,6 +26,7 @@ export class AccessTokenService {
         part = '';
         break;
       case 'delete':
+      case 'put':
         part = `/${task.name}`;
         break;
       default:
@@ -35,11 +36,7 @@ export class AccessTokenService {
     if (method === 'delete') {
       return this.api[method](url);
     }
-    if (header) { // currently only when get has header, only use fetch here
-      return this.api.fetch(url, '', header);
-    }
     return this.api[method]( `token-refresh-tasks${part}`, task);
   }
-
 
 }

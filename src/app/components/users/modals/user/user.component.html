@@ -118,7 +118,7 @@
     </div>
   
     <div
-      *ngIf="isFedAdmin"
+      *ngIf="isFedAdmin && actionType !== 'edit'"
       class="chks-wrapper"
     >
       <label>系统角色</label>

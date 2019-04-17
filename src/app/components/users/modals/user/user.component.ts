@@ -88,6 +88,10 @@ export class UserComponent implements OnInit {
       }
     }
     this.myForm = fb.group(group);
+    if (this.actionType === 'edit') {
+      this.myForm.get('username').disable();
+      this.myForm.get('email').disable();
+    }
   }
 
   confirmValidator(control: FormControl, target: string): { [s: string]: boolean } {
@@ -111,10 +115,13 @@ export class UserComponent implements OnInit {
         break;
       case 'edit':
         method = 'put';
+        params.username = this.user.username;
+        params.email = this.user.email;
         break;
       case 'reset-pwd':
         method = 'put';
         delete params.confirm;
+        params.username = this.user.username;
         break;
       default:
         method = 'delete';

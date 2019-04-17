@@ -11,6 +11,7 @@ import { AccessTokenService } from '../../access-token.service';
 import { actionTypes } from '../../access-token.model';
 import { ObjectToArray } from 'app/shared/utils';
 
+const unit = 3600000;
 @Component({
   selector: 'fed-access-token-modal',
   templateUrl: './access-token-modal.component.html',
@@ -35,14 +36,16 @@ export class AccessTokenModalComponent implements OnInit {
   myForm: FormGroup;
   additionalInfos: any[] = [];
 
-  autoRefresh = {
+  autoRefresh: any = {
+    task: {
+      name: ''
+    },
     name: '',
     triggerAutoRefresh: false,
     executionInterval: 0,
     refreshTokenValue: '',
     status: 'SCHEDULED' // SCHEDULED / STOPPED
-  }
-
+  };
   get addAble() { return (this.last.key === '') || (this.last.value === '')}
 
   set hasRefreshToken(b) {
@@ -72,12 +75,17 @@ export class AccessTokenModalComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private modal: TuiModalRef,
-    @Inject(TUI_MODAL_DATA) data,
+    @Inject(TUI_MODAL_DATA) private data,
     private api: AccessTokenService
   ) {
     this.actionType = data.type;
-    this.autoRefresh.name = data.name;
     data.refreshToken && (this.autoRefresh.refreshTokenValue = data.refreshToken.value);
+
+    if (data.task) {
+      this.autoRefresh.triggerAutoRefresh = true;
+      this.autoRefresh.task = data.task? data.task : '';
+      this.autoRefresh.task.executionInterval = data.task.executionInterval / unit;
+    }
   }
 
   ngOnInit() {
@@ -170,24 +178,31 @@ export class AccessTokenModalComponent implements OnInit {
   }
 
   setAutoRefresh() {
-    this.modal.close({name: this.autoRefresh.name});
+    this.modal.close({});
   }
 
   swithTaskStatus(status) {
-    this.autoRefresh.status = status; // SCHEDULED   STOPPED
+    this.autoRefresh.task.status = status; // SCHEDULED   STOPPED
   }
 
   autoRefreshSubmit() {
     let method = 'post';
-    const params: any = {...this.autoRefresh};
-    if (params.triggerAutoRefresh) {
-      method = 'post';
-      params.executionInterval = params.executionInterval * 3600000;
+    let task: any;
+    const autoRefresh = {...this.autoRefresh};
+    if (autoRefresh.triggerAutoRefresh) {
+      method = 'put';
+      task = {
+        ...autoRefresh.task,
+        executionInterval: autoRefresh.task.executionInterval * unit,
+      };
     } else {
       method = 'delete';
+      task = {
+        name: autoRefresh.task.name
+      }
     }
 
-    this.api.tokenRefreshTask(method, params)
+    this.api.tokenRefreshTask(method, task)
       .subscribe(res => {
         this.modal.close(res);
       });

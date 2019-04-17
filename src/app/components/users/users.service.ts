@@ -13,10 +13,19 @@ export class UsersService {
   ) {}
 
   users(method, params): Observable<any>{
-    let url = `users`
-    if (method === 'remove') {
-      url = `users/${params.username}`;
-      return this.api[method](url);
+    let url = `users`;
+    switch (method) {
+      case 'delete':
+        url = `users/${params.username}`;
+        return this.api[method](url);
+      case 'put':
+        url = `users/${params.username}`;
+        return this.api[method](url, params);
+      case 'reset-pwd':
+        url = `users/${params.username}/password`;
+        return this.api[method](url, params);
+      default:
+        break;
     }
     return this.api[method](url, params);
   }
