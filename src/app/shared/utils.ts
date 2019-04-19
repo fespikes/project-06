@@ -1,9 +1,11 @@
 import { getAttrsForDirectiveMatching } from "@angular/compiler/src/render3/view/util";
 import { Pagination } from 'tdc-ui';
+import { environment } from '../../environments/environment';
 
 export const clearOutlet = function(outletName, router) {
   router.navigate([{outlets: { [outletName]: null}}]);
 }
+export const isProduction = environment.production;
 /* 
 export const session = (function() {
   const store = window.sessionStorage;

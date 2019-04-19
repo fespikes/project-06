@@ -12,7 +12,7 @@ import { MainComponent } from './main/main.component';
 import { IndexComponent } from './components/index/index.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 
-const routes: Routes = [
+export const appRoutes: Routes = [
   {
     path: 'account',
     loadChildren: './components/account/account.module#AccountModule',
@@ -65,7 +65,7 @@ const routes: Routes = [
         path: '',
         resolve: [TranslateResolver],
         canDeactivate: [TranslateDeactivator],
-        children: routes,
+        children: appRoutes,
       },
     ], {
       useHash: true,

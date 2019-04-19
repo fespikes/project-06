@@ -53,13 +53,8 @@ import { AppService } from './app.service';
     ApiService, 
     I18nLangService, 
     TranslateService,
-    // FederationGuard,
     AuthService,
     AppService
-    // {
-    //   provide: federation_server,
-    //   useValue: 'federation-server'
-    // }
   ],
   bootstrap: [AppComponent]
 })

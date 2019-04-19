@@ -1,12 +1,15 @@
 <div class="container">
-  <nav>
+  <!-- TODO: be available next version -->
+  <!-- <nav>
     <a routerLink="/account/reset-pwd">忘记密码 ?</a>
     <span>
       <a (click)="switchLang(languages[0].value)" [ngClass]="{ 'selected': getSelected(languages[0].value)}">{{languages[0].name}}</a> |
       <a (click)="switchLang(languages[1].value)" [ngClass]="{ 'selected': getSelected(languages[1].value)}">{{languages[1].name}}</a>
     </span>
-  </nav>
-  <div class="login">
+  </nav> -->
+  <div class="login"
+  [class.more]="role !== roles['federation']"
+  >
     <div class="login-info" *ngIf="error">
     </div>
     <div class="login-title">
@@ -41,10 +44,7 @@
           formControlName="password"
         >
       </div>
-      <div
-        class="captcha-field"
-        *ngIf="roles.federation === role"
-      >
+      <div class="captcha-field">
         <div class="input-field">
           <input 
             type="text" 
@@ -53,24 +53,17 @@
             formControlName="captcha"
           >
         </div>
-        <img [src]="captchaUrl" alt="dummy captcha">
+        <img
+          (click)="resetCapture($event)"
+          [src]="captchaUrl"
+          alt="dummy captcha" 
+        />
       </div>
       <button [disabled]="loginForm.invalid">{{ 'LOGIN.LOGIN' | translate }}</button>
-<!--           <div class="checkbox-field">
-        <label>
-          <input
-            type="checkbox"
-            name="remember"
-            formControlName="remember"
-          >{{ 'LOGIN.REMEMBER_PASSWORD' | translate }}
-        </label>
-      </div> -->
     </form>
     <div class="switcher">
       <a (click)="switchAccountType(roles['federation'])" [ngClass]="{ 'selected': role === roles['federation']}">{{'Federation账号'}}</a> | 
       <a (click)="switchAccountType(roles['other'])" [ngClass]="{ 'selected': role !== roles['federation']}">{{'租户内账号'}}</a> 
-      <!-- <a (click)="switchLang(languages[0].value)" [ngClass]="{ 'selected': getSelected(languages[0].value)}">{{languages[0].name}}</a> | 
-      <a (click)="switchLang(languages[1].value)" [ngClass]="{ 'selected': getSelected(languages[1].value)}">{{languages[1].name}}</a>  -->
     </div>
   </div>  
   <div class="footer">

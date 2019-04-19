@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AccountService } from '../account.service';
 import { AuthService, LoginInfo } from 'app/shared';
 import { I18nLangService } from 'app/i18n';
+import { TuiMessageService } from 'tdc-ui'
 
 function captchaValidator(): ValidatorFn {
   return (control: AbstractControl): {[key: string]: any} => {
@@ -58,7 +59,8 @@ export class LoginComponent implements OnInit {
     private auth: AuthService,
     private router: Router,
     private i18nLang: I18nLangService,
-    private service: AccountService
+    private service: AccountService,
+    private message: TuiMessageService
   ) {
     this.role = this.roles.federation;
     this.captchaUrl = this.service.captchaUrl();
@@ -69,12 +71,13 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
-    this.auth.login(this.loginPayload).subscribe(() => {
-      this.auth.currUser.name = this.loginForm.value.name;
-      this.auth.currUser.tenant = this.loginForm.value.tenant;      
-      this.router.navigate(['/index/tenant/list']);
-    }, 
-    (error) => {});
+    this.auth.login(this.loginPayload)
+      .subscribe(() => {
+        this.message.success('登录成功');
+        this.auth.currUser.name = this.loginForm.value.name;
+        this.auth.currUser.tenant = this.loginForm.value.tenant;      
+        this.router.navigate(['/index/tenant/list']);
+      });
   }
 
   switchAccountType(role) {
@@ -92,16 +95,20 @@ export class LoginComponent implements OnInit {
 
   getFormGroup() {
     const group: any = {
-      tenant: ['', Validators.required],
       name: ['', Validators.required],
       password: ['', Validators.required],
-      captcha: ['']
+      captcha: ['', Validators.required]
     };
     if (this.role === this.roles['federation']) {
       delete group.tenant;
-      group.captcha = ['', Validators.required];
+    } else {
+      group.tenant = ['', Validators.required];
     }
     this.loginForm = this.fb.group(group);
+  }
+
+  resetCapture($event) {
+    this.captchaUrl = this.service.captchaUrl();
   }
 
 }

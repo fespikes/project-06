@@ -9,11 +9,20 @@ import {
   FederationGuard,
 } from './services';
 
+import {
+  FileUploadDirective,
+  ForbiddenUsernameDirective,
+  ForbiddenEmailDirective,
+} from 'app/shared/directives';
+
 import { TuiMessageService  } from 'tdc-ui';
 import { TuiModule, FormModule } from 'tdc-ui';
 
 @NgModule({
   declarations: [
+    FileUploadDirective,
+    ForbiddenUsernameDirective,
+    ForbiddenEmailDirective,
   ],
   imports: [
     CommonModule,

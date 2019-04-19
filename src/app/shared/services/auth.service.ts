@@ -3,6 +3,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { ApiService } from './api.service';
 import { session } from 'app/shared/utils';
 import { adminRoles } from 'app/components/tenant/tenant.model';
+import {isProduction} from 'app/shared/utils';
 
 export class User {
   name = '';
@@ -29,7 +30,7 @@ export class AuthService {
   ) { }
 
   isLoggedIn() {
-    return this.api.get('sessions/current', undefined,'federation-server');
+    return this.api.getEncode('sessions/current');
   }
 
   setToken (response: any) {
@@ -57,7 +58,7 @@ export class AuthService {
   }
 
   logout() {
-    return this.api.postEncode('logout');
+    return this.api.getEncode('logout');
   }
 
   purgeAuth() {

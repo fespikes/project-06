@@ -25,7 +25,7 @@ export class AccessTokenModalComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private modal: TuiModalRef,
+    public modal: TuiModalRef,
     @Inject(TUI_MODAL_DATA) data,
     private api: TenantService
   ) {

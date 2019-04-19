@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
+import { AuthService } from 'app/shared';
 import { session } from 'app/shared/utils';
 import { ModalsService } from './modal.service';
+import { I18nLangService } from 'app/i18n';
 
 @Component({
   selector: 'fed-index',
@@ -21,16 +24,18 @@ export class IndexComponent implements OnInit {
     { value: 'en_US', name: 'English' },
   ];
 
-  constructor(private modal: ModalsService) { }
+  constructor(
+    private router: Router,
+    private modal: ModalsService,
+    private auth: AuthService,
+    private i18nLang: I18nLangService
+  ) { }
 
   ngOnInit() {
     if(!session.isAdmin) {
       this.menuItems.pop();
     }
     this.userName = session.userName;
-    /* setTimeout(() => {
-      this.changePWD();
-    }, 16); */
   }
 
   selectChange($event) {
@@ -52,11 +57,15 @@ export class IndexComponent implements OnInit {
     this.modal.pwdModal();
   }
 
-  switchLang(language) {
+  switchLang(lang) {
+    this.i18nLang.switch(lang);
   }
 
   quit() {
-    
+    this.auth.logout()
+      .subscribe(res => {
+        this.router.navigate(['/account/login']);
+      });
   }
 
 }

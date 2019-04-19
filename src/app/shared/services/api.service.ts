@@ -1,6 +1,6 @@
 import { Injectable, Inject, InjectionToken, Optional } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import {Observable, throwError as observableThrowError} from 'rxjs';
+import {Observable, of, throwError as observableThrowError} from 'rxjs';
 import {map, catchError} from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
@@ -25,7 +25,7 @@ export class ApiService {
   ) {
     this.formatErrors = this.formatErrors.bind(this);
   }
-
+  // TODO: to be optimized
   get(path: string, params: Object = {}, fs?): Observable<any> {
     return this.http.get(
       this.makeUrl(path, fs),
@@ -131,8 +131,9 @@ export class ApiService {
 
   // only used in login/logout for now
   postEncode(urlPath: string, body: Object = {}, headers = this.headers): Observable<any> {
+    const url = this.rawUrl(urlPath);
     return this.http.post(
-      this.makeUrl(urlPath),
+      url,
       this.setHttpParams(body, true).params.toString(),
       {headers},
     ).pipe(
@@ -140,13 +141,14 @@ export class ApiService {
     );
   }
 
-  postRaw(path: string, body: Object = {}, config: Object = {}): Observable<any> {
-    return this.http.post(
-      this.makeUrl(path),
-      body,
-      config,
+  getEncode(path: string, params: Object = {}): Observable<any> {
+    const url = this.rawUrl(path);
+    return this.http.get(
+      url,
+      this.setHttpParams(params)
     ).pipe(
-      catchError(this.formatErrors));
+      catchError(this.formatErrors),
+      map((data) => data));
   }
 
   delete(url, body, header?: object): Observable<any> {
@@ -199,6 +201,10 @@ export class ApiService {
     } else {
       data = responseError.error;
     }
+    if (responseError.status === 200 || (responseError.status === 401)) {
+      // hack here.
+      return of({});
+    }
     if (data) {
       msg = data.error_code+':'+data.error_description
     } else {
@@ -231,8 +237,11 @@ export class ApiService {
     if (/\/ops\/v1/g.test(url)) {
       return url;
     }
-    // return this.join(this.federation_server || environment.apiUrl, url);
     return this.join(fs || environment.apiUrl, url);
+  }
+
+  rawUrl(url) {
+    return this.join(environment.shim, url);
   }
 
   join(...parts) {
