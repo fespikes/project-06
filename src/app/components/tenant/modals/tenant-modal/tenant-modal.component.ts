@@ -94,9 +94,6 @@ export class TenantModalComponent implements OnInit {
       case tenantActionTypes.create:
         observe = this.api.tenantMaintain('', 'post', this.params);
         break;
-      case tenantActionTypes.remove:
-        observe = this.api.tenantMaintain(this.params.name, 'delete');
-        break;
     }
 
     observe.subscribe(res => {

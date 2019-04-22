@@ -108,25 +108,3 @@
     >{{'确定' | translate}}</button>
   </div>
 </form>
-
-<div
-  class="wide"
-  *ngIf="actionType === 'remove'"
->
-  <p class="info">确认删除租户 “{{params.name}}”？</p>
-  <p class="info">删除租户后，此租户下所有的资源也将被删除。</p>
-
-  <div class="buttons">
-    <button
-      class="tui-btn-md tui-btn-default tui-btn"
-      type="reset"
-      (click)="quit()"
-    >{{'取消'}}</button>
-    <button
-      class="tui-btn-md tui-btn-primary tui-btn"
-      (click)="submit()"
-      type="submit"
-      [disabled]="submitAble ? false:  'disabled'"
-    >{{'确定' | translate}}</button>
-  </div>
-</div>

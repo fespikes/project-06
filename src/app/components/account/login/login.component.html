@@ -13,7 +13,7 @@
     <div class="login-info" *ngIf="error">
     </div>
     <div class="login-title">
-      <img src="/assets/icons/svg/federation.svg" />
+      <img [src]="logoUrl()" />
       <span> {{ "LOGIN.FEDERATION" | translate }} </span>
     </div>
     <form class="login-area" [formGroup]="loginForm" (ngSubmit)="submit()"> 

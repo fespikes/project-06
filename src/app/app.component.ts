@@ -18,5 +18,6 @@ export class AppComponent {
   ) {
     i18nLang.switch(i18nLang.lang);
     appService.fetchConstants();
+    session.basePath = document.getElementsByTagName('base')[0].href;
   }
 }

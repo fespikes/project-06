@@ -2,6 +2,8 @@ import { Component, OnInit, HostBinding, ElementRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
+import { TuiMessageService } from 'tdc-ui';
+
 import { TenantService } from '../tenant.service';
 import { ModalsService } from '../modals.service';
 import { adminRoles, tenantActionTypes } from '../tenant.model';
@@ -30,7 +32,8 @@ export class ListComponent implements OnInit {
   constructor(
     private el: ElementRef,
     private api: TenantService,
-    private modal: ModalsService
+    private modal: ModalsService,
+    private message: TuiMessageService
   ) {}
 
   ngOnInit() {
@@ -93,12 +96,21 @@ export class ListComponent implements OnInit {
       tenant: tenant,
       type
     }).subscribe(argu => {
-      this.getOwnTenants();
+      if (type === 'remove') {
+        this.api.tenantMaintain(tenant.name, 'delete')
+          .subscribe(res => {
+            this.getOwnTenants();
+            this.message.success('删除成功');
+          });
+      } else {
+        this.getOwnTenants();
+      }
     });
   }
 
   imageSrc(element) {
-    return '/assets/icons/svg/letters/'+ (element + '').slice(0,1).toUpperCase() +'.svg';
+    const base = session.basePath;
+    return base + 'assets/icons/svg/letters/'+ (element + '').slice(0,1).toUpperCase() +'.svg';
   }
 
 }

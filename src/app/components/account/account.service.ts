@@ -16,7 +16,6 @@ export class AccountService {
 
   captchaUrl() {
     return this.api.makeUrl(`login/captcha?v=${Math.random()}`, '' );
-    // return this.api.makeUrl(`login/captcha?v=${Math.random()}`, isProduction ? '' : 'federation-server');
   }
 
   sendRegisterLink() {

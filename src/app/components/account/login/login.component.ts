@@ -3,7 +3,7 @@ import { FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/
 import { Router } from '@angular/router';
 
 import { AccountService } from '../account.service';
-import { AuthService, LoginInfo } from 'app/shared';
+import { AuthService, LoginInfo, session } from 'app/shared';
 import { I18nLangService } from 'app/i18n';
 import { TuiMessageService } from 'tdc-ui'
 
@@ -105,6 +105,10 @@ export class LoginComponent implements OnInit {
       group.tenant = ['', Validators.required];
     }
     this.loginForm = this.fb.group(group);
+  }
+
+  logoUrl() {
+    return session.basePath + 'assets/icons/svg/federation.svg';
   }
 
   resetCapture($event) {
