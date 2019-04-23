@@ -108,7 +108,7 @@ export class LoginComponent implements OnInit {
   }
 
   logoUrl() {
-    return session.basePath + 'assets/icons/svg/federation.svg';
+    return session.basePath + 'assets/icons/symbols/f-logo.svg';
   }
 
   resetCapture($event) {

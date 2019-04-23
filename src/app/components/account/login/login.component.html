@@ -62,11 +62,12 @@
       <button [disabled]="loginForm.invalid">{{ 'LOGIN.LOGIN' | translate }}</button>
     </form>
     <div class="switcher">
-      <a (click)="switchAccountType(roles['federation'])" [ngClass]="{ 'selected': role === roles['federation']}">{{'Federation账号'}}</a> | 
-      <a (click)="switchAccountType(roles['other'])" [ngClass]="{ 'selected': role !== roles['federation']}">{{'租户内账号'}}</a> 
+      <a (click)="switchAccountType(roles['federation'])" [ngClass]="{ 'selected': role === roles['federation']}">{{'Federation用户'}}</a> | 
+      <a (click)="switchAccountType(roles['other'])" [ngClass]="{ 'selected': role !== roles['federation']}">{{'租户内用户'}}</a> 
     </div>
   </div>  
   <div class="footer">
-    Copyright © 2019 TRANSWARP. All Rights Reserved.
+    沪ICP备13042669号-4 @2019 TRANSWARP 保留所有权利
   </div>
+  <!-- Copyright © 2019 TRANSWARP. All Rights Reserved. -->
 </div>

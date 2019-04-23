@@ -15,7 +15,7 @@ export class AccountService {
   ) {}
 
   captchaUrl() {
-    return this.api.makeUrl(`login/captcha?v=${Math.random()}`, '' );
+    return this.api.rawUrl(`login/captcha?v=${Math.random()}`);
   }
 
   sendRegisterLink() {
