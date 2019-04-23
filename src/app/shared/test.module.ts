@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { I18nModule, TranslateService } from '../i18n';
-import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { 
   ApiService,
@@ -34,13 +34,13 @@ import { TuiModule, FormModule } from 'tdc-ui';
     FormsModule,
     ReactiveFormsModule,
     RouterTestingModule,
+    HttpClientModule
   ],
   providers: [
     ApiService,
     AuthService,
     FederationGuard,
     TuiMessageService,
-    HttpClient,
     TranslateService
   ],
   exports: [

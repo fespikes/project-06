@@ -8,7 +8,7 @@ import {
 } from './i18n';
 
 import { ApiService, SharedModule }  from 'app/shared';
-
+import { TestModule } from 'app/shared/test.module';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
@@ -19,7 +19,8 @@ describe('AppComponent', () => {
         RouterTestingModule,
         FormsModule, 
         ReactiveFormsModule,
-        SharedModule
+        SharedModule,
+        TestModule
       ],
       declarations: [
         AppComponent
