@@ -114,14 +114,12 @@
         </div>
       </tui-table-row>
     </tui-table>
-
     <tui-pagination
       [(pagination)]="tenantPaging"
-      (paginationChange)="fetchTokens('USER ', tenantPaging, true)"
-      [showSize]="true"
-      [showGoTo]="true"
-    >
-    </tui-pagination>
+      (paginationChange)="fetchTokens('CLIENT', 'tenantPaging', true)"
+      [showTotal]="false"
+      [showGoTo]="false"
+    ></tui-pagination>
   </div>
   <div *tuiTabPane="'自定义'">
     <tui-table [tuiTableFlex]="[2,1.5,1,1,0.8,1.5,1]" tuiTableOutline [tuiLoading]="loading">
@@ -252,9 +250,9 @@
     </tui-table>
     <tui-pagination
       [(pagination)]="ownPaging"
-      (paginationChange)="fetchTokens('USER ', ownPaging, true)"
-      [showGoTo]="true"
-    >
-    </tui-pagination>
+      (paginationChange)="fetchTokens('USER ', 'ownPaging', true)"
+      [showTotal]="false"
+      [showGoTo]="false"
+    ></tui-pagination>
   </div>
 </tui-tab>

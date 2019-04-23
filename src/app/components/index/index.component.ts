@@ -38,9 +38,7 @@ export class IndexComponent implements OnInit {
     this.userName = session.userName;
   }
 
-  selectChange($event) {
-    console.log('$event', $event);
-  }
+  selectChange($event) {}
 
   showProfile() {
     this.modal.profileModal();

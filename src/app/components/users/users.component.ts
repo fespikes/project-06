@@ -1,9 +1,9 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { UsersService } from './users.service';
-import { TuiMessageService } from 'tdc-ui';
+import { TuiMessageService, Pagination } from 'tdc-ui';
 
 import { ModalsService } from './modals';
-import { Paging, ObjectToArray } from 'app/shared';
+import { ObjectToArray } from 'app/shared';
 import { roles } from './users.model';
 
 @Component({
@@ -18,7 +18,7 @@ export class UsersComponent implements OnInit {
   users: any[] = [];
   roles = ObjectToArray(roles, true);
   filter: any = {searchValue: ''};
-  paging: Paging;
+  paging: Pagination = new Pagination();
 
   constructor(
     private service: UsersService,
@@ -27,22 +27,24 @@ export class UsersComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.paging = this.paging || new Paging();
     this.fetchData();
   }
 
   fetchData() {
     this.loading = true;
-    this.filter.pageNumber = this.paging.pageNumber;
-    this.filter.pageSize = this.paging.pageSize;
+    this.filter.pageNumber = this.paging.page;
+    this.filter.pageSize = this.paging.size;
     delete this.filter.roles;
 
     this.service.users('get', this.filter)
       .subscribe( res => {
         this.loading = false;
         this.users = res.body;
-        // TODO: the paging
-        this.paging.afterReturn(res.pageNumber, res.pageSize, res.itemCount);
+        this.paging = {
+          page: res.pageNumber,
+          size: res.pageSize,
+          total: res.pageSize * res.totalPageNumber
+        };
       });
   }
 

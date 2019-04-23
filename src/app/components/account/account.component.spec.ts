@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AccountComponent } from './account.component';
 import { AccountService } from './account.service';
 import { ApiService } from 'app/shared';
+import { TestModule } from 'app/shared/test.module';
 
 describe('AccountComponent', () => {
   let component: AccountComponent;
@@ -10,6 +11,7 @@ describe('AccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [TestModule],
       declarations: [ AccountComponent ],
       providers: [
         AccountService,
