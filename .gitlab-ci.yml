@@ -4,20 +4,20 @@ before_script:
   - echo "Project" $CI_PROJECT_NAME
 
 stages:
-  - test
+  # - test
   - build
 
-unit-test:
-  stage: test
-  script:
-    - echo "unit-test"
-    - cd /$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
-    - cp -r /usr/src/app/node_modules /$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/node_modules
-    - npm run test:single
-  only:
-    - master
-  tags:
-    - k8s
+# unit-test:
+#   stage: test
+#   script:
+#     - echo "unit-test"
+#     - cd /$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
+#     - cp -r /usr/src/app/node_modules /$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/node_modules
+#     - npm run test:single
+#   only:
+#     - master
+#   tags:
+#     - k8s
 
 postcommit:
   stage: build
