@@ -1,0 +1,15 @@
+LOGIN:
+  ACCOUNT_VERIFICATION_CENTER: 账户认证中心
+  USERNAME: 用户名
+  PASSWORD: 密码
+  VERIFICATION_CODE: 验证码
+  CHANGE_CODE: 换一个
+  LOGIN: 登陆
+  REMEMBER_PASSWORD: 记住我
+  FORGOT_PASSWORD: 忘记密码?
+  TENANT: 租户
+  LOGIN_SUCCESSFUL: 登录成功
+  SUCCESS_NOTIFICATION: 您已经成功登录统一身份认证系统。
+  LOGOUT_PREFIX: 出于安全考虑，一旦您访问过那些需要您提供凭证信息的应用时，请操作完成之后
+  LOGOUT: 登出
+  LOGOUT_SUFFIX: 并关闭浏览器。

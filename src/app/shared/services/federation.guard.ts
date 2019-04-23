@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  CanActivate, Router,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  CanActivateChild
-} from '@angular/router';
+import { CanActivate, Router } from '@angular/router';
 import { Observable, of as observableOf } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
@@ -20,11 +15,8 @@ export class FederationGuard implements CanActivate {
     private router: Router,
   ) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    const url: string = state.url;
-    this.auth.redirectUrl = url;
-    // return observableOf(true);
-    return this.auth.isLoggedIn().pipe(
+  canActivate(): Observable<boolean> {    
+    return this.auth.isLoggedIn().pipe( 
       map ((token) => {
         if (token) {
           this.auth.setToken(token);
@@ -32,7 +24,7 @@ export class FederationGuard implements CanActivate {
         return true;
       }),
       catchError((error) => {
-        this.router.navigate(['account/login']);
+        this.router.navigate(['login']);
         return observableOf(false);
       })
     );

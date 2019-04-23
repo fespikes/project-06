@@ -8,54 +8,24 @@ import {
 } from './i18n';
 
 import { FederationGuard } from 'app/shared';
+import { LoginMainComponent } from './login-main/login-main.component';
 import { MainComponent } from './main/main.component';
-import { IndexComponent } from './components/index/index.component';
-import { NotFoundComponent } from './components/not-found/not-found.component';
 
-export const appRoutes: Routes = [
-  {
-    path: 'account',
-    loadChildren: './components/account/account.module#AccountModule',
-  },
-  {
-    path: 'index',
-    component: IndexComponent,
-    canActivate: [FederationGuard],
-    children: [
-      {
-        path: 'tenant',
-        loadChildren: './components/tenant/tenant.module#TenantModule',
-      },
-      {
-        path: 'users',
-        loadChildren: './components/users/users.module#UsersModule',
-      },
-      {
-        path: 'main',
-        component: MainComponent,
-      },
-      {
-        path: 'access-token',
-        loadChildren: './components/access-token/access-token.module#AccessTokenModule',
-      },
-      {
-        path: 'users',
-        loadChildren: './components/users/users.module#UsersModule',
-      },
-      {
-        path: '',
-        redirectTo: 'tenant',
-        pathMatch: 'full',
-      }
-    ]
-  },
-  
+const routes: Routes = [
   {
     path: '',
-    redirectTo: 'index',
+    redirectTo: 'main',
     pathMatch: 'full',
   },
-  { path: '**', component: NotFoundComponent }
+  {
+    path: 'login',
+    component: LoginMainComponent,
+  },
+  {
+    path: 'main',
+    component: MainComponent,
+    canActivate: [FederationGuard],
+  }
 ];
 
 @NgModule({
@@ -65,7 +35,7 @@ export const appRoutes: Routes = [
         path: '',
         resolve: [TranslateResolver],
         canDeactivate: [TranslateDeactivator],
-        children: appRoutes,
+        children: routes,
       },
     ], {
       useHash: true,
@@ -74,11 +44,11 @@ export const appRoutes: Routes = [
   ],
   exports: [RouterModule],
   providers: [
-    TranslateResolver,
     TranslateDeactivator,
+    TranslateResolver,
     {
       provide: TranslateToken,
-      useValue: 'common'
+      useValue: 'login'
     },
   ]
 })
