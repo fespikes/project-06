@@ -1,0 +1,245 @@
+<form
+  [formGroup]="myForm"
+  (ngSubmit)="submit(myForm.value)"
+  class="mid"
+>
+  <ng-container *ngIf="actionType === 'register' || actionType === 'edit'">
+    <div
+      [class.error]="!myForm.get('username').valid && myForm.get('username').touched"
+    >
+      <div class="field-box">
+        <label for="usernameId"><span>*</span>{{'用户名'}}</label>
+        <input
+          class="field"
+          type="text"
+          placeholder="{{'NAME_PLACEHOLDER'}}"
+          id="usernameId"
+          autocomplete="off"
+          [formControl]="myForm.controls['username']"
+          maxlength="20"
+          />
+      </div>
+  
+      <div
+        *ngIf="myForm.controls['username'].hasError('required') && myForm.controls['username'].touched"
+        class="message"
+      >{{'NAME_TIP'}}</div>
+      <div *ngIf="myForm.controls['username'].hasError('forbiddenLetter')" class="message"
+      >
+        不能含有特殊字符
+      </div>
+    </div>
+  
+    <div
+      [class.error]="!myForm.get('email').valid && (myForm.get('email').dirty || myForm.get('email').touched)"
+    >
+      <div class="field-box">
+        <label for="emailId"><span>*</span>{{'邮箱' | translate}}</label>
+        <input
+          class="field"
+          type="email"
+          id="emailId"
+          autocomplete="off"
+          [formControl]="myForm.controls['email']"
+        />
+      </div>
+      <div
+        *ngIf="myForm.controls['email'].hasError('required') && myForm.controls['email'].touched"
+        class="message"
+      >{{'必填项' | translate}}</div>
+      <div
+        *ngIf="myForm.controls['email'].hasError('pattern') && myForm.controls['email'].touched"
+        class="message"
+      >{{'FORMAT_ERROR' | translate}}</div>
+      <div
+        *ngIf="myForm.controls['email'].errors?.forbiddenEmail && myForm.controls['email'].touched"
+        class="message"
+      >{{'EMAIL_NOT_ALLOWED' | translate}}</div>
+    </div>
+  
+  
+    <div
+      *ngIf="actionType === 'register'"
+      [class.error]="!myForm.get('password').valid && myForm.get('password').touched"
+    >
+      <div class="field-box">
+        <label for="passwordId"><span>*</span>{{'密码' | translate}}</label>
+        <input
+          class="field"
+          type="password"
+          id="passwordId"
+          autocomplete="off"
+          [formControl]="myForm.controls['password']"
+          [(ngModel)]="params.password"
+        />
+      </div>
+  
+      <div
+        *ngIf="myForm.controls['password'].hasError('required') && myForm.controls['password'].touched"
+        class="message"
+      >{{'REQUIRED' | translate}}</div>
+      <div
+        *ngIf="myForm.controls['password'].hasError('pattern') && myForm.controls['password'].touched"
+        class="message">{{'TENANT.PWD_PLACEHOLDER' | translate}}</div>
+    </div>
+  
+    <div
+      *ngIf="actionType === 'register'"
+      [class.error]="!myForm.get('confirm').valid && myForm.get('confirm').touched"
+    >
+      <div class="field-box">
+        <label for="confirmId"><span>*</span>{{'确认密码' | translate}}</label>
+        <input
+          class="field"
+          type="password"
+          id="confirmId"
+          autocomplete="off"
+          [formControl]="myForm.controls['confirm']"
+          [(ngModel)]="params.confirm"
+        />
+      </div>
+      <div
+        *ngIf="myForm.controls['confirm'].hasError('invalidCompare') && myForm.controls['confirm'].touched"
+        class="message"
+      >{{'ACCOUNT.CONFIRM_PWD_TIP' | translate}}</div>
+    </div>
+  
+    <div >
+      <div class="field-box">
+        <label for="descriptionId">{{'描述'}}</label>
+        <textarea
+          rows="3"
+          class="field textarea"
+          id="descriptionId"
+          [formControl]="myForm.controls['description']"
+        >
+        </textarea>
+      </div>
+    </div>
+  
+    <div
+      *ngIf="isFedAdmin && actionType !== 'edit'"
+      class="chks-wrapper"
+    >
+      <label>系统角色</label>
+      <ul class="chks field">
+        <li>
+          <!-- value="ROLE_FED_ADMIN" -->
+          <tui-checkbox
+            [(ngModel)]="roles['ROLE_FED_ADMIN']"
+            [ngModelOptions]="{standalone: true}"
+          >系统管理员</tui-checkbox>
+          <p>拥有Federation最高权限的管理员</p>
+        </li>
+        <li>
+          <tui-checkbox
+            [(ngModel)]="roles['ROLE_FED_VIEWER']"
+            [ngModelOptions]="{standalone: true}"
+          >系统访客</tui-checkbox>
+          <p>拥有Federation所有信息的查看权限</p>
+        </li>
+        <li>
+          <tui-checkbox
+            [(ngModel)]="roles['ROLE_FED_USER_ADMIN']"
+            [ngModelOptions]="{standalone: true}"
+          >用户管理员</tui-checkbox>
+          <p>拥有Federation用户的管理权限</p>
+        </li>
+        <li>
+          <tui-checkbox
+            [(ngModel)]="roles['ROLE_FED_USER_VIEWER']"
+            [ngModelOptions]="{standalone: true}"
+          >用户信息访客</tui-checkbox>
+          <p>拥有Federation用户的查看权限</p>
+        </li>
+        <li>
+          <tui-checkbox
+            [(ngModel)]="roles['ROLE_FED_TENANT_ADMIN']"
+            [ngModelOptions]="{standalone: true}"
+          >租户管理员</tui-checkbox>
+          <p>拥有Federation内全部租户的管理权限</p>
+        </li>
+        <li>
+          <tui-checkbox
+            [(ngModel)]="roles['ROLE_FED_TENANT_VIEWER']"
+            [ngModelOptions]="{standalone: true}"
+          >租户信息访客</tui-checkbox>
+          <p>拥有Federation内全部租户的管理权限</p>
+        </li>
+      </ul>
+    </div>
+  </ng-container>
+  <ng-container
+    *ngIf="actionType === 'reset-pwd'"
+
+  >
+    <div class="view">
+      <label>用户名</label>
+      <span class="txt">{{user.username}}</span>
+    </div>
+
+    <div
+      *ngIf="actionType === 'register' || actionType === 'reset-pwd'"
+      [class.error]="!myForm.get('newPassword').valid && myForm.get('newPassword').touched"
+    >
+      <div class="field-box">
+        <label for="newPasswordId"><span>*</span>{{'新密码' | translate}}</label>
+        <input
+          class="field"
+          type="password"
+          id="newPasswordId"
+          autocomplete="off"
+          [formControl]="myForm.controls['newPassword']"
+          [(ngModel)]="params.newPassword"
+        />
+      </div>
+
+      <div
+        *ngIf="myForm.controls['newPassword'].hasError('required') && myForm.controls['newPassword'].touched"
+        class="message"
+      >{{'REQUIRED' | translate}}</div>
+      <div
+        *ngIf="myForm.controls['newPassword'].hasError('pattern') && myForm.controls['newPassword'].touched"
+        class="message">{{'TENANT.PWD_PLACEHOLDER' | translate}}</div>
+    </div>
+
+    <div
+      *ngIf="actionType !== 'reset-pwd'"
+      [class.error]="!myForm.get('confirm').valid && myForm.get('confirm').touched"
+    >
+      <div class="field-box">
+        <label for="confirmId"><span>*</span>{{'确认新密码' | translate}}</label>
+        <input
+          class="field"
+          type="password"
+          id="confirmId"
+          autocomplete="off"
+          [formControl]="myForm.controls['confirm']"
+          [(ngModel)]="params.confirm"
+        />
+      </div>
+      <div
+        *ngIf="myForm.controls['confirm'].hasError('pattern') && myForm.controls['confirm'].touched"
+        class="message"
+      >{{'PWD_PLACEHOLDER' | translate}}
+      </div>
+      <div
+        *ngIf="myForm.controls['confirm'].hasError('invalidCompare') && myForm.controls['confirm'].touched"
+        class="message"
+      >{{'CONFIRM_PWD_TIP' | translate}}</div>
+    </div>
+  </ng-container>
+  <div class="buttons">
+    <button
+      class="tui-btn-md tui-btn-default tui-btn"
+      type="reset"
+    >{{'取消'}}</button>
+    <button
+      class="tui-btn-md tui-btn-primary tui-btn"
+      type="submit"
+      [disabled]="!myForm.valid ? 'disabled' : null"
+    >{{'确定'}}</button>
+  </div>
+</form>
+
+

@@ -1,0 +1,122 @@
+<!-- (ngSubmit)="submit(myForm.value)" -->
+<form
+  [formGroup]="myForm"
+  class="mid"
+  *ngIf="actionType==='register' || actionType==='edit'"
+>
+  <div
+    [class.error]="!myForm.get('providerId').valid && myForm.get('providerId').touched"
+  >
+    <div class="field-box">
+      <label for="providerId"><span>*</span>{{'名称'}}</label>
+      <input
+        class="field"
+        type="text"
+        id="providerId"
+        autocomplete="off"
+        [formControl]="myForm.controls['providerId']"
+        />
+    </div>
+    <div
+      *ngIf="myForm.controls['providerId'].hasError('required') && myForm.controls['providerId'].touched"
+      class="message"
+    >{{'必填项'}}</div>
+  </div>
+
+  <div [class.error]="!myForm.get('type').valid && myForm.get('type').touched">
+    <div class="field-box">
+      <label for="typeId"><span>*</span>{{'类型'}}</label>
+      <tui-select
+        class="field"
+        type="text"
+        id="typeId"
+        autocomplete="off"
+        [formControl]="myForm.controls['type']"
+      >
+        <tui-select-option
+          *ngFor="let option of providerTypes"
+          [value]="option"
+          [label]="option"
+        >{{option}}
+        </tui-select-option>
+      </tui-select>
+    </div>
+    <div
+      *ngIf="myForm.controls['type'].hasError('required') && myForm.controls['type'].touched"
+      class="message"
+    >{{'COMMON.required' | translate}}</div>
+  </div>
+
+  <div
+    [class.error]="!myForm.get('address').valid && myForm.get('address').touched"
+  >
+    <div class="field-box">
+      <label for="addressId"><span>*</span>{{'地址'}}</label>
+      <span class="tip-on-top">
+        <p class="tips">格式示例： address1:8932；address2:2344</p>
+        <textarea
+          class="field textarea" 
+          id="addressId"
+          [formControl]="myForm.controls['address']"
+        >
+          {{''}}
+        </textarea>
+      </span>
+    </div>
+
+    <div
+      *ngIf="myForm.controls['address'].hasError('required') && myForm.controls['address'].touched"
+      class="message"
+    >{{'必填项'}}</div>
+  </div>
+
+  <div class="checkbox-wrapper">
+    <label class="only">
+      <!-- <input
+        type="checkbox"
+        [(ngModel)]="params.attributes['guardian.server.tls.enabled']"
+        [ngModelOptions]="{standalone: true}"
+        />开启 TLS -->
+      <tui-checkbox
+        [(ngModel)]="params.attributes['guardian.server.tls.enabled']"
+        [ngModelOptions]="{standalone: true}"
+        name="tls"
+      >开启 TLS</tui-checkbox>
+    </label>
+  </div>
+
+  <div class="buttons">
+    <button
+      class="tui-btn-md tui-btn-default tui-btn"
+      type="reset"
+      (click)="closeSelf()"
+    >{{'取消'}}</button>
+    <button
+      class="tui-btn-md tui-btn-primary tui-btn"
+      (click)="submit()"
+      type="submit"
+      [disabled]="submitAble ? false:  'disabled'"
+    >{{'确定' | translate}}</button>
+  </div>
+</form>
+
+<!-- <div
+  class="wide"
+  *ngIf="actionType === 'remove'"
+>
+  <p class="info">确认删除认证源 “{{params.providerId}}”？</p>
+
+  <div class="buttons">
+    <button
+      class="tui-btn-md tui-btn-default tui-btn"
+      type="reset"
+      (click)="closeSelf()"
+    >{{'取消'}}</button>
+    <button
+      class="tui-btn-md tui-btn-primary tui-btn"
+      (click)="submit()"
+      type="submit"
+      [disabled]="submitAble ? false:  'disabled'"
+    >{{'确定' | translate}}</button>
+  </div>
+</div> -->

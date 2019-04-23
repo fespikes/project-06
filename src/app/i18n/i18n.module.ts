@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
+import { TranslateService } from './translate.service';
+import { TranslateToken } from './translate-token';
 import { TranslatePipe } from './translate.pipe';
 
 @NgModule({
-  declarations: [TranslatePipe],
-  imports: [
-    CommonModule
+  declarations: [
+    TranslatePipe,
   ],
-  providers: [TranslatePipe],
-  exports: [TranslatePipe], 
+  exports: [
+    TranslatePipe,
+  ],
 })
-export class I18nModule { }
+export class I18nModule {}

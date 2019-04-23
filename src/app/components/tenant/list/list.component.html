@@ -1,0 +1,77 @@
+
+<div class="banner-title">
+  <div class="left">{{userName}}</div>
+  <div class="right">
+    <tui-input
+      class="item"
+      placeholder="{{'TENANT.placeholder' | translate}}"
+      prefix="user"
+      [(ngModel)]="filter.tenant"
+      (input)="searchTenants($event)"
+    ></tui-input>
+    <button
+      class="item"
+      tuiBtn="primary"
+      (click)="showModal(undefined, tenantActionTypes['create'])"
+    >{{'TENANT.create' | translate}}</button>
+  </div>
+</div>
+
+<ul
+  class="rectangles right-scroll"
+  [tuiLoading]="loading"
+>
+  <li *ngFor="let tenant of tenants">
+    <span
+      class="left"
+      [routerLink]="['../', tenant.name]"
+    >
+      <img [src]="imageSrc(tenant.name)" />
+      <!--TODO: get the first letter -->
+    </span>
+    <span class="right">
+      <div class="name">
+        <span
+          class="opt up"
+          *ngIf="tenant.tenantOwner"
+          [tuiDropdownTrigger]="editDropdown"
+        >
+          <svg tuiIcon="f-operate-right" style="margin-right: 3px"></svg>
+          <svg tuiIcon="f-shot-down"></svg>
+        </span>
+
+        <span
+          *ngIf="(tenant.name + '').length > 18"
+          class="wid"
+          [class.wider]="!tenant.tenantOwner"
+          [tuiTooltip]="tenant.name"
+        >
+          <span class="one-line-ellipsis">{{tenant.name}}</span>
+          <svg *ngIf="tenant.tenantOwner" tuiIcon="f-user-admin"></svg>
+        </span>
+        <span
+          *ngIf="(tenant.name + '').length <= 18"
+          class="wid"
+          [class.wider]="!tenant.tenantOwner"
+        >
+          <span class="">{{tenant.name}}</span>
+          <svg *ngIf="tenant.tenantOwner" tuiIcon="f-user-admin"></svg>
+        </span>
+
+        <tui-dropdown #editDropdown direction="bottomCenter" [caret]="false">
+          <tui-dropdown-item 
+            (click)="showModal(tenant, tenantActionTypes['edit'])"
+          >编辑租户
+          </tui-dropdown-item>
+          <tui-dropdown-item (click)="showModal(tenant, tenantActionTypes['remove'])">
+            删除租户
+          </tui-dropdown-item>
+        </tui-dropdown>
+      </div>
+      <p [routerLink]="['../', tenant.name]">{{tenant.description}}</p>
+    </span>
+    <!-- <p tuiTooltip="{{tenant.attributes?.description}}"
+    >{{tenant.attributes?.description || ' - '}}</p> -->
+    <!--api not ready for that , so see the description in details-->
+  </li>
+</ul>

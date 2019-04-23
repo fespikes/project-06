@@ -1,38 +1,37 @@
+
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
+import {distinctUntilChanged, map} from 'rxjs/operators';
 
-import { ApiService } from '../shared'
+import { TuiTranslateService } from 'tdc-ui';
 
-export const LANG_KEY = 'rubik_language';
+import { ApiService } from '../shared/services/api.service';
+
+export const LANG_KEY = 'tcc_language';
 
 export enum Language {
   zh_CN = 1,
-  en_US
+  en_US,
 }
 
 const BCP47Mapping = {
   en_US: 'en-US',
   zh_CN: 'zh-CN',
-}
+};
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class I18nLangService {
-
   private langId: Language;
   private currentLangSubject = new BehaviorSubject<string>(this.lang);
   current = this.currentLangSubject.asObservable().pipe(distinctUntilChanged());
-  currentBCP47 = this.current.pipe(
-    map((lang) => {
-      return BCP47Mapping[lang];
-    }),
-  );
+  currentBCP47 = this.current.pipe(map((lang) => {
+    return BCP47Mapping[lang];
+  }));
 
   constructor(
     private api: ApiService,
-  ) { }
+    private translate: TuiTranslateService,
+  ) {}
 
   set lang(lang: string) {
     this.langId = Language[lang];
@@ -41,7 +40,7 @@ export class I18nLangService {
   }
 
   get lang() {
-    if(!this.langId) {
+    if (!this.langId) {
       this.initLangId();
     }
     return Language[this.langId];
@@ -56,7 +55,14 @@ export class I18nLangService {
     if (!Language[lang]) {
       return;
     }
-    this.lang = lang;
-    this.api.post(`config/change-session-language/${lang}`);
+    return this.updateServerLang(lang).pipe(
+    map(() => {
+      this.lang = lang;
+      this.translate.setLocale(lang);
+    }));
+  }
+
+  updateServerLang(lang: string) {
+    return this.api.post('locale', { code: lang });
   }
 }

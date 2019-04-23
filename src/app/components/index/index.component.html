@@ -1,0 +1,58 @@
+
+<section class="navigation">
+  <h1 class="logo">
+    <img [src]="imageSrc('svg/logo.svg')" />
+  </h1>
+  <tui-menu
+    routeHandler
+    (selectChange)="selectChange($event)"
+  >
+    <tui-menu-item icon="{{item.icon}}" key="{{item.path}}"
+      *ngFor="let item of menuItems; index as i;"
+    >
+      {{item.label}}
+    </tui-menu-item>
+  </tui-menu>
+</section>
+<section class="content">
+  <header>
+    <!--TODO: will be available on Stage2-->
+    <!-- <span class="invite"
+    (click)="showInvitationModal()"
+    >
+      <svg tuiIcon="f-invite"></svg>
+      {{"COMMON.HEADER.invite" | translate}}
+    </span> -->
+
+    <span class="user-dropdown" [tuiDropdownTrigger]="userDropdown">
+      {{userName}}
+      <svg tuiIcon="f-shot-down" size="md"></svg>
+    </span>
+    <tui-dropdown #userDropdown direction="bottomCenter" [caret]="true">
+      <tui-dropdown-item [class.active]="true" class="items">
+        <svg class="icons" tuiIcon="user" size="md"></svg>
+        <a (click)="showProfile()">{{'账号信息' | translate}}</a>
+      </tui-dropdown-item>
+      <tui-dropdown-item class="items">
+        <svg class="icons" tuiIcon="lock" size="md"></svg>
+        <a (click)="changePWD()">{{'修改密码' | translate}}</a>
+      </tui-dropdown-item>
+      <tui-dropdown-item class="items">
+        <span (click)="switchLang(languages[0].value)">
+          <input type="radio" name="lang" class="lang-input" />中文
+        </span>
+        <span (click)="switchLang(languages[1].value)" >
+          <input type="radio" name="lang" class="lang-input" />En
+        </span>
+      </tui-dropdown-item>
+      <tui-dropdown-item class="items">
+        <span (click)="quit()">退出</span>
+      </tui-dropdown-item>
+    </tui-dropdown>
+
+    <!-- <svg tuiIcon="f-head" size="lg"></svg> -->
+    <img [src]="imageSrc('symbols/f-head.png')" />
+  </header>
+
+  <router-outlet></router-outlet>
+</section>

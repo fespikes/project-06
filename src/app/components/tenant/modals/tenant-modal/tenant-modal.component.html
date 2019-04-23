@@ -1,0 +1,110 @@
+<form
+  class="mid"
+  *ngIf="actionType === 'create' || actionType ==='edit'"
+>
+  <div [class.error]="!myForm.get('name').valid && myForm.get('name').touched">
+    <div class="field-box">
+      <label for="nameId"><span>*</span>{{'名称'}}</label>
+      <input
+        class="field"
+        type="text"
+        id="nameId"
+        [(ngModel)]="params.name"
+        [ngModelOptions]="{standalone: true}"
+      />
+    </div>
+    <div
+      *ngIf="myForm.controls['name'].hasError('required') && myForm.controls['name'].touched"
+      class="message"
+    >{{'COMMON.required' | translate}}</div>
+  </div>
+
+  <div [class.error]="!myForm.get('type').valid && myForm.get('type').touched">
+    <div class="field-box">
+      <label for="typeId"><span>*</span>{{'类型'}}</label>
+      <tui-select
+        class="field"
+        [(ngModel)]="params.type"
+        (ngModelChange)="typeChange()"
+        [ngModelOptions]="{standalone: true}"
+        required
+      >
+        <tui-select-option
+          *ngFor="let option of tenantPrivacyTypes"
+          [value]="option"
+          [label]="option"
+        >{{option}}
+        </tui-select-option>
+      </tui-select>
+    </div>
+    <div
+      *ngIf="myForm.controls['type'].hasError('required') && myForm.controls['type'].touched"
+      class="message"
+    >{{'COMMON.required' | translate}}</div>
+  </div>
+
+  <div >
+    <div class="field-box">
+      <label for="descriptionId">{{'描述'}}</label>
+      <textarea
+        rows="3"
+        class="field textarea" id="descriptionId"
+        [(ngModel)]="params.description"
+        [ngModelOptions]="{standalone: true}"
+      >
+      </textarea>
+    </div>
+  </div>
+
+  <ul class="add-info">
+    <li class="f-title">自定义信息</li>
+    <li class="c-title">
+      <span>{{'key' | translate}}</span>
+      <span>{{'value' | translate}}</span>
+    </li>
+    <li
+      class="align-center"
+      *ngIf="(attrs.length === 0) && (last.key === undefined)"
+    >未添加自定义信息</li>
+    <ng-container *ngIf="attrs.length > 0">
+      <li *ngFor="let attr of attrs; let idx = index">
+        <span *ngIf="attr.key!==' '">{{attr.key}}</span>
+        <span *ngIf="attr.value!==' '">{{attr.value}}</span>
+      </li>
+    </ng-container>
+    <ng-container *ngIf="last.key !== undefined">
+      <li class="last-attr">
+        <span>
+          <input
+            [(ngModel)]="last.key"
+            [ngModelOptions]="{standalone: true}"
+            #focus
+          />
+        </span>
+        <span>
+          <input [(ngModel)]="last.value" [ngModelOptions]="{standalone: true}" />
+        </span>
+      </li>
+    </ng-container>
+    <li class="add-line" >
+      <button
+        class="add"
+        (click)="addInfo()"
+        [disabled]="addAble?'disabled' : ''"
+      >+</button>
+    </li>
+  </ul>
+
+  <div class="buttons">
+    <button
+      class="tui-btn-md tui-btn-default tui-btn"
+      type="reset"
+    >{{'取消'}}</button>
+    <button
+      class="tui-btn-md tui-btn-primary tui-btn"
+      (click)="submit()"
+      type="submit"
+      [disabled]="submitAble ? false:  'disabled'"
+    >{{'确定' | translate}}</button>
+  </div>
+</form>

@@ -1,0 +1,24 @@
+account:
+  forget_pwd: 忘记密码
+  send_description: 请输入您用于注册的邮箱，我们将发送重置密码的链接到此邮箱。
+  register_email: 注册邮箱
+  send_submit: 发送链接
+  resend: 重新发送
+
+LOGIN:
+  FEDERATION: Federation
+  USERNAME: 用户名
+  USERNAME&EMAIL: '用户名/邮箱'
+  PASSWORD: 密码
+  VERIFICATION_CODE: 验证码
+  CHANGE_CODE: 换一个
+  LOGIN: 登录
+  REMEMBER_PASSWORD: 记住我
+  FORGOT_PASSWORD: 忘记密码?
+  TENANT: 租户
+  LOGIN_SUCCESSFUL: 登录成功
+  SUCCESS_NOTIFICATION: 您已经成功登录统一身份认证系统。
+  LOGOUT_PREFIX: 出于安全考虑，一旦您访问过那些需要您提供凭证信息的应用时，请操作完成之后
+  LOGOUT: 登出
+  LOGOUT_SUFFIX: 并关闭浏览器。
+  

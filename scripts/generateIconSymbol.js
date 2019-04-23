@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const cheerio = require('cheerio');
 
-const iconDir = path.join(__dirname, '../src/assets/icons');
+const iconDir = path.join(__dirname, '../src/assets/icons/symbols');
 
 const svgFileNames = fs.readdirSync(iconDir)
   .filter((svgFileName) => svgFileName.split('.').pop() === 'svg');
