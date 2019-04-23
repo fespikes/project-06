@@ -68,8 +68,8 @@ export class IndexComponent implements OnInit {
       });
   }
 
-  imageSrc() {
+  imageSrc(src) {
     const base = session.basePath;
-    return base + 'assets/icons/svg/logo.svg';
+    return base + 'assets/icons/' + src;
   }
 }

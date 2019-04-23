@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UsersComponent } from './users.component';
+import { ApiService } from 'app/shared';
+import { UsersService } from './users.service';
 
 describe('UsersComponent', () => {
   let component: UsersComponent;
@@ -8,7 +10,11 @@ describe('UsersComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UsersComponent ]
+      declarations: [ UsersComponent ],
+      providers: [
+        UsersService,
+        ApiService
+      ]
     })
     .compileComponents();
   }));

@@ -1,7 +1,7 @@
 
 <section class="navigation">
   <h1 class="logo">
-    <img [src]="imageSrc()" />
+    <img [src]="imageSrc('svg/logo.svg')" />
   </h1>
   <tui-menu
     routeHandler
@@ -50,7 +50,8 @@
       </tui-dropdown-item>
     </tui-dropdown>
 
-    <svg tuiIcon="f-head" size="lg"></svg>
+    <!-- <svg tuiIcon="f-head" size="lg"></svg> -->
+    <img [src]="imageSrc('symbols/f-head.png')" />
   </header>
 
   <router-outlet></router-outlet>

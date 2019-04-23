@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AccessTokenComponent } from './access-token.component';
+import { AccessTokenService } from './access-token.service';
+import { ApiService } from 'app/shared';
 
 describe('AccessTokenComponent', () => {
   let component: AccessTokenComponent;
@@ -8,7 +10,13 @@ describe('AccessTokenComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AccessTokenComponent ]
+      declarations: [
+        AccessTokenComponent
+      ],
+      providers: [
+        AccessTokenService,
+        ApiService
+      ]
     })
     .compileComponents();
   }));
