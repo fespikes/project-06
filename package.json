@@ -4,8 +4,7 @@
   "scripts": {
     "ng": "ng",
     "prestart": "npm run i18n",
-    "start": "ng serve",
-    "local": "ng serve --port 3000 --host 172.16.203.126 --proxy-config proxy.local.json",
+    "start": "ng serve --proxy-config proxy.conf.json",
     "prebuild": "npm run i18n",
     "build": "ng build",
     "test": "ng test federation-frontend --code-coverage true --source-map true",
@@ -20,7 +19,6 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "~7.0.0",
-    "@angular/cdk": "^7.3.3",
     "@angular/common": "~7.0.0",
     "@angular/compiler": "~7.0.0",
     "@angular/core": "~7.0.0",
@@ -31,14 +29,8 @@
     "@angular/router": "~7.0.0",
     "cheerio": "^1.0.0-rc.2",
     "core-js": "^2.5.4",
-    "js-yaml": "^3.13.1",
     "lodash-es": "^4.17.11",
-    "mkdirp": "^0.5.1",
-    "ngx-clipboard": "^12.0.0",
-    "node-sass": "^4.11.0",
-    "normalize.css": "^8.0.1",
     "rxjs": "~6.3.3",
-    "tdc-ui": "^0.7.14",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {

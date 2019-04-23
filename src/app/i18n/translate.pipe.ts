@@ -34,7 +34,6 @@ export class TranslatePipe implements PipeTransform, OnDestroy {
       });
     }
     this.value = this.translate.translateKey(key);
-    this.lastKey = key;
     return this.value;
   }
 
