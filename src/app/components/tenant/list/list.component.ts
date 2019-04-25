@@ -21,6 +21,7 @@ export class ListComponent implements OnInit {
   loading = false;
   tenants = [];
   userName: string;
+  tenant: string;
   filter: any = {
     // tenant: '',
     // username: ''
@@ -40,7 +41,8 @@ export class ListComponent implements OnInit {
     this.getOwnTenants();
     this.searchSubject.pipe(
       debounceTime(500),
-      distinctUntilChanged())
+      distinctUntilChanged()
+    )
       .subscribe((argu) => {
         this.filter.searchValue = argu;
         this.getOwnTenants();
@@ -54,6 +56,7 @@ export class ListComponent implements OnInit {
   getOwnTenants() {
     this.loading = true;
     this.userName = session.userName;
+    this.tenant = session.tenant;
 
     if (session.isTenant === 'true') {
       this.filter.tenant = session.tenant;
@@ -96,7 +99,7 @@ export class ListComponent implements OnInit {
       tenant: tenant,
       type
     }).subscribe(argu => {
-      if (type === 'remove') {
+      if (type === 'remove' && argu) {
         this.api.tenantMaintain(tenant.name, 'delete')
           .subscribe(res => {
             this.getOwnTenants();

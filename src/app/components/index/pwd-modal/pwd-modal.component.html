@@ -40,12 +40,9 @@
     </div>
 
     <div
-      *ngIf="myForm.controls['newPassword'].hasError('invalidCompare') && myForm.controls['newPassword'].touched"
+      *ngIf="(myForm.controls['newPassword'].hasError('invalidCompare') || myForm.controls['newPassword'].hasError('pattern')) && myForm.controls['newPassword'].touched"
       class="message"
-    >{{'新密码必须由8-20位字母, 数字或符号组成' | translate}}</div>
-    <div
-      *ngIf="myForm.controls['newPassword'].hasError('pattern') && myForm.controls['newPassword'].touched"
-      class="message">{{'新密码为必填且不同于原密码' | translate}}</div>
+    >{{'新密码必填,须不同于原密码,由8-20位字母、数字或符号组成' | translate}}</div>
   </div>
 
   <div

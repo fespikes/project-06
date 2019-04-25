@@ -32,10 +32,10 @@
   >
     <div class="field-box fix-height-57">
       <label for="validitySecondsId"><span>*</span>{{'Access Token有效时间'}}</label>
+      <!-- [tuiMinValue]="0"
+      [tuiMaxValue]="100" -->
       <tui-input-number
         class="amount"
-        [tuiMinValue]="0"
-        [tuiMaxValue]="100"
         type="number"
         [formControl]="myForm.controls['validitySeconds']"
         required
@@ -77,10 +77,10 @@
       class="field-box fix-height-57"
     >
       <label></label>
+      <!-- [tuiMinValue]="0"
+      [tuiMaxValue]="hourMax" -->
       <tui-input-number
         class="amount"
-        [tuiMinValue]="0"
-        [tuiMaxValue]="hourMax"
         type="number"
         [formControl]="myForm.controls['refreshTokenValiditySeconds']"
         required

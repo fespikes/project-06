@@ -201,7 +201,7 @@ export class ApiService {
     } else {
       data = responseError.error;
     }
-    if (responseError.status === 200 || (responseError.status === 401)) {
+    if (responseError.status === 401) {
       // hack here.
       return of({});
     }

@@ -1,12 +1,12 @@
 
 <div class="banner-title">
-  <div class="left">{{userName}}</div>
+  <div class="left">{{tenant}}</div>
   <div class="right">
     <tui-input
       class="item"
       placeholder="{{'TENANT.placeholder' | translate}}"
-      prefix="user"
-      [(ngModel)]="filter.tenant"
+      suffix="f-operate-find"
+      [(ngModel)]="filter.searchValue"
       (input)="searchTenants($event)"
     ></tui-input>
     <button

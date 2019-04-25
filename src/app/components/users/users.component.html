@@ -1,8 +1,20 @@
+<tui-breadcrumb>
+  <tui-breadcrumb-item>
+    <a>{{'用户管理' | translate}}</a>
+  </tui-breadcrumb-item>
+</tui-breadcrumb>
+<!-- <tui-breadcrumb>
+  <tui-breadcrumb-item>
+    <a [routerLink]="['/index/users/list']">{{'租户' | translate}}</a>
+  </tui-breadcrumb-item>
+  <tui-breadcrumb-item>{{'zhxq' | translate}} - {{tenantName}}</tui-breadcrumb-item>
+</tui-breadcrumb> -->
+
 <div class="banner-title">
   <div class="left">
     <tui-select
       class="item"
-      placeholder="全部类型"
+      placeholder="全部角色"
       [(ngModel)]="filter.role"
       (ngModelChange)="fetchData()"
       allowClear

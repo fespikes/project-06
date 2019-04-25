@@ -51,8 +51,8 @@ npm run build:prod
 当node依赖更新时，需重新制作image。在项目根目录下运行
 
 ```
-docker build . -f ci/Dockerfile -t guardian-federation/federation-ci-7
-docker tag guardian-federation/federation-ci-7 172.16.1.99/frontend/guardian-federation/build/federation-ci-7
-docker push 172.16.1.99/frontend/guardian-federation/build/federation-ci-7
+docker build . -f ci/Dockerfile -t guardian-federation/federation-ci-8
+docker tag guardian-federation/federation-ci-7 172.16.1.99/frontend/guardian-federation/build/federation-ci-8
+docker push 172.16.1.99/frontend/guardian-federation/build/federation-ci-8
 ```
 

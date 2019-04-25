@@ -1,6 +1,8 @@
 <form
   class="mid"
   *ngIf="actionType === 'create' || actionType ==='edit'"
+  [formGroup]="myForm"
+  (ngSubmit)="submit(myForm.value)"
 >
   <div [class.error]="!myForm.get('name').valid && myForm.get('name').touched">
     <div class="field-box">
@@ -9,10 +11,11 @@
         class="field"
         type="text"
         id="nameId"
-        [(ngModel)]="params.name"
-        [ngModelOptions]="{standalone: true}"
-      />
-    </div>
+        [formControl]="myForm.controls['name']"
+        />
+      </div>
+      <!-- [ngModelOptions]="{standalone: true}" -->
+    <!-- [(ngModel)]="params.name" -->
     <div
       *ngIf="myForm.controls['name'].hasError('required') && myForm.controls['name'].touched"
       class="message"
@@ -24,11 +27,10 @@
       <label for="typeId"><span>*</span>{{'类型'}}</label>
       <tui-select
         class="field"
-        [(ngModel)]="params.type"
-        (ngModelChange)="typeChange()"
-        [ngModelOptions]="{standalone: true}"
-        required
+        [formControl]="myForm.controls['type']"
       >
+      <!-- [(ngModel)]="params.type"
+        [ngModelOptions]="{standalone: true}" -->
         <tui-select-option
           *ngFor="let option of tenantPrivacyTypes"
           [value]="option"
@@ -102,9 +104,8 @@
     >{{'取消'}}</button>
     <button
       class="tui-btn-md tui-btn-primary tui-btn"
-      (click)="submit()"
       type="submit"
-      [disabled]="submitAble ? false:  'disabled'"
+      [disabled]="!myForm.valid ? 'disabled' : null"
     >{{'确定' | translate}}</button>
   </div>
 </form>

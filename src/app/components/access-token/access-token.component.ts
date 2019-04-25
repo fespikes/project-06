@@ -44,7 +44,7 @@ export class AccessTokenComponent implements OnInit {
   fetchData() {
     const promises = [
       this.fetchTokens('CLIENT', 'tenantPaging'),
-      this.fetchTokens('USER ', 'ownPaging')
+      this.fetchTokens('USER', 'ownPaging')
     ];
     this.loading = true;
     combineLatest(promises)
@@ -111,16 +111,16 @@ export class AccessTokenComponent implements OnInit {
             if (res) {
               this.message.success(`"${res.name}" 已删除！`);
             }
-            this.fetchTokens('USER', this.ownPaging, true);
+            this.fetchTokens('USER', 'ownPaging', true);
           });
         } else {
-          this.fetchTokens('USER', this.ownPaging, true);
+          this.fetchTokens('USER', 'ownPaging', true);
           if (type === actionTypes['create']) {
             this.openAccessTokenModal(actionTypes['return'], res);
           } else if (type === actionTypes['return']) {
-            if (res.task) {
+            // if (res.task) {
               this.openAccessTokenModal(actionTypes['refresh'], item);
-            }
+            // }
           }
         }
       });
@@ -157,7 +157,7 @@ export class AccessTokenComponent implements OnInit {
       {'GF-Refresh-Token': token.refreshToken.value}
     ).subscribe( res => {
       this.message.success(`"${res.name}" 刷新成功！`);
-      this.fetchTokens('USER ', this.ownPaging, true);
+      this.fetchTokens('USER ', 'ownPaging', true);
     });
   }
 
