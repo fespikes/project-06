@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: '/oauth-server',
+  apiUrl: '/federation-server/api/v1',
+  shim: '/federation-server'
 };
 
 /*

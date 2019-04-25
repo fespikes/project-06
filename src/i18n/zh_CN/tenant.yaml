@@ -1,0 +1,5 @@
+TENANT:
+  tenant: 租户
+  create: 创建租户
+  placeholder: 租户名、描述
+

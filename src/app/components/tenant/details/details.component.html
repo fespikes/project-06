@@ -1,0 +1,206 @@
+<div class="right-scroll">
+  <tui-breadcrumb>
+    <tui-breadcrumb-item>
+      <a [routerLink]="['/index/tenant/list']">{{'list' | translate}}</a>
+    </tui-breadcrumb-item>
+    <tui-breadcrumb-item>{{'zhxq' | translate}} - {{tenantName}}</tui-breadcrumb-item>
+  </tui-breadcrumb>
+
+  <section>
+    <div class="details" [tuiLoading]="loading">
+      <div class="top">
+        <div class="left">{{tenantName}}</div>
+        <div class="right">
+          <button class="item" tuiBtn="default" (click)="showTruthManagementModal()" tuiBtnOutline>信任管理</button>
+          <button class="item" tuiBtn="default" (click)="showVisitManagementModal()" tuiBtnOutline>访问管理</button>
+          <button class="item" tuiBtn="default" [tuiDropdownTrigger]="editDropdown" tuiBtnOutline style="min-width: 50px">...</button>
+          <!-- trigger="hover" -->
+          <tui-dropdown #editDropdown direction="bottomRight" [caret]="false">
+            <tui-dropdown-item (click)="showTenantModal(tenantActionTypes['edit'])">
+              编辑租户
+            </tui-dropdown-item>
+            <tui-dropdown-item (click)="showTenantModal(tenantActionTypes['remove'])">
+              删除租户
+            </tui-dropdown-item>
+          </tui-dropdown>
+        </div>
+      </div>
+      <div class="description">{{details.description}}</div>
+      <div class="items">
+        <label>类型
+          <span>{{details.type}}</span>
+        </label>
+        <label>创建时间
+          <span>{{details.createTime | date:'y/M/d HH:mm:ss'}}</span>
+          <!-- <span>2018.12.31 13:20:13</span> -->
+        </label>
+        <ng-container *ngIf="attrs.length > 0">
+          <label >自定义信息
+            <span
+              [tuiPopover]="tooltip"
+              class="ellipsis"
+            >...</span>
+          </label>
+          <tui-popover #tooltip placement="bottom">
+            <div class="popover">
+              <p *ngFor="let item of attrs">{{'"' + item.key + '" = "' + item.value + '""'}}</p>
+            </div>
+          </tui-popover>
+        </ng-container>
+      </div>
+    </div>
+  </section>
+
+  <tui-tab [(selectedIndex)]="selectedIndex" (selectedIndexChange)="tabChange($event)">
+    <div *tuiTabPane="'认证源'">
+      <div class="details tab-padding">
+        <span class="right">
+          <tui-input
+            class="item"
+            placeholder="{{'名称、地址' | translate}}"
+            suffix="search"
+            [(ngModel)]="providersFilter.searchValue"
+            (input)="fetchProviders($event)"
+          ></tui-input>
+          <tui-select
+            class="item"
+            placeholder="全部类型"
+            [(ngModel)]="providersFilter.type"
+            (ngModelChange)="fetchProviders($event, true)"
+            allowClear
+            style="width: 120px"
+          >
+            <tui-select-option
+              *ngFor="let option of providerTypes"
+              [value]="option"
+              [disabled]="option.disabled"
+            >
+              {{option}}
+            </tui-select-option>
+          </tui-select>
+          <button
+            class="item"
+            tuiBtn="primary"
+            (click)="showAuthProviderModal('register')"
+          >注册认证源</button>
+        </span>
+      </div>
+      <tui-table [tuiTableFlex]="[1,1,1]" tuiTableOutline>
+        <tui-table-head>
+          <div>名称</div>
+          <div>类型</div>
+          <div>操作</div>
+        </tui-table-head>
+        <tui-table-row *ngFor="let datum of providers" >
+          <div>{{datum.providerId}}</div>
+          <div>{{datum.type}}</div>
+          <div>
+            <span tuiTooltip="{{'查看详情' | translate}}" class="mg-right-12">
+              <svg tuiIcon="f-view-details" (click)="showAuthProviderModal('edit', datum)"></svg>
+            </span>
+            <span tuiTooltip="{{'删除' | translate}}">
+              <svg tuiIcon="f-table-remove" (click)="showAuthProviderModal('remove', datum)"></svg>
+            </span>
+          </div>
+        </tui-table-row>
+      </tui-table>
+    </div>
+
+    <div *tuiTabPane="'oauth client'">
+      <div class="details tab-padding">
+        <span class="right">
+          <tui-input
+            class="item"
+            placeholder="{{'名称或Redirect Uris' | translate}}"
+            suffix="search"
+            [(ngModel)]="oAuthClientFilter.searchValue"
+            (input)="fetchOAuthClients($event)"
+          ></tui-input>
+          <tui-select
+            class="item"
+            placeholder="全部类型"
+            [(ngModel)]="oAuthClientFilter.type"
+            (ngModelChange)="fetchOAuthClients($event, true)"
+            allowClear
+            style="width: 130px"
+          >
+            <tui-select-option
+              *ngFor="let option of oAuthPrivacyTypes"
+              [value]="option"
+            >
+              {{option}}
+            </tui-select-option>
+          </tui-select>
+          <button
+            class="item"
+            tuiBtn="primary"
+            (click)="showOAuthClientModal('register')"
+          >注册 oauth client</button>
+        </span>
+      </div>
+      <tui-table
+        [tuiLoading]="refreshingClientSecret"
+        [tuiTableFlex]="[2,3,1.5,2,2,1.5]"
+        tuiTableOutline
+      >
+        <tui-table-head>
+          <div>名称</div>
+          <div>Client ID</div>
+          <div>类型</div>
+          <div>Redirect Uris</div>
+          <div>Access Token</div>
+          <div>操作</div>
+        </tui-table-head>
+        <tui-table-row *ngFor="let datum of clients" >
+          <div>{{datum.appName}}</div>
+          <div>{{datum.clientId}}</div>
+          <div>{{datum.type}}</div>
+          <div>
+            <span
+              class="one-line-ellipsis"  
+              [tuiPopover]="tooltip"
+              style="width: 174px"
+            >{{datum.redirectUris?.join(',')}}</span>
+            <tui-popover #tooltip placement="top">
+              <div class="popover">
+                <div class="popover-content" *ngFor="let url of datum.redirectUris">
+                  {{url}}
+                </div>
+              </div>
+            </tui-popover>
+          </div>
+          <div>
+            <span
+              tuiTooltip="{{'查看详情' | translate}}"
+              (click)="showAccessToken(datum, '')"
+            >
+              <svg tuiIcon="f-view-details"></svg>
+            </span>
+          </div>
+          <div>
+            <span
+              (click)="refresh(datum)"
+              class="mg-right-12"
+              tuiTooltip="{{'更新 Client Secret' | translate}}"
+            >
+              <svg tuiIcon="f-table-pull"></svg>
+            </span>
+            <span
+              class="mg-right-12"
+              (click)="showOAuthClientModal('edit', datum)"
+              tuiTooltip="{{'编辑' | translate}}"
+            >
+              <svg tuiIcon="f-table-operation"></svg>
+            </span>
+            <span
+              (click)="showOAuthClientModal('remove', datum)"
+              tuiTooltip="{{'删除' | translate}}"
+            >
+              <svg tuiIcon="f-table-remove"></svg>
+            </span>
+          </div>
+        </tui-table-row>
+      </tui-table>
+    </div>
+  </tui-tab>
+</div>

@@ -1,0 +1,79 @@
+<form
+  [formGroup]="myForm"
+  class="mid"
+>
+  <div class="wide">
+    <p class="info">请设置邀请链接的使用限制</p>
+  </div>
+
+  <div [class.error]="!myForm.get('username').valid && myForm.get('username').touched" >
+    <div class="field-box fix-height-57">
+      <label for="validitySecondsId"><span>*</span>{{'有效期'}}</label>
+      <tui-input-number
+        class="amount"
+        [tuiMinValue]="0"
+        [tuiMaxValue]="100"
+        type="number"
+        [formControl]="myForm.controls['username']"
+        required
+      ></tui-input-number>
+      <span class="unit">小时</span>
+    </div>
+    <div
+      *ngIf="myForm.controls['username'].hasError('required') && myForm.controls['username'].touched"
+      class="message"
+    >{{'必填项'}}</div>
+  </div>
+
+  <div [class.error]="!myForm.get('email').valid && myForm.get('email').touched" >
+    <div class="field-box" style="height: 77px">
+      <label for="textareaId2"><span>*</span>{{'使用次数'}}</label>
+      <span class="tip-on-top">
+        <p class="tips">可使用此链接注册的最大用户数</p>
+        <tui-input-number
+          class="amount"
+          [tuiMinValue]="0"
+          [tuiMaxValue]="1000"
+          type="number"
+          [formControl]="myForm.controls['email']"
+          required
+          style="flex-basis: 120px"
+        ></tui-input-number>
+      </span>
+    </div>
+
+    <div
+      *ngIf="myForm.controls['email'].hasError('required') && myForm.controls['email'].touched"
+      class="message"
+    >{{'NAME_TIP'}}</div>
+  </div>
+
+  <div>
+    <div class="field-box">
+      <label for="textareaId2">{{'可访问租户'}}</label>
+      <span class="tip-on-top">
+        <p class="tips">通过此邀请链接完成注册的用户将可访问选中的租户</p>
+        <input
+          class="field"
+          type="text"
+          autocomplete="off"
+          style="width: 100%"
+        />
+      </span>
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button
+      class="tui-btn-md tui-btn-default tui-btn"
+      type="reset"
+    >{{'取 消'}}</button>
+    <button
+      class="tui-btn-md tui-btn-primary tui-btn"
+      type="submit"
+      [disabled]="!myForm.valid ? 'disabled' : null"
+    >{{'生成链接'}}</button>
+  </div>
+
+</form>
+

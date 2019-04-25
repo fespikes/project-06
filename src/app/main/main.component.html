@@ -3,9 +3,11 @@
     <div class="info-text">
       <h2>{{ 'LOGIN.LOGIN_SUCCESSFUL' | translate }}, {{ user.tenant }}#{{user.name}}</h2>
       <p>{{ 'LOGIN.SUCCESS_NOTIFICATION' | translate }}</p>
-      <p>{{ 'LOGIN.LOGOUT_PREFIX' | translate }} 
-      <a (click)="logout()">{{ 'LOGIN.LOGOUT'  | translate }}</a>
-      {{ 'LOGIN.LOGOUT_SUFFIX' | translate }}</p>
+      <p>
+        {{ 'LOGIN.LOGOUT_PREFIX' | translate }} 
+        <a (click)="logout()">{{ 'LOGIN.LOGOUT'  | translate }}</a>
+        {{ 'LOGIN.LOGOUT_SUFFIX' | translate }}
+      </p>
     </div>
   </section>
   <div class="footer">
