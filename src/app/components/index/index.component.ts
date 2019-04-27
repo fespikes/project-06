@@ -13,9 +13,9 @@ import { I18nLangService } from 'app/i18n';
 })
 export class IndexComponent implements OnInit {
   menuItems = [
-    {path: '/index/tenant/list', label: '租户', icon: ''},
-    {path: '/index/access-token', label: 'AccessToken'},
-    {path: '/index/users', label: '用户管理'}
+    {path: '/index/tenant/list', label: '租户', icon: 'f-tenant'},
+    {path: '/index/access-token', label: 'AccessToken', icon: 'f-access-token'},
+    {path: '/index/users', label: '用户管理', icon: 'f-user-admin'}
   ];
   userName: string;
   dropdownDirection = 'bottomCenter';

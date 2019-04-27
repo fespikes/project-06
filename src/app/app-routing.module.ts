@@ -14,48 +14,48 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 
 export const appRoutes: Routes = [
   {
-    path: 'account',
-    loadChildren: './components/account/account.module#AccountModule',
+    path: `account`,
+    loadChildren: `./components/account/account.module#AccountModule`,
   },
   {
-    path: 'index',
+    path: `index`,
     component: IndexComponent,
     canActivate: [FederationGuard],
     children: [
       {
-        path: 'tenant',
-        loadChildren: './components/tenant/tenant.module#TenantModule',
+        path: `tenant`,
+        loadChildren: `./components/tenant/tenant.module#TenantModule`,
       },
       {
-        path: 'users',
-        loadChildren: './components/users/users.module#UsersModule',
+        path: `users`,
+        loadChildren: `./components/users/users.module#UsersModule`,
       },
       {
-        path: 'main',
+        path: `main`,
         component: MainComponent,
       },
       {
-        path: 'access-token',
-        loadChildren: './components/access-token/access-token.module#AccessTokenModule',
+        path: `access-token`,
+        loadChildren: `./components/access-token/access-token.module#AccessTokenModule`,
       },
       {
-        path: 'users',
-        loadChildren: './components/users/users.module#UsersModule',
+        path: `users`,
+        loadChildren: `./components/users/users.module#UsersModule`,
       },
       {
-        path: '',
-        redirectTo: 'tenant',
-        pathMatch: 'full',
+        path: ``,
+        redirectTo: `tenant`,
+        pathMatch: `full`,
       }
     ]
   },
   
   {
-    path: '',
-    redirectTo: 'index',
-    pathMatch: 'full',
+    path: ``,
+    redirectTo: `index`,
+    pathMatch: `full`,
   },
-  { path: '**', component: NotFoundComponent }
+  { path: `**`, component: NotFoundComponent }
 ];
 
 @NgModule({

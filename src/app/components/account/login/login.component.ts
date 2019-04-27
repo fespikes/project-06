@@ -77,6 +77,8 @@ export class LoginComponent implements OnInit {
         this.auth.currUser.name = this.loginForm.value.name;
         this.auth.currUser.tenant = this.loginForm.value.tenant;      
         this.router.navigate(['/index/tenant/list']);
+      }, error => {
+        this.resetCapture();
       });
   }
 
@@ -111,7 +113,7 @@ export class LoginComponent implements OnInit {
     return session.basePath + 'assets/icons/symbols/f-logo.svg';
   }
 
-  resetCapture($event) {
+  resetCapture() {
     this.captchaUrl = this.service.captchaUrl();
   }
 

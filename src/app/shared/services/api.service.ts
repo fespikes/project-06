@@ -205,8 +205,11 @@ export class ApiService {
       // hack here.
       return of({});
     }
-    if (data) {
+    if (data && data.error_code) {
       msg = data.error_code+':'+data.error_description
+    } else if(data.error){
+      // msg = data.error.message;
+      msg = `The server isn't return a api response but a form redirect`;
     } else {
       msg = responseError.message;
     }

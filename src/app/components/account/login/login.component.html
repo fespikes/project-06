@@ -42,6 +42,7 @@
           placeholder="{{ 'LOGIN.PASSWORD' | translate }}"
           name="password"
           formControlName="password"
+          autocomplete="off"
         >
       </div>
       <div class="captcha-field">
@@ -50,11 +51,12 @@
             type="text" 
             placeholder="{{ 'LOGIN.VERIFICATION_CODE' | translate }}"
             name="captcha"
+            autocomplete="off"
             formControlName="captcha"
           >
         </div>
         <img
-          (click)="resetCapture($event)"
+          (click)="resetCapture()"
           [src]="captchaUrl"
           alt="dummy captcha" 
         />
