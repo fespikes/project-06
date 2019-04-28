@@ -17,6 +17,11 @@ export class ModalsService {
 
   accessTokenModal(type, token?) {
     let title = '';
+    const getName = function(token) {
+      let name = token.name + '';
+        name = name.length > 25 ? (name.slice(0, 25) + '...') : name;
+        return name;
+    }
     switch (type) {
       case actionTypes.create:
         title = '创建Access Token'
@@ -34,9 +39,10 @@ export class ModalsService {
         title = `提示`;
         break;
       case actionTypes.refresh:
-        let name = token.name + '';
-        name = name.length > 25 ? (name.slice(0, 25) + '...') : name;
-        title = ` “${name}” 的自动刷新配置`;
+        title = ` “${getName(token)}” 的自动刷新配置`;
+        break;
+      case actionTypes.taskCreate:
+        title = `创建 “${getName(token)}” 的自动刷新任务`;
         break;
     }
     const size = (type === actionTypes['return'] || type === actionTypes['refresh'])?

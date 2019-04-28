@@ -58,7 +58,7 @@ export class AuthService {
   }
 
   logout() {
-    return this.api.getEncode('logout');
+    return this.api.rawUrl('logout');
   }
 
   purgeAuth() {

@@ -103,8 +103,7 @@ export class AccessTokenComponent implements OnInit {
   openAccessTokenModal(type, item?) {
     this.modal.accessTokenModal(type, item)
       .subscribe(res => {
-        // TODO: untill the solution of "Authorization"
-        if (type === actionTypes['remove']) {
+        if (type === actionTypes['remove'] && res) {
           this.service.tokens('delete', undefined, {
             'GF-Access-Token': item.value
           }).subscribe(res => {
@@ -113,14 +112,12 @@ export class AccessTokenComponent implements OnInit {
             }
             this.fetchTokens('USER', 'ownPaging', true);
           });
-        } else {
+        } else if(res) {
           this.fetchTokens('USER', 'ownPaging', true);
           if (type === actionTypes['create']) {
             this.openAccessTokenModal(actionTypes['return'], res);
           } else if (type === actionTypes['return']) {
-            // if (res.task) {
-              this.openAccessTokenModal(actionTypes['refresh'], item);
-            // }
+            this.openAccessTokenModal(actionTypes['taskCreate'], item);
           }
         }
       });

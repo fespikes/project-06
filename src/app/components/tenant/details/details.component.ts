@@ -133,7 +133,7 @@ export class DetailsComponent implements OnInit {
       tenantName: this.tenantName,  // 对当前进入的租户访问管理
       type
     }).subscribe(argu => {
-      if (type === this.tenantActionTypes.remove) {
+      if (type === this.tenantActionTypes.remove && argu) {
         this.router.navigate(['../']);
       } else {
         this.fetchData();

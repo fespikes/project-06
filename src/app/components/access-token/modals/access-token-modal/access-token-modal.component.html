@@ -55,8 +55,7 @@
         type="checkbox"
         [(ngModel)]="hasRefreshToken"
         [ngModelOptions]="{standalone: true}"
-      />开启 TLS
-      <!-- <tui-checkbox name="agree" ngModel>开启 TLS</tui-checkbox> -->
+      />创建 Refresh Token
     </label>
   </div>
 
@@ -170,15 +169,14 @@
   </div>
 </section>
 
-<section *ngIf="actionType === actionTypes['refresh']">
-  <div class="checkbox-wrapper">
+<section *ngIf="actionType === actionTypes['refresh'] || (actionType === actionTypes['taskCreate'])">
+  <div class="checkbox-wrapper" *ngIf="actionType === actionTypes['refresh']">
     <label>
-      <input type="checkbox" [(ngModel)]="autoRefresh.triggerAutoRefresh" />开启 TLS
+      <input type="checkbox" [(ngModel)]="autoRefresh.triggerAutoRefresh" />开启自动刷新Access Token
     </label>
   </div>
   <div
     class="narrow" 
-    *ngIf="autoRefresh.triggerAutoRefresh"
   >
     <div class="row">
       <label>刷新时间间隔</label>
@@ -199,9 +197,14 @@
           class="half"
           tuiBtn="primary"
           tuiBtnOutline
-          [tuiBtnIcon]="f-remove"
           (click)="swithTaskStatus('STOPPED')"
-        >暂停任务</button>
+        >
+          <svg
+            tuiIcon="f-remove"
+            class="pointer"
+          ></svg>
+          暂停任务
+        </button>
       </ng-container>
       <ng-container *ngIf="autoRefresh.task.status === 'STOPPED'">
         <span>已暂停</span>
@@ -209,9 +212,14 @@
           class="half"
           tuiBtn="primary"
           tuiBtnOutline
-          [tuiBtnIcon]="user-admin"
           (click)="swithTaskStatus('SCHEDULED')"
-        >开始调度</button>
+        >
+          <svg
+            tuiIcon="f-remove"
+            class="pointer"
+          ></svg>
+          开始调度
+        </button>
       </ng-container>
     </div>
   </div>

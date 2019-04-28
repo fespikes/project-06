@@ -46,6 +46,7 @@ export class AccessTokenModalComponent implements OnInit {
     refreshTokenValue: '',
     status: 'SCHEDULED' // SCHEDULED / STOPPED
   };
+  name: string;
   get addAble() { return (this.last.key === '') || (this.last.value === '')}
 
   set hasRefreshToken(b) {
@@ -80,11 +81,19 @@ export class AccessTokenModalComponent implements OnInit {
   ) {
     this.actionType = data.type;
     data.refreshToken && (this.autoRefresh.refreshTokenValue = data.refreshToken.value);
+    this.name = data.name;
 
     if (data.task) {
       this.autoRefresh.triggerAutoRefresh = true;
-      this.autoRefresh.task = data.task? data.task : '';
-      this.autoRefresh.task.executionInterval = data.task.executionInterval / unit;
+      this.autoRefresh.task = data.task;
+      this.autoRefresh.task.executionInterval = data.task.executionInterval ? (data.task.executionInterval / unit) : 0;
+    }
+    if (this.actionType === actionTypes.taskCreate) {
+      this.autoRefresh.task = {
+        refreshTokenValue: data.refreshToken.value,
+        executionInterval: 0,
+        status: 'STOPPED'
+      }
     }
   }
 
@@ -121,6 +130,7 @@ export class AccessTokenModalComponent implements OnInit {
       value: ''
     };
     this.focus && this.focus.nativeElement.focus();
+    return false;
   }
 
   removeSelf(self, flag) {
@@ -191,6 +201,12 @@ export class AccessTokenModalComponent implements OnInit {
     const autoRefresh = {...this.autoRefresh};
     if (autoRefresh.triggerAutoRefresh) {
       method = 'put';
+      task = {
+        ...autoRefresh.task,
+        executionInterval: autoRefresh.task.executionInterval * unit,
+      };
+    } else if (this.actionType === actionTypes['taskCreate']) {
+      method = 'post';
       task = {
         ...autoRefresh.task,
         executionInterval: autoRefresh.task.executionInterval * unit,
