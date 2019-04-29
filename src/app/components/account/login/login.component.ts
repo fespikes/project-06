@@ -36,11 +36,6 @@ export class LoginComponent implements OnInit {
   get loginPayload(): LoginInfo {
     const loginValue = this.loginForm.value as LoginInfo;
     const result = {...loginValue};
-    if (this.role === this.roles['federation']) {
-      result.username = loginValue.name + '#FEDERATION';
-    } else {
-      result.username = loginValue.name + '#' + loginValue.tenant;
-    }
     return result;
   }
 
@@ -97,7 +92,7 @@ export class LoginComponent implements OnInit {
 
   getFormGroup() {
     const group: any = {
-      name: ['', Validators.required],
+      username: ['', Validators.required],
       password: ['', Validators.required],
       captcha: ['', Validators.required]
     };
