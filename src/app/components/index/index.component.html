@@ -46,7 +46,9 @@
         </span>
       </tui-dropdown-item>
       <tui-dropdown-item class="items">
-        <span (click)="quit()">退出</span>
+        <span class="quit">
+          <a [href]="logoutUrl">退出</a>
+        </span>
       </tui-dropdown-item>
     </tui-dropdown>
 

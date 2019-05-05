@@ -36,11 +36,6 @@ export class LoginComponent implements OnInit {
   get loginPayload(): LoginInfo {
     const loginValue = this.loginForm.value as LoginInfo;
     const result = {...loginValue};
-    if (this.role === this.roles['federation']) {
-      result.username = loginValue.name + '#FEDERATION';
-    } else {
-      result.username = loginValue.name + '#' + loginValue.tenant;
-    }
     return result;
   }
 
@@ -77,6 +72,8 @@ export class LoginComponent implements OnInit {
         this.auth.currUser.name = this.loginForm.value.name;
         this.auth.currUser.tenant = this.loginForm.value.tenant;      
         this.router.navigate(['/index/tenant/list']);
+      }, error => {
+        this.resetCapture();
       });
   }
 
@@ -95,7 +92,7 @@ export class LoginComponent implements OnInit {
 
   getFormGroup() {
     const group: any = {
-      name: ['', Validators.required],
+      username: ['', Validators.required],
       password: ['', Validators.required],
       captcha: ['', Validators.required]
     };
@@ -111,7 +108,7 @@ export class LoginComponent implements OnInit {
     return session.basePath + 'assets/icons/symbols/f-logo.svg';
   }
 
-  resetCapture($event) {
+  resetCapture() {
     this.captchaUrl = this.service.captchaUrl();
   }
 

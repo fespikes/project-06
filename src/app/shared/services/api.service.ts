@@ -201,12 +201,15 @@ export class ApiService {
     } else {
       data = responseError.error;
     }
-    if (responseError.status === 200 || (responseError.status === 401)) {
-      // hack here.
-      return of({});
-    }
-    if (data) {
+    // if (responseError.status === 48000) {
+    //   observableThrowError(data)
+    //   return of({});
+    // }
+    if (data && data.error_code) {
       msg = data.error_code+':'+data.error_description
+    } else if(data.error){
+      // msg = data.error.message;
+      msg = `The server isn't return a api response but a form redirect`;
     } else {
       msg = responseError.message;
     }

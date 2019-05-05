@@ -12,7 +12,6 @@
         <input
           class="field"
           type="text"
-          placeholder="{{'NAME_PLACEHOLDER'}}"
           id="usernameId"
           autocomplete="off"
           [formControl]="myForm.controls['username']"
@@ -23,7 +22,7 @@
       <div
         *ngIf="myForm.controls['username'].hasError('required') && myForm.controls['username'].touched"
         class="message"
-      >{{'NAME_TIP'}}</div>
+      >{{'必填项'}}</div>
       <div *ngIf="myForm.controls['username'].hasError('forbiddenLetter')" class="message"
       >
         不能含有特殊字符
@@ -50,11 +49,11 @@
       <div
         *ngIf="myForm.controls['email'].hasError('pattern') && myForm.controls['email'].touched"
         class="message"
-      >{{'FORMAT_ERROR' | translate}}</div>
+      >{{'格式错误' | translate}}</div>
       <div
         *ngIf="myForm.controls['email'].errors?.forbiddenEmail && myForm.controls['email'].touched"
         class="message"
-      >{{'EMAIL_NOT_ALLOWED' | translate}}</div>
+      >{{'不符合要求的email' | translate}}</div>
     </div>
   
   
@@ -77,10 +76,10 @@
       <div
         *ngIf="myForm.controls['password'].hasError('required') && myForm.controls['password'].touched"
         class="message"
-      >{{'REQUIRED' | translate}}</div>
+      >{{'必填项' | translate}}</div>
       <div
         *ngIf="myForm.controls['password'].hasError('pattern') && myForm.controls['password'].touched"
-        class="message">{{'TENANT.PWD_PLACEHOLDER' | translate}}</div>
+        class="message">{{'密码必填,由8-20位字母、数字或符号组成' | translate}}</div>
     </div>
   
     <div
@@ -101,7 +100,7 @@
       <div
         *ngIf="myForm.controls['confirm'].hasError('invalidCompare') && myForm.controls['confirm'].touched"
         class="message"
-      >{{'ACCOUNT.CONFIRM_PWD_TIP' | translate}}</div>
+      >{{'须与新密码相同' | translate}}</div>
     </div>
   
     <div >
@@ -195,12 +194,9 @@
       </div>
 
       <div
-        *ngIf="myForm.controls['newPassword'].hasError('required') && myForm.controls['newPassword'].touched"
+        *ngIf="(myForm.controls['newPassword'].hasError('required') || myForm.controls['newPassword'].hasError('pattern')) && myForm.controls['newPassword'].touched"
         class="message"
-      >{{'REQUIRED' | translate}}</div>
-      <div
-        *ngIf="myForm.controls['newPassword'].hasError('pattern') && myForm.controls['newPassword'].touched"
-        class="message">{{'TENANT.PWD_PLACEHOLDER' | translate}}</div>
+      >{{'密码必填,由8-20位字母、数字或符号组成' | translate}}</div>
     </div>
 
     <div
@@ -219,14 +215,10 @@
         />
       </div>
       <div
-        *ngIf="myForm.controls['confirm'].hasError('pattern') && myForm.controls['confirm'].touched"
+        *ngIf="(myForm.controls['confirm'].hasError('pattern') || myForm.controls['confirm'].hasError('invalidCompare'))&& myForm.controls['confirm'].touched"
         class="message"
-      >{{'PWD_PLACEHOLDER' | translate}}
+      >{{'必填,与新密码相同,由8-20位字母、数字或符号组成' | translate}}
       </div>
-      <div
-        *ngIf="myForm.controls['confirm'].hasError('invalidCompare') && myForm.controls['confirm'].touched"
-        class="message"
-      >{{'CONFIRM_PWD_TIP' | translate}}</div>
     </div>
   </ng-container>
   <div class="buttons">

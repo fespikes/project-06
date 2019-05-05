@@ -13,9 +13,9 @@ import { I18nLangService } from 'app/i18n';
 })
 export class IndexComponent implements OnInit {
   menuItems = [
-    {path: '/index/tenant/list', label: '租户', icon: ''},
-    {path: '/index/access-token', label: 'AccessToken'},
-    {path: '/index/users', label: '用户管理'}
+    {path: '/index/tenant/list', label: '租户', icon: 'f-tenant'},
+    {path: '/index/access-token', label: 'AccessToken', icon: 'f-access-token'},
+    {path: '/index/users', label: '用户管理', icon: 'f-user-admin'}
   ];
   userName: string;
   dropdownDirection = 'bottomCenter';
@@ -23,6 +23,7 @@ export class IndexComponent implements OnInit {
     { value: 'zh_CN', name: '中文' },
     { value: 'en_US', name: 'English' },
   ];
+  logoutUrl: string;
 
   constructor(
     private router: Router,
@@ -36,6 +37,7 @@ export class IndexComponent implements OnInit {
       this.menuItems.pop();
     }
     this.userName = session.userName;
+    this.logoutUrl = this.auth.logout();
   }
 
   selectChange($event) {}
@@ -57,13 +59,6 @@ export class IndexComponent implements OnInit {
 
   switchLang(lang) {
     this.i18nLang.switch(lang);
-  }
-
-  quit() {
-    this.auth.logout()
-      .subscribe(res => {
-        this.router.navigate(['/account/login']);
-      });
   }
 
   imageSrc(src) {

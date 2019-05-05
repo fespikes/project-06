@@ -35,9 +35,6 @@ export class TenantModalComponent implements OnInit {
   get addAble() {
     return (this.last.key === '') || (this.last.value === '');
   }
-  get submitAble() {
-    return this.params.name !== '';
-  }
 
   constructor(
     private fb: FormBuilder,
@@ -55,14 +52,22 @@ export class TenantModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.myForm = this.fb.group({
-      'name': ['', Validators.required],
-      'type': ['', Validators.required],
-      'description': ['']
-    });
+    if (this.actionType === 'edit') {
+      this.myForm = this.fb.group({
+        'name': [this.params.name, Validators.required],
+        'type': [this.params.type, Validators.required],
+        'description': [this.params.description]
+      });
+      this.myForm.controls['name'].disable();
+      this.myForm.controls['type'].disable();
+    } else {
+      this.myForm = this.fb.group({
+        'name': ['', Validators.required],
+        'type': ['', Validators.required],
+        'description': ['']
+      });
+    }
   }
-
-  typeChange() {}
 
   addInfo() {
     if (this.last.key && this.attrs.filter(item => item.key === this.last.key).length===0) {
@@ -75,8 +80,10 @@ export class TenantModalComponent implements OnInit {
     this.focus && this.focus.nativeElement.focus();
   }
 
-  submit() {
+  submit(val) {
     if (this.actionType !== tenantActionTypes.remove) {
+      this.params.name = val.name;
+      this.params.type = val.type;
       if (this.last && (this.last.key !== undefined) && (this.last.value !== undefined)) {
         this.attrs.push(this.last);
         this.last = {};

@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { combineLatest } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { TuiMessageService } from 'tdc-ui';
 
 import { TenantService } from '../tenant.service';
 import { tenantActionTypes, oAuthPrivacyTypes } from '../tenant.model';
@@ -39,6 +40,7 @@ export class DetailsComponent implements OnInit {
     private service: TenantService,
     private modal: ModalsService,
     private router: Router,
+    private message: TuiMessageService
   ) { }
 
   ngOnInit() {
@@ -77,8 +79,6 @@ export class DetailsComponent implements OnInit {
       this.providersFilter.type = $event;
     } else if($event) {
       this.providersFilter.searchValue = $event.target.value;
-      console.log($event.target.value);
-      console.log(this.providersFilter);
     } else {
       return this.service.fetchProviders(this.tenantName, this.providersFilter)
     }
@@ -108,8 +108,12 @@ export class DetailsComponent implements OnInit {
       tenant: this.details,
       type
     }).subscribe(argu => {
-      if (type === this.tenantActionTypes.remove) {
-        this.router.navigate(['../']);
+      if (type === this.tenantActionTypes.remove && argu) {
+        this.service.tenantMaintain(this.details.name, 'delete')
+          .subscribe(res => {
+            this.message.success('删除成功');
+            this.router.navigate(['../']);
+          });
       } else {
         this.fetchData();
       }
@@ -129,7 +133,7 @@ export class DetailsComponent implements OnInit {
       tenantName: this.tenantName,  // 对当前进入的租户访问管理
       type
     }).subscribe(argu => {
-      if (type === this.tenantActionTypes.remove) {
+      if (type === this.tenantActionTypes.remove && argu) {
         this.router.navigate(['../']);
       } else {
         this.fetchData();
@@ -141,6 +145,12 @@ export class DetailsComponent implements OnInit {
     this.modal.AuthProvider(provider, type, this.tenantName)
       .subscribe(argu => {
         this.fetchProviders('', '', true);
+        if (type === 'remove' && argu) {
+          this.service.providerMaintain(this.tenantName, 'delete', {providerId: provider.providerId})
+            .subscribe(res => {
+              this.fetchData();
+            });
+        }
       });
   }
 
@@ -199,20 +209,5 @@ export class DetailsComponent implements OnInit {
         });
       });
   }
-
-  removeOAuthClient(oAuthClient) {
-    this.refreshingClientSecret = true;
-    this.modal.modal.error({
-      title: '删除',
-      message: `确认删除 “${oAuthClient.clientId}”？`
-    }).subscribe( res => {
-      this.service.oAuthClients(this.tenantName, 'delete', '', oAuthClient.clientId)
-        .subscribe( res => {
-          this.fetchOAuthClients();
-          this.refreshingClientSecret = false;
-        });
-    });
-  }
-
 
 }

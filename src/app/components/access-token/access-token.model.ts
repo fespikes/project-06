@@ -4,5 +4,6 @@ export const actionTypes = {
   edit: 'edit',
   remove: 'remove',
   refresh: 'refresh',
-  return: 'return'
+  return: 'return',
+  taskCreate: 'taskCreate'
 }

@@ -11,10 +11,10 @@ export class User {
 }
 
 export class LoginInfo {
-  name = '';
   tenant = '';
   password = '';
   username = '';
+  captcha: '';
 }
 
 @Injectable({
@@ -54,11 +54,11 @@ export class AuthService {
         'Content-Type': 'application/x-www-form-urlencoded',
       });
 
-    return this.api.postEncode('login', formValue, header);
+    return this.api.post('login', formValue);
   }
 
   logout() {
-    return this.api.getEncode('logout');
+    return this.api.rawUrl('logout');
   }
 
   purgeAuth() {

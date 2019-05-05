@@ -84,10 +84,10 @@
   >
     <div class="field-box fix-height-57">
       <label for="accessTokenValiditySecondsId"><span>*</span>{{'Access Token有效时间'}}</label>
+      <!-- [tuiMaxValue]="hourMax" -->
       <tui-input-number
         class="amount"
         [tuiMinValue]="0"
-        [tuiMaxValue]="hourMax"
         type="number"
         [(ngModel)]="at"
         [ngModelOptions]="{standalone: true}"
@@ -99,7 +99,7 @@
     <div
       *ngIf="myForm.controls['accessTokenValiditySeconds'].hasError('required') && myForm.controls['accessTokenValiditySeconds'].touched"
       class="message"
-    >{{'NAME_TIP'}}</div>
+    >{{'必填项'}}</div>
   </div>
 
 <!--   <div>
@@ -118,11 +118,10 @@
   <div >
     <div class="field-box fix-height-57">
       <label for="passwordId"><span>*</span>{{'Refresh Token 有效时间'}}</label>
-      <!--TODO-->
+      <!-- [tuiMaxValue]="hourMax" -->
       <tui-input-number
         class="amount"
         [tuiMinValue]="0"
-        [tuiMaxValue]="hourMax"
         type="number"
         [(ngModel)]="rt"
         [ngModelOptions]="{standalone: true}"

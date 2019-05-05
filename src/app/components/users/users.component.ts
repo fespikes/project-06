@@ -51,7 +51,7 @@ export class UsersComponent implements OnInit {
   toUserModal(type, user?) {
     this.modal.userModal(type, user)
       .subscribe(res => {
-        if (type === 'remove') {
+        if (type === 'remove' && res) {
           return this.service.users('delete', {username: user.username})
             .subscribe( res => {
               this.fetchData();

@@ -48,14 +48,6 @@ export class AuthProviderComponent implements OnInit {
     this.tenantName = data.tenantName;
 
     if (data.type !== 'remove') {
-      if (data.type === 'register') {
-        this.api.fetchProviderTypes()
-          .subscribe(res => {
-            this.providerTypes = res;
-            this.myForm.controls['type'].setValue(res[0]);
-          });
-      }
-
       let group;
       if (data.type === 'register') {
         group = {
@@ -75,9 +67,18 @@ export class AuthProviderComponent implements OnInit {
       }
 
       this.myForm = this.fb.group(group);
+      this.api.fetchProviderTypes()
+        .subscribe(res => {
+          this.providerTypes = res;
+          if (this.actionType === 'edit') {
+            this.myForm.controls['type'].setValue(this.params.type);
+          } else {
+            this.myForm.controls['type'].setValue(res[0]);
+          }
+        });
       if (data.type === 'edit') {
-        this.myForm.controls['providerId'].disabled;
-        this.myForm.controls['type'].disabled;
+        this.myForm.controls['providerId'].disable();
+        this.myForm.controls['type'].disable();
       }
     }
   }
