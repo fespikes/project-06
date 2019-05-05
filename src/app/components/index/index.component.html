@@ -1,11 +1,9 @@
 
 <section class="navigation">
-  <h1 class="logo">
-    <img [src]="imageSrc('svg/logo.svg')" />
-  </h1>
   <tui-menu
     routeHandler
     (selectChange)="selectChange($event)"
+    [menuHeadTemplate]="menuHeadTemplate"
   >
     <tui-menu-item icon="{{item.icon}}" key="{{item.path}}"
       *ngFor="let item of menuItems; index as i;"
@@ -13,6 +11,15 @@
       {{item.label}}
     </tui-menu-item>
   </tui-menu>
+
+  <ng-template #menuHeadTemplate let-collapsed="collapsed">
+    <div class="menu-head">
+      <div class="logo" [routerLink]="['/index']">
+        <img *ngIf="!collapsed" [src]="imageSrc('svg/logo.svg')">
+        <img *ngIf="collapsed" [src]="imageSrc('svg/logo-small.svg')">
+      </div>
+    </div>
+  </ng-template>
 </section>
 <section class="content">
   <header>
