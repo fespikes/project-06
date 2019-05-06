@@ -37,8 +37,11 @@
         <div>{{'COMMON.OPERATION.operate' | translate}}</div>
       </tui-table-head>
       <tui-table-row *ngFor="let datum of tenantASToken" >
-        <div>
-          <span class="one-line-ellipsis" style="width: 160px">{{datum.name}}</span>
+        <div *ngIf="(datum.name + '').length>18">
+          <span tuiTooltip="{{datum.name}}" class="one-line-ellipsis" style="width: 168px">{{datum.name}}</span>
+        </div>
+        <div *ngIf="(datum.name + '').length<=18">
+          <span style="width: 180px">{{datum.name}}</span>
         </div>
         <div>{{datum.tenant}}</div>
         <div>{{datum.clientId}}</div>
@@ -133,8 +136,11 @@
         <div>{{'COMMON.OPERATION.operate' | translate}}</div>
       </tui-table-head>
       <tui-table-row *ngFor="let datum of ownASToken" >
-        <div>
-          <span class="one-line-ellipsis" style="width: 240px">{{datum.name}}</span>
+        <div *ngIf="(datum.name + '').length>27">
+          <span tuiTooltip="{{datum.name}}"  class="one-line-ellipsis" style="width: 210px">{{datum.name}}</span>
+        </div>
+        <div *ngIf="(datum.name + '').length<=27">
+          <span class="one-line-ellipsis"  style="width: 210px">{{datum.name}}</span>
         </div>
         <div>{{datum.createTime | date:'y/M/d HH:mm:ss'}}</div>
         <div>
