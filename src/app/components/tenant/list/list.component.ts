@@ -105,7 +105,7 @@ export class ListComponent implements OnInit {
             this.getOwnTenants();
             this.message.success('删除成功');
           });
-      } else {
+      } else if (argu) {
         this.getOwnTenants();
       }
     });
