@@ -26,7 +26,7 @@ export class AccessTokenModalComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public modal: TuiModalRef,
-    @Inject(TUI_MODAL_DATA) data,
+    @Inject(TUI_MODAL_DATA) private data,
     private api: TenantService
   ) {
     this.oAuthClient = data.oAuthClient;

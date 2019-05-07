@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PwdModalComponent } from './pwd-modal.component';
+import { TestModule } from 'app/shared/test.module';
 
 describe('PwdModalComponent', () => {
   let component: PwdModalComponent;
@@ -8,6 +9,8 @@ describe('PwdModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [TestModule],
+
       declarations: [ PwdModalComponent ]
     })
     .compileComponents();

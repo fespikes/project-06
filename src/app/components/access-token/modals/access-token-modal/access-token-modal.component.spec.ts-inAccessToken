@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { AccessTokenService } from '../../access-token.service';
+import { AccessTokenServiceStub } from '../../access-token.service.stub';
 import { AccessTokenModalComponent } from './access-token-modal.component';
+import { TestModule } from 'app/shared/test.module';
 
 describe('AccessTokenModalComponent', () => {
   let component: AccessTokenModalComponent;
@@ -8,12 +11,20 @@ describe('AccessTokenModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AccessTokenModalComponent ]
+      imports: [TestModule],
+      declarations: [ AccessTokenModalComponent ],
+      providers: [
+        {
+          provide: AccessTokenService,
+          useClass: AccessTokenServiceStub
+        }
+      ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10* 1000;
     fixture = TestBed.createComponent(AccessTokenModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

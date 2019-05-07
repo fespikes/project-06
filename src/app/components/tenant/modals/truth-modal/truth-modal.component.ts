@@ -27,14 +27,14 @@ export class TruthModalComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private modal: TuiModalRef,
-    @Inject(TUI_MODAL_DATA) data,
+    @Inject(TUI_MODAL_DATA) private data,
     private api: TenantService,
     private message: TuiMessageService
   ) {
-    this.filters.src = data.tenant.name;
   }
 
   ngOnInit() {
+    this.filters.src = this.data.tenant.name;
     this.fetchData();
   }
 

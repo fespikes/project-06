@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestModule } from 'app/shared/test.module';
 
 import { ResetComponent } from './reset.component';
+import { AccountService } from '../account.service';
+import { AccountServiceStub } from '../account.service.stub';
 
 describe('ResetComponent', () => {
   let component: ResetComponent;
@@ -8,7 +11,14 @@ describe('ResetComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ResetComponent ]
+      imports: [TestModule],
+      declarations: [ ResetComponent ],
+      providers: [
+        {
+          provide: AccountService,
+          useClass: AccountServiceStub,
+        },
+      ]
     })
     .compileComponents();
   }));

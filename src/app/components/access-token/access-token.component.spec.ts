@@ -2,8 +2,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AccessTokenComponent } from './access-token.component';
 import { AccessTokenService } from './access-token.service';
+import { AccessTokenServiceStub } from './access-token.service.stub';
 import { ApiService } from 'app/shared';
 import { TestModule } from 'app/shared/test.module';
+import { ModalsService } from './modals/modals.service'
 
 describe('AccessTokenComponent', () => {
   let component: AccessTokenComponent;
@@ -16,8 +18,11 @@ describe('AccessTokenComponent', () => {
         AccessTokenComponent
       ],
       providers: [
-        AccessTokenService,
-        ApiService
+        ModalsService,
+        {
+          provide: AccessTokenService,
+          useClass: AccessTokenServiceStub
+        }
       ]
     })
     .compileComponents();

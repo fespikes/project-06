@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AccessTokenModalComponent } from './access-token-modal.component';
+import { TestModule } from 'app/shared/test.module';
+import { TenantService } from '../../tenant.service';
 
 describe('AccessTokenModalComponent', () => {
   let component: AccessTokenModalComponent;
@@ -8,7 +10,24 @@ describe('AccessTokenModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AccessTokenModalComponent ]
+      imports: [TestModule],
+      declarations: [ AccessTokenModalComponent ],
+      providers: [
+        {
+          provide: TenantService,
+          useValue: {
+            fetchAccessToken(a?, b?) {
+              return {
+                subscribe(cb) {
+                  cb({
+                    body: []
+                  })
+                }
+              }
+            }
+          }
+        }
+      ]
     })
     .compileComponents();
   }));
@@ -16,6 +35,7 @@ describe('AccessTokenModalComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AccessTokenModalComponent);
     component = fixture.componentInstance;
+    component.oAuthClient = {};
     fixture.detectChanges();
   });
 
