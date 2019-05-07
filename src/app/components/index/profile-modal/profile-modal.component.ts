@@ -30,8 +30,8 @@ export class ProfileModalComponent implements OnInit {
 
   ngOnInit() {
     const userName = session.userName;
-    this.isTenant = session.isTenant;
-    if( this.isTenant) {
+    this.isTenant = (session.isTenant === 'true' ? true: false);
+    if( this.isTenant ) {
       this.tenant = session.tenant;
     } else {
       this.service.getProfile(userName)

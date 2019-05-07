@@ -1,9 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UsersComponent } from './users.component';
-import { ApiService } from 'app/shared';
 import { UsersService } from './users.service';
+import { UsersServiceStub } from './users.service.stub';
 import { TestModule } from 'app/shared/test.module';
+import { ModalsService } from './modals';
 
 describe('UsersComponent', () => {
   let component: UsersComponent;
@@ -14,8 +15,11 @@ describe('UsersComponent', () => {
       imports: [TestModule],
       declarations: [ UsersComponent ],
       providers: [
-        UsersService,
-        ApiService
+        {
+          provide: UsersService,
+          useClass: UsersServiceStub
+        },
+        ModalsService
       ]
     })
     .compileComponents();

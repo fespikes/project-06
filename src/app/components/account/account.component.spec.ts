@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AccountComponent } from './account.component';
 import { AccountService } from './account.service';
-import { ApiService } from 'app/shared';
+import { AccountServiceStub } from './account.service.stub';
 import { TestModule } from 'app/shared/test.module';
 
 describe('AccountComponent', () => {
@@ -14,14 +14,17 @@ describe('AccountComponent', () => {
       imports: [TestModule],
       declarations: [ AccountComponent ],
       providers: [
-        AccountService,
-        ApiService
+        {
+          provide: AccountService,
+          useClass: AccountServiceStub,
+        },
       ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 100 * 1000;
     fixture = TestBed.createComponent(AccountComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

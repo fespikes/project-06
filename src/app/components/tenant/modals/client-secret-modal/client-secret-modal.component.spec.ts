@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ClientSecretModalComponent } from './client-secret-modal.component';
+import { TestModule } from 'app/shared/test.module';
 
 describe('ClientSecretModalComponent', () => {
   let component: ClientSecretModalComponent;
@@ -8,6 +9,7 @@ describe('ClientSecretModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [TestModule],
       declarations: [ ClientSecretModalComponent ]
     })
     .compileComponents();

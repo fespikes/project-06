@@ -2,30 +2,35 @@ import { NgModule } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { I18nModule, TranslateService } from '../i18n';
+import { I18nModule, TranslateService, I18nLangService } from '../i18n';
 import { HttpClientModule } from '@angular/common/http';
+import {ClipboardModule} from 'ngx-clipboard';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { of } from 'rxjs';
 
-import { 
+import {
   ApiService,
   AuthService,
   FederationGuard,
 } from './services';
+import { ApiServiceStub } from 'app/shared/services/api.service.stub';
+import {
+  TuiMessageService,
+  TuiModalService,
+  TuiModule,
+  FormModule,
+  TuiModalRef,
+  TUI_MODAL_DATA,
+} from 'tdc-ui';
 
-// import {
-//   FileUploadDirective,
-//   ForbiddenUsernameDirective,
-//   ForbiddenEmailDirective,
-// } from 'app/shared/directives';
-
-import { TuiMessageService  } from 'tdc-ui';
-import { TuiModule, FormModule } from 'tdc-ui';
+export class TuiModalServiceStub {
+  open() {
+    return of();
+  }
+}
 
 @NgModule({
-  declarations: [
-    // FileUploadDirective,
-    // ForbiddenUsernameDirective,
-    // ForbiddenEmailDirective,
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     TuiModule,
@@ -34,20 +39,41 @@ import { TuiModule, FormModule } from 'tdc-ui';
     FormsModule,
     ReactiveFormsModule,
     RouterTestingModule,
-    HttpClientModule
+    HttpClientModule,
+    ClipboardModule,
+    BrowserAnimationsModule
   ],
   providers: [
-    ApiService,
+    {
+      provide: ApiService,
+      useClass: ApiServiceStub,
+    },
     AuthService,
     FederationGuard,
     TuiMessageService,
-    TranslateService
+    {
+      provide: TuiModalService,
+      useClass: TuiModalServiceStub
+    },
+    TuiModalRef,
+    TranslateService,
+    I18nLangService,
+    {
+      provide: TUI_MODAL_DATA,
+      useValue: {},
+    },
   ],
   exports: [
     TuiModule,
     I18nModule,
+    FormModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ClipboardModule,
+    BrowserAnimationsModule,
+    CommonModule,
+    RouterTestingModule,
+    HttpClientModule
   ]
 })
 export class TestModule { }

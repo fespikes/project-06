@@ -1,9 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
 
 import { ListComponent } from './list.component';
-import { ApiService } from 'app/shared';
+import { TenantServiceStub } from '../tenant.service.stub';
 import { TenantService } from '../tenant.service';
 import { TestModule } from 'app/shared/test.module';
+import { ModalsService } from '../modals.service';
+import { ModalsServiceStub } from '../modals.service.stub';
 
 describe('ListComponent', () => {
   let component: ListComponent;
@@ -14,8 +17,14 @@ describe('ListComponent', () => {
       imports: [TestModule],
       declarations: [ ListComponent ],
       providers: [
-        ApiService,
-        TenantService
+        {
+          provide: TenantService,
+          useClass: TenantServiceStub
+        },
+        {
+          provide: ModalsService,
+          useClass: ModalsServiceStub
+        }
       ]
     })
     .compileComponents();

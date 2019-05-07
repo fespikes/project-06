@@ -2,6 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginComponent } from './login.component';
 import { TestModule } from 'app/shared/test.module';
+import { AccountService } from '../account.service';
+import { AccountServiceStub } from '../account.service.stub';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -12,7 +14,13 @@ describe('LoginComponent', () => {
       imports: [
         TestModule
       ],
-      declarations: [ LoginComponent ]
+      declarations: [ LoginComponent ],
+      providers: [
+        {
+          provide: AccountService,
+          useClass: AccountServiceStub
+        }
+      ]
     })
     .compileComponents();
   }));
@@ -20,6 +28,17 @@ describe('LoginComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
+    component.captchaUrl = '';
+    component.roles = {
+      federation: 'FEDERATION'
+    };
+    component.role = '';
+    component.languages = [
+      { value: 'zh_CN', name: '中文' },
+      { value: 'en_US', name: 'English' },
+    ];
+    component.loginForm;
+    component.errorMsg = '';
     fixture.detectChanges();
   });
 

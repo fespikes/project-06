@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IndexComponent } from './index.component';
+import { TestModule } from 'app/shared/test.module';
+import { ModalsService } from './modal.service';
 
 describe('IndexComponent', () => {
   let component: IndexComponent;
@@ -8,7 +10,11 @@ describe('IndexComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ IndexComponent ]
+      imports: [TestModule],
+      declarations: [ IndexComponent ],
+      providers: [
+        ModalsService,
+      ]
     })
     .compileComponents();
   }));

@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestModule } from 'app/shared/test.module';
 
 import { UserComponent } from './user.component';
 
@@ -8,6 +9,7 @@ describe('UserComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [TestModule],
       declarations: [ UserComponent ]
     })
     .compileComponents();
@@ -16,6 +18,8 @@ describe('UserComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(UserComponent);
     component = fixture.componentInstance;
+    (component as any).actionType = 'reset-pwd';
+    (component as any).user = {};
     fixture.detectChanges();
   });
 

@@ -31,14 +31,16 @@ export class UserComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private modal: TuiModalRef,
-    @Inject(TUI_MODAL_DATA) data,
+    @Inject(TUI_MODAL_DATA) private data,
     private service: UsersService
   ) {
     this.actionType = data.type;
     this.user = data.user;
     this.isFedAdmin = session.isFedAdmin
-    const me = this;
+  }
 
+  ngOnInit() {
+    const me = this;
     let group: any;
     if (this.actionType === 'register') {
       group = {
@@ -87,7 +89,7 @@ export class UserComponent implements OnInit {
         ])]
       }
     }
-    this.myForm = fb.group(group);
+    this.myForm = this.fb.group(group);
     if (this.actionType === 'edit') {
       this.myForm.get('username').disable();
       this.myForm.get('email').disable();
@@ -100,7 +102,6 @@ export class UserComponent implements OnInit {
     }
   }
 
-  ngOnInit() {}
 
   submit(val: {[s:string]: string}) {
     const params: any = {...val};

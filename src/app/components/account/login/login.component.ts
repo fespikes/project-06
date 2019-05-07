@@ -20,12 +20,12 @@ function captchaValidator(): ValidatorFn {
   styleUrls: ['./login.component.sass']
 })
 export class LoginComponent implements OnInit {
-  captchaUrl: string;
+  captchaUrl: string = '';
   roles = {
     federation: 'FEDERATION'
   };
 
-  role: string;
+  role: string = '';
   languages = [
     { value: 'zh_CN', name: '中文' },
     { value: 'en_US', name: 'English' },
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
     return result;
   }
 
-  errorMsg: string;
+  errorMsg: string = '';
 
   set error(err: any) {
     this.errorMsg = err.message;

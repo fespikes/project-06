@@ -162,7 +162,6 @@
                   tuiIcon="f-copy"
                   ngxClipboard
                   [cbContent]="datum['value']"
-                  (cbOnSuccess)="copy(datum['value'])"
                 ></svg>
               </span>
               <p class="dropdown-p">{{'COMMON.MODULES.refreshAt' | translate}}： {{datum['refreshTime'] | date:'y/M/d HH:mm:ss'}}</p>
@@ -194,7 +193,6 @@
                   tuiIcon="f-copy"
                   ngxClipboard
                   [cbContent]="datum['refreshToken']['value']"
-                  (cbOnSuccess)="copy(datum['refreshToken']['value'])"
                 ></svg>
               </span>
               <p

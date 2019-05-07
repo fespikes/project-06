@@ -102,6 +102,15 @@
   dependencies:
     tslib "^1.9.0"
 
+"@angular/cdk@^7.3.3":
+  version "7.3.7"
+  resolved "http://172.16.1.161:30033/repository/npm-group/@angular/cdk/-/cdk-7.3.7.tgz#ce1ad53ba04beb9c8e950acc5691ea0143753764"
+  integrity sha1-zhrVO6BL65yOlQrMVpHqAUN1N2Q=
+  dependencies:
+    tslib "^1.7.1"
+  optionalDependencies:
+    parse5 "^5.0.0"
+
 "@angular/cli@~7.0.4":
   version "7.0.7"
   resolved "http://172.16.1.161:30033/repository/npm-group/@angular/cli/-/cli-7.0.7.tgz#0f4500c5fcf22694c9c40f14d2a5b3dc90fbb4a3"
@@ -3384,6 +3393,14 @@ js-yaml@3.x, js-yaml@^3.12.0, js-yaml@^3.7.0, js-yaml@^3.9.0:
     argparse "^1.0.7"
     esprima "^4.0.0"
 
+js-yaml@^3.13.1:
+  version "3.13.1"
+  resolved "http://172.16.1.161:30033/repository/npm-group/js-yaml/-/js-yaml-3.13.1.tgz#aff151b30bfdfa8e49e05da22e7415e9dfa37847"
+  integrity sha1-r/FRswv9+o5J4F2iLnQV6d+jeEc=
+  dependencies:
+    argparse "^1.0.7"
+    esprima "^4.0.0"
+
 jsbn@~0.1.0:
   version "0.1.1"
   resolved "http://172.16.1.161:30033/repository/npm-group/jsbn/-/jsbn-0.1.1.tgz#a5e654c2e5a2deb5f201d96cefbca80c0ef2f513"
@@ -3656,7 +3673,7 @@ lodash.tail@^4.1.1:
   version "4.1.1"
   resolved "http://172.16.1.161:30033/repository/npm-group/lodash.tail/-/lodash.tail-4.1.1.tgz#d2333a36d9e7717c8ad2f7cacafec7c32b444664"
 
-lodash@^4.0.0, lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.5.0, lodash@~4.17.10:
+lodash@^4.0.0, lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.5.0, lodash@~4.17.10:
   version "4.17.11"
   resolved "http://172.16.1.161:30033/repository/npm-group/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
 
@@ -4002,6 +4019,11 @@ nan@^2.10.0, nan@^2.9.2:
   version "2.11.1"
   resolved "http://172.16.1.161:30033/repository/npm-group/nan/-/nan-2.11.1.tgz#90e22bccb8ca57ea4cd37cc83d3819b52eea6766"
 
+nan@^2.13.2:
+  version "2.13.2"
+  resolved "http://172.16.1.161:30033/repository/npm-group/nan/-/nan-2.13.2.tgz#f51dc7ae66ba7d5d55e1e6d4d8092e802c9aefe7"
+  integrity sha1-9R3Hrma6fV1V4ebU2AkugCya7+c=
+
 nanomatch@^1.2.9:
   version "1.2.13"
   resolved "http://172.16.1.161:30033/repository/npm-group/nanomatch/-/nanomatch-1.2.13.tgz#b87a8aa4fc0de8fe6be88895b38983ff265bd119"
@@ -4033,6 +4055,21 @@ negotiator@0.6.1:
 neo-async@^2.5.0:
   version "2.6.0"
   resolved "http://172.16.1.161:30033/repository/npm-group/neo-async/-/neo-async-2.6.0.tgz#b9d15e4d71c6762908654b5183ed38b753340835"
+
+ngx-clipboard@^12.0.0:
+  version "12.0.0"
+  resolved "http://172.16.1.161:30033/repository/npm-group/ngx-clipboard/-/ngx-clipboard-12.0.0.tgz#5ad5e10545fc4c8e8ca99f4197c3305f6bfbde53"
+  integrity sha1-WtXhBUX8TI6MqZ9Bl8MwX2v73lM=
+  dependencies:
+    ngx-window-token "^2.0.0"
+    tslib "^1.9.0"
+
+ngx-window-token@^2.0.0:
+  version "2.0.1"
+  resolved "http://172.16.1.161:30033/repository/npm-group/ngx-window-token/-/ngx-window-token-2.0.1.tgz#8f91221af4116aa9f49bb3f7a6f1111639884fba"
+  integrity sha1-j5EiGvQRaqn0m7P3pvERFjmIT7o=
+  dependencies:
+    tslib "^1.9.0"
 
 nice-try@^1.0.4:
   version "1.0.5"
@@ -4132,6 +4169,29 @@ node-sass@4.9.3:
     stdout-stream "^1.4.0"
     "true-case-path" "^1.0.2"
 
+node-sass@^4.11.0:
+  version "4.12.0"
+  resolved "http://172.16.1.161:30033/repository/npm-group/node-sass/-/node-sass-4.12.0.tgz#0914f531932380114a30cc5fa4fa63233a25f017"
+  integrity sha1-CRT1MZMjgBFKMMxfpPpjIzol8Bc=
+  dependencies:
+    async-foreach "^0.1.3"
+    chalk "^1.1.1"
+    cross-spawn "^3.0.0"
+    gaze "^1.0.0"
+    get-stdin "^4.0.1"
+    glob "^7.0.3"
+    in-publish "^2.0.0"
+    lodash "^4.17.11"
+    meow "^3.7.0"
+    mkdirp "^0.5.1"
+    nan "^2.13.2"
+    node-gyp "^3.8.0"
+    npmlog "^4.0.0"
+    request "^2.88.0"
+    sass-graph "^2.2.4"
+    stdout-stream "^1.4.0"
+    "true-case-path" "^1.0.2"
+
 "nopt@2 || 3", nopt@3.x:
   version "3.0.6"
   resolved "http://172.16.1.161:30033/repository/npm-group/nopt/-/nopt-3.0.6.tgz#c6465dbf08abcd4db359317f79ac68a646b28ff9"
@@ -4163,6 +4223,11 @@ normalize-path@^2.0.0, normalize-path@^2.0.1, normalize-path@^2.1.1:
 normalize-range@^0.1.2:
   version "0.1.2"
   resolved "http://172.16.1.161:30033/repository/npm-group/normalize-range/-/normalize-range-0.1.2.tgz#2d10c06bdfd312ea9777695a4d28439456b75942"
+
+normalize.css@^8.0.1:
+  version "8.0.1"
+  resolved "http://172.16.1.161:30033/repository/npm-group/normalize.css/-/normalize.css-8.0.1.tgz#9b98a208738b9cc2634caacbc42d131c97487bf3"
+  integrity sha1-m5iiCHOLnMJjTKrLxC0THJdIe/M=
 
 npm-bundled@^1.0.1:
   version "1.0.5"
@@ -4482,6 +4547,11 @@ parse5@^3.0.1:
   resolved "http://172.16.1.161:30033/repository/npm-group/parse5/-/parse5-3.0.3.tgz#042f792ffdd36851551cf4e9e066b3874ab45b5c"
   dependencies:
     "@types/node" "*"
+
+parse5@^5.0.0:
+  version "5.1.0"
+  resolved "http://172.16.1.161:30033/repository/npm-group/parse5/-/parse5-5.1.0.tgz#c59341c9723f414c452975564c7c00a68d58acd2"
+  integrity sha1-xZNByXI/QUxFKXVWTHwApo1YrNI=
 
 parseqs@0.0.5:
   version "0.0.5"
@@ -5038,7 +5108,7 @@ request@2.87.0:
     tunnel-agent "^0.6.0"
     uuid "^3.1.0"
 
-request@^2.74.0, request@^2.83.0, request@^2.87.0:
+request@^2.74.0, request@^2.83.0, request@^2.87.0, request@^2.88.0:
   version "2.88.0"
   resolved "http://172.16.1.161:30033/repository/npm-group/request/-/request-2.88.0.tgz#9c2fca4f7d35b592efe57c7f0a55e81052124fef"
   dependencies:
@@ -5853,6 +5923,13 @@ tar@^4:
     safe-buffer "^5.1.2"
     yallist "^3.0.2"
 
+tdc-ui@^0.7.14:
+  version "0.7.20"
+  resolved "http://172.16.1.161:30033/repository/npm-group/tdc-ui/-/tdc-ui-0.7.20.tgz#ce384595e1fd0ca7924ea427397282d62c04aa12"
+  integrity sha512-DzYgu6RXDEYR8iamJs4UJCJfRERB0lTb7rAHdOwQ3VuOURHdoFuI/o1FYMNoEw1kfNRzW6DfmmHWvD6eqwblyg==
+  dependencies:
+    tslib "^1.9.0"
+
 terser-webpack-plugin@1.1.0:
   version "1.1.0"
   resolved "http://172.16.1.161:30033/repository/npm-group/terser-webpack-plugin/-/terser-webpack-plugin-1.1.0.tgz#cf7c25a1eee25bf121f4a587bb9e004e3f80e528"
@@ -5989,7 +6066,7 @@ ts-node@~7.0.0:
     source-map-support "^0.5.6"
     yn "^2.0.0"
 
-tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0:
+tslib@^1.7.1, tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.9.3"
   resolved "http://172.16.1.161:30033/repository/npm-group/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
 
