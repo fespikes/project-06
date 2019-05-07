@@ -1,4 +1,4 @@
-FROM 172.16.1.99/frontend/guardian-federation/build/federation-ci-8:latest
+FROM 172.16.1.99/frontend/guardian-federation/build/federation-ci-9:latest
 
 ARG APP_DIR="/usr/src/app"
 
