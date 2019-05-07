@@ -1,4 +1,4 @@
-image: 172.16.1.99/frontend/guardian-federation/build/federation-ci-8
+image: 172.16.1.99/frontend/guardian-federation/build/federation-ci-8:latest
 before_script:
   - echo "Namespace" $CI_PROJECT_NAMESPACE
   - echo "Project" $CI_PROJECT_NAME
@@ -15,6 +15,7 @@ unit-test:
     - cp -r /usr/src/app/node_modules /$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/node_modules
     - npm run test:single
   only:
+    - dev
     - master
   tags:
     - k8s
