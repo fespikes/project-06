@@ -25,7 +25,7 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
+    browsers: ['google-chrome'],
     browserNoActivityTimeout: 300000,
     retryLimit: 5,
     singleRun: false
