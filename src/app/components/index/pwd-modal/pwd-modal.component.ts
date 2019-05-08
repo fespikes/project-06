@@ -29,6 +29,7 @@ export class PwdModalComponent implements OnInit {
     fb: FormBuilder,
     private service: IndexService,
     private message: TuiMessageService,
+    private modal: TuiModalRef
   ) {
     this.userName = session.userName
     this.myForm = fb.group({
@@ -71,6 +72,7 @@ export class PwdModalComponent implements OnInit {
     this.service.changePWD(this.userName, {...value})
       .subscribe(res => {
         this.message.success('密码修改成功!');
+        this.modal.close(true);
       });
   }
 

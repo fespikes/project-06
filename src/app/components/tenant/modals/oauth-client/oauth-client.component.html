@@ -182,16 +182,15 @@
       [disabled]="!myForm.valid ? 'disabled' : null"
     >{{'COMMON.MODAL.confirm' | translate}}</button>
   </div>
-
 </form>
 
 <div *ngIf="'return'===actionType || ('clientSecret'===actionType)">
   <div class="narrow">
     <p class="info" *ngIf="'return'===actionType">
-      “rubik-Client”已经注册成功，生成的Client ID 和 Client Secret 如下，请及时保存。
+      “{{returned.appName}}”已经注册成功，生成的Client ID 和 Client Secret 如下，请及时保存。
     </p>
     <p class="info" *ngIf="'clientSecret'===actionType">
-      “rubik-Client”已经更新成功，生成的Client ID 和 Client Secret 如下，请及时保存。
+      “{{returned.appName}}”已经更新成功，生成的Client ID 和 Client Secret 如下，请及时保存。
     </p>
   </div>
   <div class="copy-field">

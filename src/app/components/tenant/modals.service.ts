@@ -110,7 +110,6 @@ export class ModalsService {
       case 'return':
         title = '生成Client ID 和 Client Secret'
         break;
-        break;
       case 'clientSecret':
         title = '更新 Client Secret'
         break;

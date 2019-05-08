@@ -4,6 +4,7 @@
     *ngIf="selectedIndex===0"
     placeholder="{{'COMMON.MODULES.ATSearchPlaceholder' | translate}}"
     [(ngModel)]="filter.searchValue"
+    (ngModelChange)="fetchTokens('CLIENT', 'tenantPaging', true)"
     suffix="f-operate-find"
   ></tui-input>
   <ng-container *ngIf="selectedIndex===1">
@@ -11,6 +12,7 @@
       class="item"
       placeholder="{{'COMMON.MODULES.name' | translate}}"
       [(ngModel)]="filter.searchValue"
+      (ngModelChange)="fetchTokens('USER', 'ownPaging', true)"
       suffix="f-operate-find"
     ></tui-input>
     <button

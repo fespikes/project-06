@@ -3,12 +3,6 @@
     <a>{{'用户管理' | translate}}</a>
   </tui-breadcrumb-item>
 </tui-breadcrumb>
-<!-- <tui-breadcrumb>
-  <tui-breadcrumb-item>
-    <a [routerLink]="['/index/users/list']">{{'租户' | translate}}</a>
-  </tui-breadcrumb-item>
-  <tui-breadcrumb-item>{{'zhxq' | translate}} - {{tenantName}}</tui-breadcrumb-item>
-</tui-breadcrumb> -->
 
 <div class="banner-title">
   <div class="left">
@@ -32,7 +26,7 @@
   <div class="right">
     <tui-input
       class="item"
-      placeholder="{{'用户名、邮箱、描述' | translate}}"
+      placeholder="{{'用户名' | translate}}"
       suffix="f-operate-find"
       [(ngModel)]="filter.searchValue"
       (input)="fetchData()"
