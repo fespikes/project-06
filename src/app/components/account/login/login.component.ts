@@ -68,8 +68,8 @@ export class LoginComponent implements OnInit {
   submit() {
     this.auth.login(this.loginPayload)
       .subscribe((res) => {
-        if (res && res.rediect_url) {
-          window.location.href = res.rediect_url;
+        if (res && res.redirect_url) {
+          window.location.href = res.redirect_url;
           return ;
         }
         this.message.success('登录成功');
