@@ -79,6 +79,10 @@ export class DetailsComponent implements OnInit {
       this.providersFilter.type = $event;
     } else if($event) {
       this.providersFilter.searchValue = $event.target.value;
+      this.service.fetchProviders(this.tenantName, this.providersFilter)
+        .subscribe( res => {
+          this.providers = res.body;
+        });
     } else {
       return this.service.fetchProviders(this.tenantName, this.providersFilter)
     }
@@ -94,6 +98,10 @@ export class DetailsComponent implements OnInit {
       this.oAuthClientFilter.type = $event;
     } else if($event) {
       $event.target && (this.oAuthClientFilter.searchValue = $event.target.value);
+      this.service.oAuthClients(this.tenantName, 'get', this.oAuthClientFilter)
+        .subscribe( res => {
+          this.clients = res.body;
+        });
     } else {
       return this.service.oAuthClients(this.tenantName, 'get', this.oAuthClientFilter);
     }

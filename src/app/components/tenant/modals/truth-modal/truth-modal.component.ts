@@ -15,6 +15,7 @@ import { TuiMessageService } from 'tdc-ui';
 export class TruthModalComponent implements OnInit {
   @ViewChild('dstTenantLast') focus: ElementRef;
   trusts: any;
+  trustsPassive: any;
   filters: any = {};
   last: string;
   set lastTrust(trust) {
@@ -43,6 +44,10 @@ export class TruthModalComponent implements OnInit {
       .subscribe(res => {
         console.log(res);
         this.trusts = res.body;
+      });
+    this.api.trusts('get', {dst: this.filters.src})
+      .subscribe(res => {
+        this.trustsPassive = res.body;
       });
   }
 
