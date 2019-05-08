@@ -67,10 +67,14 @@ export class LoginComponent implements OnInit {
 
   submit() {
     this.auth.login(this.loginPayload)
-      .subscribe(() => {
+      .subscribe((res) => {
+        if (res && res.rediect_url) {
+          window.location.href = res.rediect_url;
+          return ;
+        }
         this.message.success('登录成功');
         this.auth.currUser.name = this.loginForm.value.name;
-        this.auth.currUser.tenant = this.loginForm.value.tenant;      
+        this.auth.currUser.tenant = this.loginForm.value.tenant;
         this.router.navigate(['/index/tenant/list']);
       }, error => {
         this.resetCapture();
