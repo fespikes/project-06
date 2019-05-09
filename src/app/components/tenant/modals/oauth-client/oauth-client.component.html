@@ -207,7 +207,7 @@
         tuiIcon="f-copy"
         ngxClipboard
         [cbContent]="returned['clientId']"
-        (cbOnSuccess)="copy(clientIdInput)"
+        (cbOnSuccess)="copy('Client ID')"
       ></svg>
     </span>
   </div>
@@ -225,7 +225,7 @@
         tuiIcon="f-copy"
         ngxClipboard
         [cbContent]="returned['clientSecret']"
-        (cbOnSuccess)="copy(clientSecretInput)"
+        (cbOnSuccess)="copy('Client Secret')"
       ></svg>
     </span>
   </div>

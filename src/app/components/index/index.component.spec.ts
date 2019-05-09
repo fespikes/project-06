@@ -20,8 +20,10 @@ describe('IndexComponent', () => {
   }));
 
   beforeEach(() => {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 1000;
     fixture = TestBed.createComponent(IndexComponent);
     component = fixture.componentInstance;
+    component.imageSrc = function() { return ''};
     fixture.detectChanges();
   });
 

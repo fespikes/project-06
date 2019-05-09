@@ -19,11 +19,7 @@ export class AccessTokenComponent implements OnInit {
   tenantASToken: any[];
   ownASToken: any[];
   filter: any = {
-    // clientId: '',
     tokenSource: '',
-    // searchValue: '',
-    // pageSize: '',
-    // pageNumber: ''
   };
   tenantPaging = new Pagination();
   ownPaging = new Pagination();
@@ -36,9 +32,6 @@ export class AccessTokenComponent implements OnInit {
 
   ngOnInit() {
     this.fetchData();
-    // setTimeout(function() {
-    //   this.openAccessTokenModal('return', {name: 'rock'});
-    // }.bind(this), 0)
   }
 
   fetchData() {
@@ -156,6 +149,10 @@ export class AccessTokenComponent implements OnInit {
       this.message.success(`"${res.name}" 刷新成功！`);
       this.fetchTokens('USER ', 'ownPaging', true);
     });
+  }
+
+  copy($event) {
+    this.message.success($event + '复制成功！')
   }
 
 }

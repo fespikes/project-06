@@ -67,6 +67,7 @@
                   tuiIcon="f-copy"
                   ngxClipboard
                   [cbContent]="datum['value']"
+                  (cbOnSuccess)="copy('Access Token')"
                 ></svg>
               </span>
               <p class="dropdown-p">{{'COMMON.MODULES.refreshAt' | translate}}： {{datum['refreshTime'] | date:'y/M/d HH:mm:ss'}}</p>
@@ -100,6 +101,7 @@
                     tuiIcon="f-copy"
                     ngxClipboard
                     [cbContent]="datum['refreshToken']['value']"
+                    (cbOnSuccess)="copy('Refresh Token')"
                   ></svg>
                 </span>
                 <p class="dropdown-p">{{'COMMON.MODULES.expireAt' | translate}}： {{datum['refreshToken']['expireTime'] | date:'y/M/d HH:mm:ss'}}</p>
@@ -164,6 +166,7 @@
                   tuiIcon="f-copy"
                   ngxClipboard
                   [cbContent]="datum['value']"
+                  (cbOnSuccess)="copy('Access Token')"
                 ></svg>
               </span>
               <p class="dropdown-p">{{'COMMON.MODULES.refreshAt' | translate}}： {{datum['refreshTime'] | date:'y/M/d HH:mm:ss'}}</p>
@@ -195,6 +198,7 @@
                   tuiIcon="f-copy"
                   ngxClipboard
                   [cbContent]="datum['refreshToken']['value']"
+                  (cbOnSuccess)="copy('Refresh Token')"
                 ></svg>
               </span>
               <p

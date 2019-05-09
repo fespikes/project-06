@@ -2,8 +2,11 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DetailsComponent } from './details.component';
 import { ApiService } from 'app/shared';
+import { TenantServiceStub } from '../tenant.service.stub';
 import { TenantService } from '../tenant.service';
 import { TestModule } from 'app/shared/test.module';
+import { ModalsService } from '../modals.service';
+import { ModalsServiceStub } from '../modals.service.stub';
 
 describe('DetailsComponent', () => {
   let component: DetailsComponent;
@@ -14,8 +17,14 @@ describe('DetailsComponent', () => {
       imports: [TestModule],
       declarations: [ DetailsComponent ],
       providers: [
-        ApiService,
-        TenantService
+        {
+          provide: TenantService,
+          useClass: TenantServiceStub
+        },
+        {
+          provide: ModalsService,
+          useClass: ModalsServiceStub
+        }
       ]
     })
     .compileComponents();

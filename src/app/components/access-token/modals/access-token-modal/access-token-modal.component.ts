@@ -3,13 +3,11 @@ import {
   FormBuilder,
   FormGroup,
   Validators,
-  FormControl,
 } from '@angular/forms';
 
-import { TuiModalService, TuiModalRef, TUI_MODAL_DATA } from 'tdc-ui';
+import { TuiModalRef, TUI_MODAL_DATA } from 'tdc-ui';
 import { AccessTokenService } from '../../access-token.service';
 import { actionTypes } from '../../access-token.model';
-import { ObjectToArray } from 'app/shared/utils';
 
 const unit = 3600000;
 @Component({

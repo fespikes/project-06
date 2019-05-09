@@ -10,24 +10,20 @@ import {
 import { ApiService, SharedModule }  from 'app/shared';
 import { TestModule } from 'app/shared/test.module';
 import { AppComponent } from './app.component';
+import { AppService } from './app.service';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
       imports: [
-        RouterTestingModule,
-        FormsModule, 
-        ReactiveFormsModule,
-        SharedModule,
         TestModule
       ],
       declarations: [
         AppComponent
       ],
       providers:[
-        ApiService,
-        TranslateService,
+        AppService,
         {
           provide: I18nLangService,
           useValue: {

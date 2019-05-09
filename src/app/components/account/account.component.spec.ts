@@ -11,20 +11,14 @@ describe('AccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [TestModule],
+      // imports: [TestModule],
       declarations: [ AccountComponent ],
-      providers: [
-        {
-          provide: AccountService,
-          useClass: AccountServiceStub,
-        },
-      ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 100 * 1000;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 1000;
     fixture = TestBed.createComponent(AccountComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

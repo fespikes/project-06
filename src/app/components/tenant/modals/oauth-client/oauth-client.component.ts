@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, ElementRef, ViewChild } from '@angular/core';
-import { TuiModalService, TuiModalRef, TUI_MODAL_DATA } from 'tdc-ui';
+import { TuiModalService, TuiModalRef, TUI_MODAL_DATA, TuiMessageService } from 'tdc-ui';
 import {
   FormBuilder,
   FormGroup,
@@ -54,6 +54,7 @@ export class OauthClientComponent implements OnInit {
     private fb: FormBuilder,
     private modal: TuiModalRef,
     @Inject(TUI_MODAL_DATA) data,
+    private message: TuiMessageService
   ) {
     this.actionType = data.type;
     this.tenant = data.tenantName;
@@ -168,7 +169,7 @@ export class OauthClientComponent implements OnInit {
   }
 
   copy($event) {
-    $event.select();
+    this.message.success($event + '复制成功！')
   }
 
 }

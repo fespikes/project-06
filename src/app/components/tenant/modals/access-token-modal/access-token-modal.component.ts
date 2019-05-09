@@ -5,7 +5,7 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
-
+import { TuiMessageService } from 'tdc-ui';
 import { TuiModalService, TuiModalRef, TUI_MODAL_DATA } from 'tdc-ui';
 
 import { tenantPrivacyTypes, tenantActionTypes } from '../../tenant.model';
@@ -27,7 +27,8 @@ export class AccessTokenModalComponent implements OnInit {
     private fb: FormBuilder,
     public modal: TuiModalRef,
     @Inject(TUI_MODAL_DATA) private data,
-    private api: TenantService
+    private api: TenantService,
+    private message: TuiMessageService
   ) {
     this.oAuthClient = data.oAuthClient;
   }
@@ -43,8 +44,8 @@ export class AccessTokenModalComponent implements OnInit {
       });
   }
 
-  copy() {
-    return false;
+  copy($event) {
+    this.message.success($event + '复制成功！')
   }
 
 }
