@@ -28,8 +28,6 @@ export class OauthClientComponent implements OnInit {
     'accessTokenValiditySeconds': 0,  // Access Token有效时间（单位为秒）
     'refreshTokenValiditySeconds': 0, // Refresh Token有效时间
     'additionalInfo': {}, // 自定义信息
-    // 'clientSecret': 'string',
-    // 'tenant': 'string',
     'noExpire': true
   };
   oAuthPrivacyTypes: any[] = [];
@@ -37,44 +35,6 @@ export class OauthClientComponent implements OnInit {
   at = 0;
   rt = 0;
   hourMax = 1000;
-
-  // atMax: number;
-  // rtMax: number;
-  // at = 0;
-  // rt = 0;
-  // atUnit = 0;
-  // atUnitValue = 0;
-  // rtUnit = 0;
-  // rtUnitValue = 0;
-  // set accessTokenUnit(ag) {
-  //   const unitAndMax = getUnitAndMax(ag);
-  //   this.atUnit = ag;
-  //   this.atMax = unitAndMax.max;
-  //   this.atUnitValue = unitAndMax.unit;
-  //   this.accountSeconds(this.at, unitAndMax.unit, 'accessTokenValiditySeconds');
-  // }
-  // get accessTokenUnit() { return this.atUnit; }
-  // accessTokenUnit = 'hour'
-/* 
-  set atAmount(ag) {
-    this.at = ag;
-    this.accountSeconds(this.at, this.atUnitValue, 'accessTokenValiditySeconds');
-  }
-  get atAmount() { return this.at; }
-
-  set refreshTokenUnit(ag) {
-    const unitAndMax = getUnitAndMax(ag);
-    this.rtUnit = ag;
-    this.atMax = unitAndMax.max;
-    this.rtUnitValue = unitAndMax.unit;
-    this.accountSeconds(this.rt, unitAndMax.unit, 'refreshTokenValiditySeconds');
-  }
-  get refreshTokenUnit() { return this.rtUnit; }
-  set rtAmount(ag) {
-    this.rt = ag;
-    this.accountSeconds(this.rt, this.rtUnitValue, 'refreshTokenValiditySeconds');
-  }
-  get rtAmount() { return this.rt; } */
 
   last: any = {}
   attrs: any[] = [];
@@ -162,7 +122,6 @@ export class OauthClientComponent implements OnInit {
 
   submit(val: {[s:string]: string}) {
     let observe: any;
-    // const val = this.myForm.value;
     const params = {...this.params};
     if (this.actionType === 'register') {
       const item = val['redirectUris'].split('\n');
@@ -186,8 +145,6 @@ export class OauthClientComponent implements OnInit {
       params.appName = val['appName'];
       params.accessTokenValiditySeconds = this.at * 3600;
       params.refreshTokenValiditySeconds = this.rt * 3600;
-      // params.accessTokenValiditySeconds = this.at * this.atUnitValue;
-      // params.refreshTokenValiditySeconds = this.rt * this.rtUnitValue;
       params.noExpire && (delete params.refreshTokenValiditySeconds);
     }
 
