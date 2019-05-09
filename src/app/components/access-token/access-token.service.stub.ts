@@ -22,7 +22,7 @@ export class AccessTokenServiceStub {
   tokenRefreshTask(method, task?) {
     return of({
       createTimestamp: 0,
-      executionInterval: 3600000,
+      executionInterval: 360,
       lastExecutionTimestamp: 0,
       name: "task-1064140633-i91tTION",
       refreshTokenValue: "i91tnhtZzXONCIP8kB5W-FEDERATION",

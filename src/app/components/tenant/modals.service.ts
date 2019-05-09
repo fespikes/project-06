@@ -8,8 +8,6 @@ import {
   AuthProviderComponent,
   OauthClientComponent,
   AccessTokenModalComponent,
-  ClientSecretModalComponent,
-  GuardianModalComponent,
 } from './modals';
 import { tenantActionTypes as actionTypes } from './tenant.model';
 

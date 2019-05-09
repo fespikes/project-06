@@ -5,7 +5,7 @@ import { ApiService } from 'app/shared';
 @Injectable({
   providedIn: 'root'
 })
-export class IndexService {
+export class IndexServiceStub {
 
   getProfile(userName): Observable<any>{
     return of({});

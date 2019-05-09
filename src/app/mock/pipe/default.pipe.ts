@@ -1,7 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({name: 'translate'})
-export class TranslatePipeSub implements PipeTransform {
+@Pipe({
+  name: 'tuiDefault',
+})
+export class DefaultPipeStub implements PipeTransform {
   transform(value) {
     return value;
   }

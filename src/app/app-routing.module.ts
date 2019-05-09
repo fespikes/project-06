@@ -24,7 +24,7 @@ export const appRoutes: Routes = [
     children: [
       {
         path: `tenant`,
-        loadChildren: `./components/tenant/tenant.module#TenantModule`,
+        loadChildren: `./components/tenant/tenant.module#TenantModule`, // TODO: to change to support for import 
       },
       {
         path: `users`,

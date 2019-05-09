@@ -1,13 +1,17 @@
 import { NgModule } from '@angular/core';
 
-import { TranslatePipeSub } from './pipe';
+import { DefaultPipeStub, TranslatePipeStub, FilterPipeStub } from './pipe';
 
 @NgModule({
   declarations: [
-    TranslatePipeSub
+    DefaultPipeStub,
+    TranslatePipeStub,
+    FilterPipeStub,
   ],
   exports: [
-    TranslatePipeSub,
-  ]
+    DefaultPipeStub,
+    TranslatePipeStub,
+    FilterPipeStub,
+  ],
 })
 export class MockModule { }

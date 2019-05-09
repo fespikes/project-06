@@ -1,7 +1,6 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable } from 'rxjs';
-import { combineLatest } from 'rxjs';
+import { Observable ,  combineLatest } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { TuiMessageService } from 'tdc-ui';
 

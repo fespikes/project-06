@@ -1,9 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslatePipeStub, DefaultPipeStub } from 'app/mock';
+
+import { OverlayModule } from '@angular/cdk/overlay';
+import { HttpClientModule } from '@angular/common/http';
+
 import { TestModule } from 'app/shared/test.module';
+import {
+  ApiService,
+  AuthService,
+  FederationGuard,
+} from 'app/shared/services';
+import { TuiMessageService } from 'tdc-ui';
+
 
 import { ResetComponent } from './reset.component';
-import { AccountService } from '../account.service';
-import { AccountServiceStub } from '../account.service.stub';
 
 describe('ResetComponent', () => {
   let component: ResetComponent;
@@ -11,13 +21,19 @@ describe('ResetComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [TestModule],
-      declarations: [ ResetComponent ],
+      imports: [
+        // TestModule,
+        HttpClientModule,
+        OverlayModule
+      ],
+      declarations: [
+        DefaultPipeStub,
+        TranslatePipeStub,
+        ResetComponent
+      ],
       providers: [
-        {
-          provide: AccountService,
-          useClass: AccountServiceStub,
-        },
+        ApiService,
+        TuiMessageService
       ]
     })
     .compileComponents();

@@ -35,25 +35,20 @@ export class AccessTokenComponent implements OnInit {
   }
 
   fetchData() {
-    const promises = [
-      this.fetchTokens('CLIENT', 'tenantPaging'),
+      this.fetchTokens('CLIENT', 'tenantPaging')
+        .subscribe(tenantASTokenRes => {
+          this.tenantASToken = this.adjustTokens((tenantASTokenRes as any).body);
+          this.setPaging('tenantPaging', tenantASTokenRes);
+          this.loading = false;
+        });
       this.fetchTokens('USER', 'ownPaging')
-    ];
-    this.loading = true;
-    combineLatest(promises)
-      .subscribe(([tenantASTokenRes, ownASTokenRes]) => {
-        const tenant: any = tenantASTokenRes;
-        const own: any = ownASTokenRes;
-        this.tenantASToken = this.adjustTokens((tenantASTokenRes as any).body);
-        this.setPaging('tenantPaging', tenant);
-
-        this.ownASToken = this.adjustTokens((ownASTokenRes as any).body);
-        this.setPaging('ownPaging', own);
-        this.loading = false;
-      });
+        .subscribe(ownASTokenRes => {
+          this.ownASToken = this.adjustTokens((ownASTokenRes as any).body);
+          this.setPaging('ownPaging', ownASTokenRes);
+        });
   }
 
-  fetchTokens(tokenSource, paging, refresh?) {
+  fetchTokens(tokenSource, paging, refresh?): any{
     const filter = {...this.filter};
     filter.tokenSource = tokenSource;
     filter.pageNumber = this[paging].page;

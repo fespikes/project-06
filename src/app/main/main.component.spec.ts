@@ -1,14 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AuthService } from 'app/shared';
-import { MainComponent } from './main.component';
-import { TranslatePipeSub } from 'app/mock';
+import { of } from 'rxjs';
 
-const mockUser = {
-  tenant: 't',
-  name: 'name',
-  password: 'psd',
-  username: 'uname',
-}
+import { AuthService } from 'app/shared';
+import { AuthServiceStub } from 'app/shared/services/auth.service.stub';
+import { ApiService } from 'app/shared';
+import { I18nModule, TranslateService, I18nLangService } from 'app/i18n';
+import { TranslatePipeStub, DefaultPipeStub } from 'app/mock';
+
+import { MainComponent } from './main.component';
+import { TestModule } from 'app/shared/test.module';
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -16,13 +16,27 @@ describe('MainComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MainComponent, TranslatePipeSub ],
+      declarations: [
+        MainComponent,
+        DefaultPipeStub,
+        TranslatePipeStub,
+      ],
       providers: [
+        ApiService,
         {
           provide: AuthService,
+          useClass: AuthServiceStub
+        },
+        {
+          provide: TranslateService,
           useValue: {
-            currUser: mockUser,
-            purgeAuth() {}
+            get() {
+              return of();
+            },
+            translateKey() {},
+            onLangChange: {
+              subscribe: () => {}
+            }
           }
         }
       ]
@@ -33,6 +47,10 @@ describe('MainComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MainComponent);
     component = fixture.componentInstance;
+    component.user = {
+      name: '',
+      tenant: ''
+    };
     fixture.detectChanges();
   });
 

@@ -14,7 +14,7 @@ import { TranslateService } from './translate.service';
   pure: false,
 })
 export class TranslatePipe implements PipeTransform, OnDestroy {
-  onLangChange: EventEmitter<TranslateService>;
+  onLangChange: any; //EventEmitter<TranslateService>;
   lastKey: string;
   value: string;
 

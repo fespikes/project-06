@@ -11,7 +11,7 @@ export class AccountServiceStub {
   }
 
   sendRegisterLink() {
-    return of({});
+    return of({subscribe: () => {}});
   }
 
 

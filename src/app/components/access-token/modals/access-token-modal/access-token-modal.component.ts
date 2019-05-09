@@ -16,7 +16,6 @@ const unit = 3600000;
   styleUrls: ['./access-token-modal.component.sass']
 })
 export class AccessTokenModalComponent implements OnInit {
-  @ViewChild('focus') focus: ElementRef;
   actionType: string;
   actionTypes = actionTypes;
   params: any = {
@@ -127,7 +126,6 @@ export class AccessTokenModalComponent implements OnInit {
       key: '',
       value: ''
     };
-    this.focus && this.focus.nativeElement.focus();
     return false;
   }
 

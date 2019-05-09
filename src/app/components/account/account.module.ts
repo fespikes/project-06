@@ -9,7 +9,7 @@ import { federation_server } from 'app/shared/app.tokens';
 import { AccountRoutingModule } from './account-routing.module';
 import { LoginComponent } from './login/login.component';
 import { ResetComponent } from './reset/reset.component';
-import { AccountComponent } from './account.component';
+// import { AccountComponent } from './account.component';
 
 @NgModule({
   imports: [
@@ -23,7 +23,7 @@ import { AccountComponent } from './account.component';
   declarations: [
     LoginComponent,
     ResetComponent,
-    AccountComponent,
+    // AccountComponent,
   ],
   providers: [
     {

@@ -12,7 +12,7 @@ export class MainComponent implements OnInit {
 
   constructor(
     private auth: AuthService,
-  ) { 
+  ) {
     this.user = {...auth.currUser};
   }
 
