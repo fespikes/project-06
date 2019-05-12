@@ -1,6 +1,9 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { UsersService } from './users.service';
 import { TuiMessageService, Pagination } from 'tdc-ui';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { Subject,  Subscription } from 'rxjs';
 
 import { ModalsService } from './modals';
 import { ObjectToArray } from 'app/shared';
@@ -14,11 +17,13 @@ import { roles } from './users.model';
 export class UsersComponent implements OnInit {
   @HostBinding('class.main') hostClass = true;
   loading = false;
+  private searchSubject = new Subject();
 
   users: any[] = [];
   roles = ObjectToArray(roles, true);
   filter: any = {searchValue: ''};
   paging: Pagination = new Pagination();
+
 
   constructor(
     private service: UsersService,
@@ -28,6 +33,18 @@ export class UsersComponent implements OnInit {
 
   ngOnInit() {
     this.fetchData();
+
+    this.searchSubject.pipe(
+      debounceTime(200),
+      distinctUntilChanged())
+      .subscribe((searchValue) => {
+        this.filter.searchValue = searchValue;
+        this.fetchData();
+      });
+  }
+
+  searchInput($event) {
+    this.searchSubject.next($event.target.value);
   }
 
   fetchData() {

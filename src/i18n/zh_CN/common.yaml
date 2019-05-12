@@ -20,7 +20,7 @@ COMMON:
 
   MODULES:
     userManagement: 用户管理
-    ATSearchPlaceholder: '名称，租户名，Client ID'
+    ATSearchPlaceholder: 名称
     createAT: 创建Access Token
     tenantCreate: 租户创建
     createTime: 创建时间

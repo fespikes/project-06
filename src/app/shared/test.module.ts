@@ -37,8 +37,8 @@ export class I18nLangServiceStub {
 
 @NgModule({
   declarations: [
-    DefaultPipeStub,
-    TranslatePipeStub
+    // DefaultPipeStub,
+    // TranslatePipeStub
   ],
   imports: [
     FormsModule,
@@ -70,18 +70,6 @@ export class I18nLangServiceStub {
     // },
     // FederationGuard,
     // TuiMessageService,
-    {
-      provide: TranslateService,
-      useValue: {
-        get() {
-          return of();
-        },
-        translateKey() {},
-        onLangChange: {
-          subscribe: () => {}
-        }
-      }
-    },
     {
       provide: TuiModalService,
       useClass: TuiModalServiceStub

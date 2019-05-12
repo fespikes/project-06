@@ -64,6 +64,8 @@ export class ListComponent implements OnInit {
         .subscribe( res => {
           this.tenants = [res];
           this.loading = false;
+        }, () => {
+          this.loading = false;
         });
     } else {
       this.api.getTenants(this.filter, false)
@@ -75,6 +77,8 @@ export class ListComponent implements OnInit {
               this.tenants = this.mergeTenants(rs.body, accesses);
               // TODO: due to api change, let's holdon here
             });
+        }, () => {
+          this.loading = false;
         });
     }
   }

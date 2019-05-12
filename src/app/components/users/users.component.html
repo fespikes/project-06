@@ -28,8 +28,7 @@
       class="item"
       placeholder="{{'用户名' | translate}}"
       suffix="f-operate-find"
-      [(ngModel)]="filter.searchValue"
-      (input)="fetchData()"
+      (input)="searchInput($event)"
     ></tui-input>
     <!--TODO: 需根据当前用户的权限来判断是否显示“添加用户”按钮。-->
     <button

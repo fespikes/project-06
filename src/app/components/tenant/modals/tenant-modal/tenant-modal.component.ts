@@ -82,8 +82,10 @@ export class TenantModalComponent implements OnInit {
 
   submit(val) {
     if (this.actionType !== tenantActionTypes.remove) {
-      this.params.name = val.name;
-      this.params.type = val.type;
+      if (this.actionType !== 'edit') {
+        this.params.name = val.name;
+        this.params.type = val.type;
+      }
       if (this.last && (this.last.key !== undefined) && (this.last.value !== undefined)) {
         this.attrs.push(this.last);
         this.last = {};
