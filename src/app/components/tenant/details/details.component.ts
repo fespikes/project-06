@@ -1,9 +1,10 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable ,  combineLatest } from 'rxjs';
+import { map }                from 'rxjs/operators';
+import {combineLatest,  Observable } from 'rxjs';
+
 import { switchMap } from 'rxjs/operators';
 import { TuiMessageService } from 'tdc-ui';
-
 import { TenantService } from '../tenant.service';
 import { tenantActionTypes, oAuthPrivacyTypes } from '../tenant.model';
 import { ModalsService } from '../modals.service';
@@ -23,6 +24,7 @@ export class DetailsComponent implements OnInit {
   details: any = {};
   attrs: any[] = [];
   tenantName = '';
+  isTenantOwner: boolean;
 
   providerTypes: any;
   oAuthPrivacyTypes = ObjectToArray(oAuthPrivacyTypes, true);
@@ -43,9 +45,15 @@ export class DetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-        this.tenantName = params.get('name');
-        this.fetchData();
+    const promises = [
+      this.route.params,
+      this.route.queryParams,
+    ];
+    combineLatest(promises)
+    .subscribe(([pathParams, queryParams]) => {
+      this.tenantName = pathParams['name'];
+      this.isTenantOwner = queryParams['isOwner'] === 'true';
+      this.fetchData();
     });
   }
 
@@ -127,9 +135,10 @@ export class DetailsComponent implements OnInit {
     });
   }
 
-  showTruthManagementModal() {
+  showTruthManagementModal(isTenantOwner?) {
     this.modal.truthManagement({
       tenant: this.details,
+      isOwner: isTenantOwner
     }).subscribe(argu => {
       this.fetchData();
     });

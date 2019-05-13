@@ -201,10 +201,10 @@ export class ApiService {
     } else {
       data = responseError.error;
     }
-    // if (responseError.status === 48000) {
-    //   observableThrowError(data)
-    //   return of({});
-    // }
+    if (responseError.status === 403) {
+      this.message.error('无权限访问');
+      return observableThrowError(data)
+    }
     if (data && data.error_code) {
       msg = data.error_code+':'+data.error_description
     } else if(data.error){
@@ -213,7 +213,7 @@ export class ApiService {
     } else {
       msg = responseError.message;
     }
-    this.message.error(msg); // TODO
+    this.message.error(msg);
     return observableThrowError(data);
   }
 

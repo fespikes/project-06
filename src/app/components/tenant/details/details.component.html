@@ -11,9 +11,11 @@
       <div class="top">
         <div class="left">{{tenantName}}</div>
         <div class="right">
-          <button class="item" tuiBtn="default" (click)="showTruthManagementModal()" tuiBtnOutline>信任管理</button>
+          <button class="item" tuiBtn="default" (click)="showTruthManagementModal(isTenantOwner)" tuiBtnOutline>信任管理</button>
           <button class="item" tuiBtn="default" (click)="showVisitManagementModal()" tuiBtnOutline>访问管理</button>
-          <button class="item" tuiBtn="default" [tuiDropdownTrigger]="editDropdown" tuiBtnOutline style="min-width: 50px">...</button>
+          <button
+            *ngIf="isTenantOwner"
+            class="item" tuiBtn="default" [tuiDropdownTrigger]="editDropdown" tuiBtnOutline style="min-width: 50px">...</button>
           <!-- trigger="hover" -->
           <tui-dropdown #editDropdown direction="bottomRight" [caret]="false">
             <tui-dropdown-item (click)="showTenantModal(tenantActionTypes['edit'])">

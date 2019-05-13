@@ -24,6 +24,7 @@ export class TruthModalComponent implements OnInit {
   get lastTrust() {
     return this.last;
   }
+  isTenantOwner: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -36,15 +37,18 @@ export class TruthModalComponent implements OnInit {
 
   ngOnInit() {
     this.filters.src = this.data.tenant.name;
+    this.isTenantOwner = this.data.isOwner;
     this.fetchData();
   }
 
   fetchData() {
-    this.api.trusts('get', this.filters)
-      .subscribe(res => {
-        console.log(res);
-        this.trusts = res.body;
-      });
+    if (this.isTenantOwner) {
+      this.api.trusts('get', this.filters)
+        .subscribe(res => {
+          console.log(res);
+          this.trusts = res.body;
+        });
+    }
     this.api.trusts('get', {dst: this.filters.src})
       .subscribe(res => {
         this.trustsPassive = res.body;
